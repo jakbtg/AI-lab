@@ -20,9 +20,11 @@ fratelloGermano(X, Y) :-
     genitore(SecondoGenitore, Y).
 
 fratelloUnilaterale(X, Y) :- 
-    genitore(PrimoGenitore, X), 
-    genitore(PrimoGenitore, Y),  
+    genitore(GenitoreComune, X),
+    genitore(GenitoreComune, Y),
     X \== Y,
-    genitore(SecondoGenitore, X), 
-    PrimoGenitore \== SecondoGenitore,
-    genitore(SecondoGenitore, Y).
+    genitore(GenitoreX, X),
+    GenitoreX \== GenitoreComune,
+    genitore(GenitoreY, Y),
+    GenitoreY \== GenitoreComune,
+    GenitoreX \== GenitoreY.
