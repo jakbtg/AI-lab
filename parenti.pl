@@ -11,4 +11,10 @@ genitore(chiara, lia).
 nonno(X, Y) :- genitore(X, Z), genitore(Z, Y).
 antenato(X, Y) :- genitore(X, Y).
 antenato(X, Y) :- genitore(Z, Y), antenato(X, Z).
-fratelloGermano(X, Y) :- genitore(PrimoGenitore, X), genitore(PrimoGenitore, Y), genitore(SecondoGenitore, X), genitore(SecondoGenitore, Y).
+fratelloGermano(X, Y) :- 
+    genitore(PrimoGenitore, X), 
+    genitore(PrimoGenitore, Y),  
+    X \== Y,
+    genitore(SecondoGenitore, X), 
+    PrimoGenitore \== SecondoGenitore,
+    genitore(SecondoGenitore, Y).
