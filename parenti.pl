@@ -10,12 +10,14 @@ genitore(chiara, lia).
 
 nonno(X, Y) :- genitore(X, Z), genitore(Z, Y).
 
-% è importante considerare l'ordine con cui sono scritte le regole.
-% ad esempio se le due regole seguenti fossero invertite, si entrerebbe in un loop infinito.
-% questo perché prolog cerca di soddisfare le regole secondo l'ordine in cui sono scritte.
-% è quindi importante scrivere prima i casi base e poi quelli ricorsivi.
-% è inoltre importante l'ordine dei sottogoal all'interno di una regola: 
-% prima i predicati instanziabili e poi il passo ricorsivo.
+/**
+* è importante considerare l'ordine con cui sono scritte le regole.
+* ad esempio se le due regole seguenti fossero invertite, si entrerebbe in un loop infinito.
+* questo perché prolog cerca di soddisfare le regole secondo l'ordine in cui sono scritte.
+* è quindi importante scrivere prima i casi base e poi quelli ricorsivi.
+* è inoltre importante l'ordine dei sottogoal all'interno di una regola: 
+* prima i predicati instanziabili e poi il passo ricorsivo.
+*/
 antenato(X, Y) :- genitore(X, Y).
 antenato(X, Y) :- genitore(Z, Y), antenato(X, Z).
 
