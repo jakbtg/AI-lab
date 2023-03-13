@@ -9,3 +9,8 @@ prodotto([],0). % prodotto di una lista vuota è 0
 prodotto([X],X). % prodotto di una lista con un solo elemento è il valore di quel elemento
 
 prodotto([Head|Tail], Res) :- prodotto(Tail, N), Res is Head * N.
+
+% proviamo a scrivere un nostro predicato "appartiene" = member
+% parto cercando dei casi base
+appartiene(X, [X|_]). % se X è uguale al primo elemento della lista, allora X appartiene alla lista
+appartiene(X, [_|Tail]) :- appartiene(X, Tail). % se X non è uguale al primo elemento della lista, allora X appartiene alla lista se appartiene alla coda della lista
