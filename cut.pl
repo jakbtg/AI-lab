@@ -5,12 +5,13 @@
 contaPositivi([],0).
 contaPositivi([Head|Tail], Tot) :- 
     Head > 0,
-    !, % cut: da qui vengono tagliate tutte le altre strade aperte
-    % ovvero non passerà per il secondo caso di contaPositivi
+    !, 
+    % cut: da qui vengono tagliate tutte le altre strade aperte 
+    % quell'altro ramo viene potato, ovvero non passerà per il secondo caso di contaPositivi
     % e nemmeno per atre instanzazioni di Head (o altre variabili coinvolte)
     % influisce comunque solo sulle scelte già fatte, non su quelle future
     % se ci fossero altre variabili o altre alternative quelle continueranno ad esserci
-    contaPositivi(Tail, N), 
+    contaPositivi(Tail, N),
     Tot is N + 1.
 % si applica il cut perché abbiamo visto che passare da questo caso qui lascerebbe aperte strade sbagliate
 contaPositivi([_|Tail], Tot) :- contaPositivi(Tail, Tot).
