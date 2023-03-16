@@ -23,3 +23,8 @@ applicabile(sx, pos(Riga, Colonna)) :-
     \+ occupata(pos(Riga, ColonnaSx)).
 
 % Trasformazione di uno stato in un altro per una data azione
+% trasforma(Azione, Stato, NuovoStato)
+trasforma(su, pos(Riga, Colonna), pos(RigaSopra, Colonna)) :- RigaSopra is Riga-1.
+trasforma(giu, pos(Riga, Colonna), pos(RigaSotto, Colonna)) :- RigaSotto is Riga+1.
+trasforma(dx, pos(Riga, Colonna), pos(Riga, ColonnaDx)) :- ColonnaDx is Colonna+1.
+trasforma(sx, pos(Riga, Colonna), pos(Riga, ColonnaSx)) :- ColonnaSx is Colonna-1.
