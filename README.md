@@ -1,6 +1,6 @@
 # AI Laboratory
 
-Exercises from the **AI** course (Intelligenza artificiale), University of Turin, Italy.  
+Exercises from the **AI** course (Intelligenza Artificiale), University of Turin, Italy.  
 Teachers: **Gian Luca Pozzato**, **Roberto Micalizio** e **Antonio Lieto**.
 
 Author: **Giacomo Grandi**.  
