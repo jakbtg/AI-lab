@@ -9,17 +9,22 @@ initialize :- retractall(current_depth(_)), assert(current_depth(1)).
 % prova a risolvere caso base
 prova(Cammino) :- 
     iniziale(S0), 
-    current_depth(D), % che sarà la profondità massima per questa esecuzione
+    current_depth(D),
+    % D sarà la profondità massima per questa esecuzione
     risolvi(S0, Cammino, [], D).
 
 % passo ricorsivo: se non sono riuscito a risolvere con la profondità precedente, incremento la profondità e riprovo
 prova(Cammino) :- 
     current_depth(D),
-    D < 100, % se la profondità è maggiore di 100, allora non c'è soluzione e termino
+    % se la profondità è maggiore di 100, allora non c'è soluzione e termino
+    D < 100,
     NewD is D + 1,
-    retractall(current_depth(_)), % cancello la profondità precedente
-    assert(current_depth(NewD)), % asserisco la nuova profondità
-    prova(Cammino). % riprovo ricorsivamente
+    % cancello la profondità precedente
+    retractall(current_depth(_)),
+    % asserisco la nuova profondità
+    assert(current_depth(NewD)),
+    % riprovo ricorsivamente
+    prova(Cammino).
 
 risolvi(S, [], _, _) :- finale(S), !.
 risolvi(S, [Azione|ListaAzioni], Visitati, ProfMax) :-
