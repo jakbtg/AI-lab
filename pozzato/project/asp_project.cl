@@ -54,16 +54,17 @@ giornata(1..38).
 % Elimino i modelli in cui una squadra affronta se stessa
 :- partita(S1, S2), S1 = S2.
 
+% Regola 2
 % Ogni partita avviene in una giornata
-% Regola 2
 1 {assegna(partita(S1,S2), G) : giornata(G)} 1 :- partita(S1, S2).
-
-% Ogni squadra gioca una sola partita per giornata
-% Regola 2
-1 {assegna(partita(S1,S2), G) : partita(S1, S2)} 1 :- giornata(G).
-
-
+% Ogni giornata ha 10 partite
+10 {assegna(partita(S1, S2), G) : partita(S1,S2)} 10 :- giornata(G).
+% Ogni squadra gioca in ogni giornata
+1 {assegna(partita(S1, S2), G) : partita(S1, S2)} 1 :- squadra(S1), giornata(G).
 
 
-#show partita/2.
+
+
+
+% #show partita/2.
 #show assegna/2.
