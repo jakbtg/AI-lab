@@ -38,3 +38,11 @@ in(spezia, spezia).
 in(hellas_verona, verona).
 in(sampdoria, genova).
 in(cremonese, cremona).
+
+% Ogni squadra affronta due volte tutte le altre squadre
+19 {partita(S1, S2) : squadra(S2)} 19 :- squadra(S1).
+
+% Elimino i modelli in cui una squadra affronta se stessa
+:- partita(S1, S2), S1 = S2.
+
+#show partita/2.
