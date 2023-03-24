@@ -59,8 +59,9 @@ giornata(1..38).
 1 {assegna(partita(S1,S2), G) : giornata(G)} 1 :- partita(S1, S2).
 % Ogni giornata ha 10 partite
 10 {assegna(partita(S1, S2), G) : partita(S1,S2)} 10 :- giornata(G).
-% Ogni squadra gioca in ogni giornata
-1 {assegna(partita(S1, S2), G) : partita(S1, S2)} 1 :- squadra(S1), giornata(G).
+% Ogni squadra gioca una sola partita per giornata
+% 1 {assegna(partita(S1, S2), G) : partita(S1,S2)} 1 :- squadra(S1), giornata(G).
+:- assegna(partita(S1, S2), G), assegna(partita(S3, S4), G), S2 == S4.
 
 
 

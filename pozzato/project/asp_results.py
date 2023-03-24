@@ -23,6 +23,9 @@ total_assegna = len(assegna)
 print(f'Total assegna: {total_assegna}')
 
 # print all fiorentina matches
+fio_matches = []
 for match in assegna:
     if re.search(r'fiorentina', match):
+        fio_matches.append(match)
         print(match)
+print(f'Total Fiorentina matches: {len(fio_matches)}')
