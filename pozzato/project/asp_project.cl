@@ -61,9 +61,14 @@ giornata(1..38).
 10 {assegna(partita(S1, S2), G) : partita(S1,S2)} 10 :- giornata(G).
 % Ogni squadra gioca una sola partita per giornata
 % 1 {assegna(partita(S1, S2), G) : partita(S1,S2)} 1 :- squadra(S1), giornata(G).
-:- assegna(partita(S1, S2), G), assegna(partita(S3, S4), G), S2 == S4.
+% prova con count
+conta_partite(S1, G, N) :- assegna(partita(S1, _), G), N = #count{S2 : assegna(partita(S1, S2), G)} > 0.
+:- squadra(S1), giornata(G), conta_partite(S1, G, N), N > 1.
 
-
+assegna(partita(napoli, fiorentina), 1).
+assegna(partita(milan, lazio), 1).
+assegna(partita(inter, sassuolo), 1).
+assegna(partita(juventus, torino), 1).
 
 
 
