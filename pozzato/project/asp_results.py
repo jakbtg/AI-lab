@@ -4,13 +4,11 @@ import re
 with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_out.txt', 'r') as f:
     line = f.readline()
     result = line.split()
-    i = 1
     days = []
     for element in result:
         if re.match(r'assegna', element):
             days.append(element)
             # print(f'{i}: {element}')
-        i += 1
 
 total_days = len(days)
 print(f'Total assegna: {total_days}')
@@ -34,8 +32,13 @@ print(final_calendar)
 headers = ['Giornata', 'Squadra Casa', 'Squadra Ospite']
 with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_final_calendar.tsv', 'w') as f:
     f.write('\t'.join(headers) + '\n')
+    i = 1
     for element in final_calendar:
         f.write('\t'.join(map(str, element)) + '\n')
+        i += 1
+        if i == 11:
+            f.write('-'*50 + '\n')
+            i = 1
 
 
 # # print all fiorentina matches
