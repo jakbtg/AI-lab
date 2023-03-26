@@ -12,12 +12,12 @@
 %     contro l’altra (derby).
 % ------------------------------------------------
 
-% Squadre partecipanti
 % Regola 1
+% Squadre partecipanti
 squadra(napoli; milan; inter; juventus; atalanta; roma; lazio; fiorentina; sassuolo; torino; udinese; bologna; monza; empoli; salernitana; lecce; spezia; hellas_verona; sampdoria; cremonese).
 
-% Città di riferimento delle squadre
 % Regola 3
+% Città di riferimento delle squadre
 in(napoli, napoli).
 in(milan, milano).
 in(inter, milano).
@@ -44,12 +44,12 @@ in(cremonese, cremona).
 % Ci sono 38 giornate
 giornata(1..38).
 
+% Regola 4
 % Ogni squadra affronta due volte tutte le altre squadre:
 % in questo modo vengono generate 19 partite in casa per ogni squadra
 % ma dato che ogni squadra compare poi anche in trasferta esattamente una volta per ogni avversaria,
 % ogni squadra compare esaattamente 38 volte in totale, ovvero affronta tutte le altre squadre 2 volte,
 % una volta in casa e una volta in trasferta
-% Regola 4
 19 {partita(S1, S2) : squadra(S2)} 19 :- squadra(S1).
 % Elimino i modelli in cui una squadra affronta se stessa
 :- partita(S1, S2), S1 = S2.
@@ -60,8 +60,6 @@ giornata(1..38).
 % Ogni giornata ha 10 partite
 10 {assegna(partita(S1, S2), G) : partita(S1,S2)} 10 :- giornata(G).
 % Ogni squadra gioca una sola partita per giornata
-% 1 {assegna(partita(S1, S2), G) : partita(S1,S2)} 1 :- squadra(S1), giornata(G).
-% prova con count
 % Conto le partite in casa ed elimino modelli in cui una squadra gioca più di una partita in casa nella stessa giornata
 conta_partite_casa(S1, G, N) :- assegna(partita(S1, _), G), N = #count{S2 : assegna(partita(S1, S2), G)}.
 :- squadra(S1), giornata(G), conta_partite_casa(S1, G, N), N > 1.
@@ -72,12 +70,4 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 :- assegna(partita(S1, _), G), assegna(partita(_, S1), G).
 
 
-% assegna(partita(napoli, fiorentina), 1).
-% assegna(partita(milan, lazio), 1).
-% assegna(partita(inter, sassuolo), 1).
-% assegna(partita(juventus, torino), 1).
-
-
-
-% #show partita/2.
 #show assegna/2.
