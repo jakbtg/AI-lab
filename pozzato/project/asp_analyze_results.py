@@ -10,6 +10,7 @@ with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_out.txt', '
             days.append(element)
             # print(f'{i}: {element}')
 
+# check if there are 380 matches in the calendar
 total_days = len(days)
 if total_days == 380:
     print(f'There are 380 matches in the calendar')
@@ -95,12 +96,3 @@ with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_final_calen
         if i == 11:
             f.write('-'*50 + '\n')
             i = 1
-
-
-# # print all fiorentina matches
-# fio_matches = []
-# for match in days:
-#     if re.search(r'fiorentina', match):
-#         fio_matches.append(match)
-#         print(match)
-# print(f'Total Fiorentina matches: {len(fio_matches)}')
