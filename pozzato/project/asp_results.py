@@ -10,8 +10,9 @@ with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_out.txt', '
             days.append(element)
             # print(f'{i}: {element}')
 
+
 total_days = len(days)
-print(f'Total assegna: {total_days}')
+print(f'Are there 380 matches? {total_days == 380}')
 
 # create matrix 380x3 (380 matches, 3 columns: day, home team, away team)
 final_calendar = []
@@ -26,7 +27,22 @@ for element in days:
 
 # sort the calendar by day
 final_calendar.sort(key=lambda x: x[0])
-print(final_calendar)
+
+# check if there are 10 matches per day
+error = False
+for i in range(1, 39):
+    count_matches_per_day = {}
+    for element in final_calendar:
+        if element[0] == i:
+            count_matches_per_day[element[0]] = count_matches_per_day.get(element[0], 0) + 1
+    if count_matches_per_day[i] != 10:
+        print(f'Error: {count_matches_per_day[i]} matches on day {i}')
+        error = True
+if not error:
+    print('There are 10 matches per each day')
+
+# print the final calendar
+# print(final_calendar)
 
 # create an output file 
 headers = ['Giornata', 'Squadra Casa', 'Squadra Ospite']
