@@ -62,8 +62,13 @@ giornata(1..38).
 % Ogni squadra gioca una sola partita per giornata
 % 1 {assegna(partita(S1, S2), G) : partita(S1,S2)} 1 :- squadra(S1), giornata(G).
 % prova con count
-conta_partite(S1, G, N) :- assegna(partita(S1, _), G), N = #count{S2 : assegna(partita(S1, S2), G)}.
-:- squadra(S1), giornata(G), conta_partite(S1, G, N), N > 1.
+% Conto le partite in casa ed elimino modelli in cui una squadra gioca più di una partita in casa nella stessa giornata
+conta_partite_casa(S1, G, N) :- assegna(partita(S1, _), G), N = #count{S2 : assegna(partita(S1, S2), G)}.
+:- squadra(S1), giornata(G), conta_partite_casa(S1, G, N), N > 1.
+% Conto le partite in trasferta ed elimino modelli in cui una squadra gioca più di una partita in trasferta nella stessa giornata
+conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 : assegna(partita(S2, S1), G)}.
+:- squadra(S1), giornata(G), conta_partite_trasferta(S1, G, N), N > 1.
+% Se una squadra gioca in casa in una giornata, non può giocare in trasferta in quella stessa giornata
 :- assegna(partita(S1, _), G), assegna(partita(_, S1), G).
 
 
