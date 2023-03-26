@@ -41,6 +41,15 @@ for i in range(1, 39):
 if not error:
     print('There are 10 matches per each day')
 
+# check number of matches for each team
+teams = ['napoli', 'milan', 'inter', 'juventus', 'atalanta', 'roma', 'lazio', 'fiorentina', 'sassuolo', 'torino', 'udinese', 'bologna', 'monza', 'empoli', 'salernitana', 'lecce', 'spezia', 'hellas_verona', 'sampdoria', 'cremonese']
+for team in teams:
+    count_matches = 0
+    for element in final_calendar:
+        if re.search(team, element[1]) or re.search(team, element[2]):
+            count_matches += 1
+    print(f'{team}: {count_matches}')
+
 # print the final calendar
 # print(final_calendar)
 

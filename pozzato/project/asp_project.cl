@@ -64,11 +64,13 @@ giornata(1..38).
 % prova con count
 conta_partite(S1, G, N) :- assegna(partita(S1, _), G), N = #count{S2 : assegna(partita(S1, S2), G)}.
 :- squadra(S1), giornata(G), conta_partite(S1, G, N), N > 1.
+:- assegna(partita(S1, _), G), assegna(partita(_, S1), G).
 
-assegna(partita(napoli, fiorentina), 1).
-assegna(partita(milan, lazio), 1).
-assegna(partita(inter, sassuolo), 1).
-assegna(partita(juventus, torino), 1).
+
+% assegna(partita(napoli, fiorentina), 1).
+% assegna(partita(milan, lazio), 1).
+% assegna(partita(inter, sassuolo), 1).
+% assegna(partita(juventus, torino), 1).
 
 
 
