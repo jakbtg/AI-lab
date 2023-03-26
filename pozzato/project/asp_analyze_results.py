@@ -94,5 +94,5 @@ with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_final_calen
         f.write('\t'.join(map(str, element)) + '\n')
         i += 1
         if i == 11:
-            f.write('-'*50 + '\n')
+            # f.write('-'*50 + '\n')
             i = 1

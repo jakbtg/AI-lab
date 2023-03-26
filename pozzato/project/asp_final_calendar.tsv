@@ -9,7 +9,6 @@ Giornata	Squadra Casa	Squadra Ospite
 1	salernitana	empoli
 1	lecce	bologna
 1	sampdoria	monza
---------------------------------------------------
 2	juventus	sampdoria
 2	atalanta	hellas_verona
 2	lazio	monza
@@ -20,7 +19,6 @@ Giornata	Squadra Casa	Squadra Ospite
 2	empoli	milan
 2	spezia	inter
 2	cremonese	torino
---------------------------------------------------
 3	inter	monza
 3	juventus	udinese
 3	atalanta	fiorentina
@@ -31,7 +29,6 @@ Giornata	Squadra Casa	Squadra Ospite
 3	salernitana	milan
 3	spezia	napoli
 3	hellas_verona	roma
---------------------------------------------------
 4	napoli	lecce
 4	milan	roma
 4	fiorentina	atalanta
@@ -42,7 +39,6 @@ Giornata	Squadra Casa	Squadra Ospite
 4	spezia	juventus
 4	sampdoria	lazio
 4	cremonese	inter
---------------------------------------------------
 5	napoli	milan
 5	inter	bologna
 5	roma	juventus
@@ -53,7 +49,6 @@ Giornata	Squadra Casa	Squadra Ospite
 5	udinese	monza
 5	hellas_verona	salernitana
 5	sampdoria	cremonese
---------------------------------------------------
 6	milan	inter
 6	roma	sassuolo
 6	fiorentina	sampdoria
@@ -64,7 +59,6 @@ Giornata	Squadra Casa	Squadra Ospite
 6	salernitana	juventus
 6	spezia	lazio
 6	cremonese	lecce
---------------------------------------------------
 7	inter	salernitana
 7	juventus	hellas_verona
 7	atalanta	bologna
@@ -75,7 +69,6 @@ Giornata	Squadra Casa	Squadra Ospite
 7	empoli	monza
 7	sampdoria	sassuolo
 7	cremonese	napoli
---------------------------------------------------
 8	atalanta	sassuolo
 8	roma	fiorentina
 8	lazio	lecce
@@ -86,7 +79,6 @@ Giornata	Squadra Casa	Squadra Ospite
 8	spezia	empoli
 8	hellas_verona	juventus
 8	cremonese	milan
---------------------------------------------------
 9	napoli	inter
 9	milan	lazio
 9	atalanta	juventus
@@ -97,7 +89,6 @@ Giornata	Squadra Casa	Squadra Ospite
 9	empoli	lecce
 9	salernitana	roma
 9	cremonese	spezia
---------------------------------------------------
 10	napoli	udinese
 10	milan	spezia
 10	roma	inter
@@ -108,7 +99,6 @@ Giornata	Squadra Casa	Squadra Ospite
 10	salernitana	sampdoria
 10	lecce	sassuolo
 10	hellas_verona	lazio
---------------------------------------------------
 11	napoli	spezia
 11	milan	torino
 11	roma	cremonese
@@ -119,7 +109,6 @@ Giornata	Squadra Casa	Squadra Ospite
 11	lecce	udinese
 11	hellas_verona	atalanta
 11	sampdoria	juventus
---------------------------------------------------
 12	napoli	fiorentina
 12	milan	cremonese
 12	juventus	lazio
@@ -130,7 +119,6 @@ Giornata	Squadra Casa	Squadra Ospite
 12	spezia	sassuolo
 12	hellas_verona	bologna
 12	sampdoria	torino
---------------------------------------------------
 13	napoli	monza
 13	milan	sassuolo
 13	inter	spezia
@@ -141,7 +129,6 @@ Giornata	Squadra Casa	Squadra Ospite
 13	bologna	udinese
 13	empoli	roma
 13	cremonese	salernitana
---------------------------------------------------
 14	inter	napoli
 14	roma	salernitana
 14	lazio	torino
@@ -152,7 +139,6 @@ Giornata	Squadra Casa	Squadra Ospite
 14	spezia	sampdoria
 14	hellas_verona	milan
 14	cremonese	monza
---------------------------------------------------
 15	inter	milan
 15	roma	spezia
 15	lazio	bologna
@@ -163,7 +149,6 @@ Giornata	Squadra Casa	Squadra Ospite
 15	salernitana	torino
 15	lecce	hellas_verona
 15	cremonese	sampdoria
---------------------------------------------------
 16	napoli	salernitana
 16	juventus	cremonese
 16	roma	torino
@@ -174,7 +159,6 @@ Giornata	Squadra Casa	Squadra Ospite
 16	spezia	bologna
 16	hellas_verona	inter
 16	sampdoria	udinese
---------------------------------------------------
 17	juventus	milan
 17	roma	monza
 17	lazio	atalanta
@@ -185,7 +169,6 @@ Giornata	Squadra Casa	Squadra Ospite
 17	hellas_verona	spezia
 17	sampdoria	salernitana
 17	cremonese	fiorentina
---------------------------------------------------
 18	napoli	bologna
 18	milan	monza
 18	inter	cremonese
@@ -196,7 +179,6 @@ Giornata	Squadra Casa	Squadra Ospite
 18	lecce	salernitana
 18	spezia	fiorentina
 18	hellas_verona	sampdoria
---------------------------------------------------
 19	milan	udinese
 19	inter	sampdoria
 19	juventus	bologna
@@ -207,7 +189,6 @@ Giornata	Squadra Casa	Squadra Ospite
 19	monza	fiorentina
 19	lecce	spezia
 19	hellas_verona	empoli
---------------------------------------------------
 20	napoli	empoli
 20	inter	lazio
 20	juventus	sassuolo
@@ -218,7 +199,6 @@ Giornata	Squadra Casa	Squadra Ospite
 20	lecce	roma
 20	hellas_verona	monza
 20	sampdoria	atalanta
---------------------------------------------------
 21	inter	torino
 21	atalanta	monza
 21	roma	sampdoria
@@ -229,7 +209,6 @@ Giornata	Squadra Casa	Squadra Ospite
 21	spezia	lecce
 21	hellas_verona	fiorentina
 21	cremonese	juventus
---------------------------------------------------
 22	napoli	atalanta
 22	juventus	salernitana
 22	fiorentina	inter
@@ -240,7 +219,6 @@ Giornata	Squadra Casa	Squadra Ospite
 22	lecce	lazio
 22	hellas_verona	udinese
 22	cremonese	empoli
---------------------------------------------------
 23	milan	empoli
 23	inter	hellas_verona
 23	atalanta	cremonese
@@ -251,7 +229,6 @@ Giornata	Squadra Casa	Squadra Ospite
 23	salernitana	sassuolo
 23	lecce	napoli
 23	sampdoria	roma
---------------------------------------------------
 24	inter	roma
 24	juventus	empoli
 24	atalanta	milan
@@ -262,7 +239,6 @@ Giornata	Squadra Casa	Squadra Ospite
 24	spezia	torino
 24	sampdoria	fiorentina
 24	cremonese	hellas_verona
---------------------------------------------------
 25	napoli	sampdoria
 25	juventus	inter
 25	atalanta	salernitana
@@ -273,7 +249,6 @@ Giornata	Squadra Casa	Squadra Ospite
 25	lecce	fiorentina
 25	spezia	milan
 25	cremonese	lazio
---------------------------------------------------
 26	napoli	roma
 26	milan	bologna
 26	juventus	monza
@@ -284,7 +259,6 @@ Giornata	Squadra Casa	Squadra Ospite
 26	salernitana	inter
 26	lecce	cremonese
 26	sampdoria	spezia
---------------------------------------------------
 27	inter	atalanta
 27	juventus	napoli
 27	lazio	salernitana
@@ -295,7 +269,6 @@ Giornata	Squadra Casa	Squadra Ospite
 27	spezia	roma
 27	sampdoria	lecce
 27	cremonese	bologna
---------------------------------------------------
 28	juventus	torino
 28	atalanta	roma
 28	lazio	inter
@@ -306,7 +279,6 @@ Giornata	Squadra Casa	Squadra Ospite
 28	spezia	udinese
 28	sampdoria	milan
 28	cremonese	sassuolo
---------------------------------------------------
 29	milan	napoli
 29	juventus	atalanta
 29	torino	inter
@@ -317,7 +289,6 @@ Giornata	Squadra Casa	Squadra Ospite
 29	spezia	cremonese
 29	hellas_verona	sassuolo
 29	sampdoria	empoli
---------------------------------------------------
 30	milan	sampdoria
 30	inter	udinese
 30	juventus	spezia
@@ -328,7 +299,6 @@ Giornata	Squadra Casa	Squadra Ospite
 30	empoli	fiorentina
 30	salernitana	bologna
 30	hellas_verona	cremonese
---------------------------------------------------
 31	milan	lecce
 31	juventus	fiorentina
 31	atalanta	inter
@@ -339,7 +309,6 @@ Giornata	Squadra Casa	Squadra Ospite
 31	empoli	sampdoria
 31	salernitana	spezia
 31	hellas_verona	napoli
---------------------------------------------------
 32	milan	hellas_verona
 32	inter	fiorentina
 32	atalanta	empoli
@@ -350,7 +319,6 @@ Giornata	Squadra Casa	Squadra Ospite
 32	lecce	juventus
 32	spezia	monza
 32	cremonese	udinese
---------------------------------------------------
 33	napoli	lazio
 33	milan	atalanta
 33	roma	hellas_verona
@@ -361,7 +329,6 @@ Giornata	Squadra Casa	Squadra Ospite
 33	monza	inter
 33	lecce	sampdoria
 33	spezia	salernitana
---------------------------------------------------
 34	napoli	juventus
 34	atalanta	lazio
 34	fiorentina	salernitana
@@ -372,7 +339,6 @@ Giornata	Squadra Casa	Squadra Ospite
 34	lecce	milan
 34	hellas_verona	torino
 34	sampdoria	inter
---------------------------------------------------
 35	napoli	hellas_verona
 35	milan	fiorentina
 35	inter	lecce
@@ -383,7 +349,6 @@ Giornata	Squadra Casa	Squadra Ospite
 35	udinese	salernitana
 35	sampdoria	bologna
 35	cremonese	atalanta
---------------------------------------------------
 36	napoli	sassuolo
 36	milan	salernitana
 36	inter	empoli
@@ -394,7 +359,6 @@ Giornata	Squadra Casa	Squadra Ospite
 36	bologna	torino
 36	monza	juventus
 36	sampdoria	hellas_verona
---------------------------------------------------
 37	milan	juventus
 37	inter	sassuolo
 37	torino	lazio
@@ -405,7 +369,6 @@ Giornata	Squadra Casa	Squadra Ospite
 37	hellas_verona	lecce
 37	sampdoria	napoli
 37	cremonese	roma
---------------------------------------------------
 38	napoli	torino
 38	inter	juventus
 38	atalanta	udinese
@@ -416,4 +379,3 @@ Giornata	Squadra Casa	Squadra Ospite
 38	empoli	cremonese
 38	salernitana	lecce
 38	spezia	hellas_verona
---------------------------------------------------
