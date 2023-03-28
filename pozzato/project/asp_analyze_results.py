@@ -82,6 +82,17 @@ for i in range(1, 39):
 if not error:
     print('Each team plays only once per day')
 
+# check if from two teams from the same city only one plays at home
+# error = False
+# cities = {'napoli': 'napoli', 'milan': 'milano', 'inter': 'milano', 'juventus': 'juventus', 'atalanta': 'brescia', 'roma': 'roma', 'lazio': 'lazio', 'fiorentina': 'firenze', 'sassuolo': 'sassuolo', 'torino': 'torino', 'udinese': 'udine', 'bologna': 'bologna', 'monza': 'monza', 'empoli': 'empoli', 'salernitana': 'salerno', 'lecce': 'lecce', 'spezia': 'spezia', 'hellas_verona': 'verona', 'sampdoria': 'genova', 'cremonese': 'cremona'}
+# for i in range(1, 39):
+#     for team in cities.keys():
+#         count_matches_same_city = fill_dict()
+#         for element in final_calendar:
+#             if element[0] == i:
+#                 if re.search(team, element[1]):
+#                     count_matches_same_city[element[0]] = count_matches_same_city.get(element[0], 0) + 1
+
 # print the final calendar
 # print(final_calendar)
 
@@ -94,5 +105,5 @@ with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_final_calen
         f.write('\t'.join(map(str, element)) + '\n')
         i += 1
         if i == 11:
-            # f.write('-'*50 + '\n')
+            f.write('-'*50 + '\n')
             i = 1
