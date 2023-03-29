@@ -71,8 +71,9 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 
 % Regola 5
 % Squadre della stessa città non possono giocare entrambe in casa nella stessa giornata a meno che non giochino l'una contro l'altra
-% usando il count
-conta_partite_stessa_citta(S1, G, N) :- assegna(partita(S1, _), G), in(S1, C), N = #count{S2 : assegna(partita(S2, _), G), in(S2, C)}.
-:- squadra(S1), giornata(G), in(S1, C), conta_partite_stessa_citta(S1, G, N), N > 1.
+:- assegna(partita(S1, _), G), assegna(partita(S2, _), G), in(S1, C), in(S2, C), S1 <> S2.
+% prova con il count che funziona ma è molto più lento
+% conta_partite_stessa_citta(S1, G, N) :- assegna(partita(S1, _), G), in(S1, C), N = #count{S2 : assegna(partita(S2, _), G), in(S2, C)}.
+% :- squadra(S1), giornata(G), in(S1, C), conta_partite_stessa_citta(S1, G, N), N > 1.
 
 #show assegna/2.
