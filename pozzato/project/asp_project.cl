@@ -84,6 +84,17 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 % Regola 7
 % La distanza tra una coppia di gare di andata e ritorno è di almeno 10 giornate
 % In realtà voglio fare il calendario simmetrico, ovvero che la partita di andata e quella di ritorno siano sempre distanti 19 giornate
-:- assegna(partita(S1, S2), G1), assegna(partita(S2, S1), G2), G1 < G2, G2 - G1 < 19.
+:- assegna(partita(S1, S2), G1), assegna(partita(S2, S1), G2), G1 < G2, G2 - G1 < 10.
+
+assegna(partita(inter, lazio), 1).
+assegna(partita(sassuolo, hellas_verona), 1).
+assegna(partita(atalanta, empoli), 1).
+assegna(partita(cremonese, torino), 1).
+assegna(partita(salernitana, milan), 1).
+assegna(partita(udinese, bologna), 1).
+assegna(partita(spezia, napoli), 1).
+assegna(partita(juventus, lecce), 1).
+assegna(partita(sampdoria, roma), 1).
+assegna(partita(fiorentina, monza), 1).
 
 #show assegna/2.

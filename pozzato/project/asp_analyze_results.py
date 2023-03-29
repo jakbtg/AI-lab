@@ -108,6 +108,27 @@ for i in range(1, 39):
 if not error:
     print('There is maximum one match per city per day')
 
+# check number of days between home and away matches for each couple of teams
+error = False
+for team1 in teams:
+    for team2 in teams:
+        if team1 != team2:
+            days_between_matches = []
+            for i in range(1, 39):
+                for element in final_calendar:
+                    if element[0] == i:
+                        if re.search(team1, element[1]) and re.search(team2, element[2]):
+                            days_between_matches.append(i)
+                        elif re.search(team2, element[1]) and re.search(team1, element[2]):
+                            days_between_matches.append(i)
+            if abs(days_between_matches[0] - days_between_matches[1]) < 10:
+                print(f'Error: less than 10 days between matches between {team1} and {team2}')
+                error = True
+if not error:
+    print('There are at least 10 days between matches between each couple of teams')
+
+
+
 # print the final calendar
 # print(final_calendar)
 
