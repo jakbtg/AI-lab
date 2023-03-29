@@ -10,6 +10,11 @@
 %  5. due delle 20 squadre fanno riferimento alla medesima città e condividono la stessa struttura di gioco, quindi non possono 
 %     giocare entrambe in casa nella stessa giornata. Ovviamente, fanno eccezione le due giornate in cui giocano l’una 
 %     contro l’altra (derby).
+%
+% Vincoli facoltativi:
+%  6. ciascuna squadra non deve giocare mai più di due partite consecutive in casa o fuori casa;
+%  7. la distanza tra una coppia di gare di andata e ritorno è di almeno 10 giornate, ossia se SquadraA vs SquadraB è programmata 
+%     per la giornata 12, il ritorno SquadraB vs SquadraA verrà schedulato non prima dalla giornata 22. 
 % ------------------------------------------------
 
 % Regola 1
@@ -52,7 +57,7 @@ giornata(1..38).
 % una volta in casa e una volta in trasferta
 19 {partita(S1, S2) : squadra(S2)} 19 :- squadra(S1).
 % Elimino i modelli in cui una squadra affronta se stessa
-:- partita(S1, S2), S1 = S2.
+:- partita(S1, S2), S1 == S2.
 
 % Regola 2
 % Ogni partita avviene in una giornata
@@ -75,5 +80,10 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 % prova con il count che funziona ma è molto più lento
 % conta_partite_stessa_citta(S1, G, N) :- assegna(partita(S1, _), G), in(S1, C), N = #count{S2 : assegna(partita(S2, _), G), in(S2, C)}.
 % :- squadra(S1), giornata(G), in(S1, C), conta_partite_stessa_citta(S1, G, N), N > 1.
+
+% Regola 7
+% La distanza tra una coppia di gare di andata e ritorno è di almeno 10 giornate
+% In realtà voglio fare il calendario simmetrico, ovvero che la partita di andata e quella di ritorno siano sempre distanti 19 giornate
+:- assegna(partita(S1, S2), G1), assegna(partita(S2, S1), G2), G1 < G2, G2 - G1 < 19.
 
 #show assegna/2.
