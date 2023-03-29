@@ -109,6 +109,7 @@ if not error:
     print('There is maximum one match per city per day')
 
 # check number of days between home and away matches for each couple of teams
+# TODO: analyze if performs what it should
 error = False
 for team1 in teams:
     for team2 in teams:
