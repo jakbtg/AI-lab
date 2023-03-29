@@ -82,16 +82,31 @@ for i in range(1, 39):
 if not error:
     print('Each team plays only once per day')
 
-# check if from two teams from the same city only one plays at home
-# error = False
-# cities = {'napoli': 'napoli', 'milan': 'milano', 'inter': 'milano', 'juventus': 'juventus', 'atalanta': 'brescia', 'roma': 'roma', 'lazio': 'lazio', 'fiorentina': 'firenze', 'sassuolo': 'sassuolo', 'torino': 'torino', 'udinese': 'udine', 'bologna': 'bologna', 'monza': 'monza', 'empoli': 'empoli', 'salernitana': 'salerno', 'lecce': 'lecce', 'spezia': 'spezia', 'hellas_verona': 'verona', 'sampdoria': 'genova', 'cremonese': 'cremona'}
-# for i in range(1, 39):
-#     for team in cities.keys():
-#         count_matches_same_city = fill_dict()
-#         for element in final_calendar:
-#             if element[0] == i:
-#                 if re.search(team, element[1]):
-#                     count_matches_same_city[element[0]] = count_matches_same_city.get(element[0], 0) + 1
+# teams and respective cities
+teams_cities = {'napoli': 'napoli', 'milan': 'milano', 'inter': 'milano', 'juventus': 'juventus', 'atalanta': 'brescia', 'roma': 'roma', 'lazio': 'lazio', 'fiorentina': 'firenze', 'sassuolo': 'sassuolo', 'torino': 'torino', 'udinese': 'udine', 'bologna': 'bologna', 'monza': 'monza', 'empoli': 'empoli', 'salernitana': 'salerno', 'lecce': 'lecce', 'spezia': 'spezia', 'hellas_verona': 'verona', 'sampdoria': 'genova', 'cremonese': 'cremona'}
+
+# reset n_match_per_city_per_day dictionary to 0
+def reset_dict():
+    dict = {}
+    for city in teams_cities.values():
+        dict[city] = 0
+    return dict
+
+# check if only one from two teams from the same city plays per day
+error = False
+n_match_per_city_per_day = reset_dict()
+for i in range(1, 39):
+    for element in final_calendar:
+        if element[0] == i:
+            if element[1] in teams_cities:
+                n_match_per_city_per_day[teams_cities[element[1]]] += 1
+    for city in teams_cities.values():
+        if n_match_per_city_per_day[city] > 1:
+            print(f'Error: more than one match in {city} on day {i}')
+            error = True
+    n_match_per_city_per_day = reset_dict()
+if not error:
+    print('There is maximum one match per city per day')
 
 # print the final calendar
 # print(final_calendar)
