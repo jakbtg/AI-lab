@@ -91,18 +91,23 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 % La distanza tra una coppia di gare di andata e ritorno è di almeno 10 giornate
 :- assegna(partita(S1, S2), G1), assegna(partita(S2, S1), G2), G1 < G2, G2 - G1 < 10.
 
+% Regola 6
+% ciascuna squadra non gioca più di due partite consecutive in casa o fuori casa
+:- assegna(partita(S1, _), G), assegna(partita(S1, _), G+1), assegna(partita(S1, _), G+2).
+:- assegna(partita(_, S1), G), assegna(partita(_, S1), G+1), assegna(partita(_, S1), G+2).
+
 % prove con qualche assegnamento per velocizzare un po'
-% assegna(partita(milan,napoli),17).
-% assegna(partita(milan,inter),4).
-% assegna(partita(milan,juventus),5).
-% assegna(partita(milan,atalanta),6).
-% assegna(partita(milan,roma),26).
+assegna(partita(milan,napoli),17).
+assegna(partita(milan,inter),4).
+assegna(partita(milan,juventus),5).
+assegna(partita(milan,atalanta),7).
+assegna(partita(milan,roma),26).
 
 % altri assegnamenti
-assegna(partita(milan,napoli),1).
-assegna(partita(milan,inter),36).
-assegna(partita(milan,juventus),12).
-assegna(partita(milan,atalanta),2).
-assegna(partita(milan,roma),19).
+% assegna(partita(milan,napoli),1).
+% assegna(partita(milan,inter),36).
+% assegna(partita(milan,juventus),12).
+% assegna(partita(milan,atalanta),2).
+% assegna(partita(milan,roma),19).
 
 #show assegna/2.
