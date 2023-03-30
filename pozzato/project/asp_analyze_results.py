@@ -29,10 +29,19 @@ for element in days:
     final_calendar.append([day, home_team, away_team])
 
 # add fake match -- for testing
-# final_calendar.append([38, 'fiorentina', 'napoli'])
+# final_calendar.append([38, 'fiorentina', 'fiorentina'])
 
 # sort the calendar by day
 final_calendar.sort(key=lambda x: x[0])
+
+# check if no team plays against itself
+error = False
+for element in final_calendar:
+    if element[1] == element[2]:
+        print(f'Error: {element[1]} plays against itself on day {element[0]}')
+        error = True
+if not error:
+    print('No team plays against itself')
 
 # check if there are 10 matches per day
 error = False
@@ -109,26 +118,31 @@ if not error:
     print('There is maximum one match per city per day')
 
 # check number of days between home and away matches for each couple of teams
-# TODO: analyze if performs what it should
 error = False
+# create dictionary with teams couples as keys and 0 as values (e.g. {'napoli-milan': 0, 'napoli-inter': 0, ...})
+teams_couples = {}
 for team1 in teams:
     for team2 in teams:
         if team1 != team2:
-            days_between_matches = []
-            for i in range(1, 39):
-                for element in final_calendar:
-                    if element[0] == i:
-                        if re.search(team1, element[1]) and re.search(team2, element[2]):
-                            days_between_matches.append(i)
-                        elif re.search(team2, element[1]) and re.search(team1, element[2]):
-                            days_between_matches.append(i)
-            if abs(days_between_matches[0] - days_between_matches[1]) < 10:
-                print(f'Error: less than 10 days between matches between {team1} and {team2}')
-                error = True
+            tmp1 = f'{team1}-{team2}'
+            tmp2 = f'{team2}-{team1}'
+            if not tmp1 in teams_couples and not tmp2 in teams_couples:
+                teams_couples[f'{team1}-{team2}'] = 0
+
+# for each couple of teams, check the number of days between home and away matches
+for couple in teams_couples:
+    team1 = couple.split('-')[0]
+    team2 = couple.split('-')[1]
+    for element in final_calendar:
+        if re.search(team1, element[1]) and re.search(team2, element[2]):
+            teams_couples[couple] = element[0] - teams_couples[couple]
+        elif re.search(team2, element[1]) and re.search(team1, element[2]):
+            teams_couples[couple] = element[0] - teams_couples[couple]
+    if teams_couples[couple] < 10:
+        print(f'Error: less than 10 days between matches between {couple} (days: {teams_couples[couple]})')
+        error = True
 if not error:
     print('There are at least 10 days between matches between each couple of teams')
-
-
 
 # print the final calendar
 # print(final_calendar)
