@@ -93,21 +93,26 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 
 % Regola 6
 % ciascuna squadra non gioca più di due partite consecutive in casa o fuori casa
-:- assegna(partita(S1, _), G), assegna(partita(S1, _), G+1), assegna(partita(S1, _), G+2).
-:- assegna(partita(_, S1), G), assegna(partita(_, S1), G+1), assegna(partita(_, S1), G+2).
+% :- assegna(partita(S1, _), G), assegna(partita(S1, _), G+1), assegna(partita(S1, _), G+2).
+% :- assegna(partita(_, S1), G), assegna(partita(_, S1), G+1), assegna(partita(_, S1), G+2).
 
 % prove con qualche assegnamento per velocizzare un po'
-assegna(partita(milan,napoli),17).
-assegna(partita(milan,inter),4).
-assegna(partita(milan,juventus),5).
-assegna(partita(milan,atalanta),7).
-assegna(partita(milan,roma),26).
+% assegna(partita(milan,napoli),17).
+% assegna(partita(milan,inter),4).
+% assegna(partita(milan,juventus),5).
+% assegna(partita(milan,atalanta),7).
+% assegna(partita(milan,roma),26).
 
 % altri assegnamenti
-% assegna(partita(milan,napoli),1).
-% assegna(partita(milan,inter),36).
-% assegna(partita(milan,juventus),12).
-% assegna(partita(milan,atalanta),2).
-% assegna(partita(milan,roma),19).
+assegna(partita(milan,napoli),1).
+assegna(partita(milan,inter),36).
+assegna(partita(milan,juventus),12).
+assegna(partita(milan,atalanta),2).
+assegna(partita(milan,roma),19).
+assegna(partita(milan,lazio),10).
+assegna(partita(milan,fiorentina),37).
+assegna(partita(milan,sassuolo),30).
+assegna(partita(milan,torino),33).
+assegna(partita(milan,udinese),8).
 
 #show assegna/2.
