@@ -13,7 +13,7 @@ with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_out.txt', '
 # check if there are 380 matches in the calendar
 total_days = len(days)
 if total_days == 380:
-    print(f'There are 380 matches in the calendar')
+    print(f'Test ok: there are 380 matches in the calendar')
 else:
     print(f'Error: {total_days} matches in the calendar')
 
@@ -41,7 +41,7 @@ for element in final_calendar:
         print(f'Error: {element[1]} plays against itself on day {element[0]}')
         error = True
 if not error:
-    print('No team plays against itself')
+    print('Test ok: no team plays against itself')
 
 # check if there are 10 matches per day
 error = False
@@ -54,7 +54,7 @@ for i in range(1, 39):
         print(f'Error: {count_matches_per_day[i]} matches on day {i}')
         error = True
 if not error:
-    print('There are 10 matches per each day')
+    print('Test ok: there are 10 matches per each day')
 
 # check number of matches for each team
 teams = ['napoli', 'milan', 'inter', 'juventus', 'atalanta', 'roma', 'lazio', 'fiorentina', 'sassuolo', 'torino', 'udinese', 'bologna', 'monza', 'empoli', 'salernitana', 'lecce', 'spezia', 'hellas_verona', 'sampdoria', 'cremonese']
@@ -67,7 +67,7 @@ for team in teams:
         print(f'Error: {count_matches} matches for {team}')
         break
 else:
-    print('There are 38 total matches for each team')
+    print('Test ok: there are 38 total matches for each team')
 
 # helper function to fill a dictionary of 38 elements with 0
 def fill_dict():
@@ -89,7 +89,7 @@ for i in range(1, 39):
             print(f'Error: {count_matches_per_day[i]} matches for {team} on day {i}')
             error = True
 if not error:
-    print('Each team plays only once per day')
+    print('Test ok: each team plays only once per day')
 
 # teams and respective cities
 teams_cities = {'napoli': 'napoli', 'milan': 'milano', 'inter': 'milano', 'juventus': 'juventus', 'atalanta': 'brescia', 'roma': 'roma', 'lazio': 'lazio', 'fiorentina': 'firenze', 'sassuolo': 'sassuolo', 'torino': 'torino', 'udinese': 'udine', 'bologna': 'bologna', 'monza': 'monza', 'empoli': 'empoli', 'salernitana': 'salerno', 'lecce': 'lecce', 'spezia': 'spezia', 'hellas_verona': 'verona', 'sampdoria': 'genova', 'cremonese': 'cremona'}
@@ -115,7 +115,7 @@ for i in range(1, 39):
             error = True
     n_match_per_city_per_day = reset_dict()
 if not error:
-    print('There is maximum one match per city per day')
+    print('Test ok: there is maximum one match per city per day')
 
 # check number of days between home and away matches for each couple of teams
 error = False
@@ -142,7 +142,7 @@ for couple in teams_couples:
         print(f'Error: less than 10 days between matches between {couple} (days: {teams_couples[couple]})')
         error = True
 if not error:
-    print('There are at least 10 days between matches between each couple of teams')
+    print('Test ok: there are at least 10 days between matches between each couple of teams')
 
 # print the final calendar
 # print(final_calendar)
