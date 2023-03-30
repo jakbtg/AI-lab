@@ -60,17 +60,26 @@ giornata(1..38).
 % Regola 2
 % Ogni partita avviene in una giornata
 1 {assegna(partita(S1,S2), G) : giornata(G)} 1 :- partita(S1, S2).
+
 % Ogni giornata ha 10 partite
 10 {assegna(partita(S1, S2), G) : partita(S1,S2)} 10 :- giornata(G).
+
 % Ogni squadra gioca una sola partita per giornata
+% 1 {assegna(partita(S1, _), G) : squadra(S1)} 1 :- giornata(G).
 % Conto le partite in casa ed elimino modelli in cui una squadra gioca più di una partita in casa nella stessa giornata
-conta_partite_casa(S1, G, N) :- assegna(partita(S1, _), G), N = #count{S2 : assegna(partita(S1, S2), G)}.
-:- squadra(S1), giornata(G), conta_partite_casa(S1, G, N), N > 1.
+% conta_partite_casa(S1, G, N) :- assegna(partita(S1, _), G), N = #count{S2 : assegna(partita(S1, S2), G)}.
+% :- squadra(S1), giornata(G), conta_partite_casa(S1, G, N), N > 1.
+:- assegna(partita(S1, S2), G), assegna(partita(S1, S3), G), S2 <> S3, assegna(partita(S4, S1), G), assegna(partita(S5, S1), G), S4 <> S5.
+
 % Conto le partite in trasferta ed elimino modelli in cui una squadra gioca più di una partita in trasferta nella stessa giornata
-conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 : assegna(partita(S2, S1), G)}.
-:- squadra(S1), giornata(G), conta_partite_trasferta(S1, G, N), N > 1.
+% conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 : assegna(partita(S2, S1), G)}.
+% :- squadra(S1), giornata(G), conta_partite_trasferta(S1, G, N), N > 1.
+% :- assegna(partita(S2, S1), G), assegna(partita(S3, S1), G), S2 <> S3, assegna(partita(S1, _), G).
+
+% Ho provato 
+
 % Se una squadra gioca in casa in una giornata, non può giocare in trasferta in quella stessa giornata
-:- assegna(partita(S1, _), G), assegna(partita(_, S1), G).
+% :- assegna(partita(S1, _), G), assegna(partita(_, S1), G).
 
 % Regola 5
 % Squadre della stessa città non possono giocare entrambe in casa nella stessa giornata a meno che non giochino l'una contro l'altra
@@ -84,13 +93,13 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 % In realtà voglio fare il calendario simmetrico, ovvero che la partita di andata e quella di ritorno siano sempre distanti 19 giornate
 % :- assegna(partita(S1, S2), G1), assegna(partita(S2, S1), G2), G1 < G2, G2 - G1 < 10.
 
-assegna(partita(milan,napoli),4). 
-assegna(partita(milan,inter),12). 
-assegna(partita(milan,juventus),38). 
-assegna(partita(milan,atalanta),36).
-assegna(partita(milan,roma),26).
-assegna(partita(milan,lazio),32).
-assegna(partita(milan,fiorentina),5).
-assegna(partita(milan,sassuolo),6).
+% assegna(partita(milan,napoli),4).
+% assegna(partita(milan,inter),12).
+% assegna(partita(milan,juventus),38).
+% assegna(partita(milan,atalanta),36).
+% assegna(partita(milan,roma),26).
+% assegna(partita(milan,lazio),32).
+% assegna(partita(milan,fiorentina),5).
+% assegna(partita(milan,sassuolo),6).
 
 #show assegna/2.
