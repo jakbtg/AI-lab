@@ -56,9 +56,6 @@ giornata(1..38).
 % ogni squadra compare esattamente 38 volte in totale, ovvero affronta tutte le altre squadre 2 volte,
 % una volta in casa e una volta in trasferta. Con la condizione S1 <> S2 elimino i modelli in cui una squadra affronta se stessa
 19 {partita(S1, S2) : squadra(S2), S1 <> S2} 19 :- squadra(S1).
-% 19 {partita(S1, S2) : squadra(S2)} 19 :- squadra(S1).
-% Elimino i modelli in cui una squadra affronta se stessa
-% :- partita(S1, S2), S1 == S2.
 
 % Regola 2
 % Ogni partita avviene in una giornata
@@ -87,15 +84,13 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 % In realtà voglio fare il calendario simmetrico, ovvero che la partita di andata e quella di ritorno siano sempre distanti 19 giornate
 % :- assegna(partita(S1, S2), G1), assegna(partita(S2, S1), G2), G1 < G2, G2 - G1 < 10.
 
-% assegna(partita(inter, lazio), 1).
-% assegna(partita(sassuolo, hellas_verona), 1).
-% assegna(partita(atalanta, empoli), 1).
-% assegna(partita(cremonese, torino), 1).
-% assegna(partita(salernitana, milan), 1).
-% assegna(partita(udinese, bologna), 1).
-% assegna(partita(spezia, napoli), 1).
-% assegna(partita(juventus, lecce), 1).
-% assegna(partita(sampdoria, roma), 1).
-% assegna(partita(fiorentina, monza), 1).
+assegna(partita(milan,napoli),4). 
+assegna(partita(milan,inter),12). 
+assegna(partita(milan,juventus),38). 
+assegna(partita(milan,atalanta),36).
+assegna(partita(milan,roma),26).
+assegna(partita(milan,lazio),32).
+assegna(partita(milan,fiorentina),5).
+assegna(partita(milan,sassuolo),6).
 
 #show assegna/2.
