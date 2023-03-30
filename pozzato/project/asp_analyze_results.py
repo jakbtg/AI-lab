@@ -144,6 +144,29 @@ for couple in teams_couples:
 if not error:
     print('Test ok: there are at least 10 days between matches between each couple of teams')
 
+# check if there are more than 2 consecutive home or away matches for each team
+error = False
+for team in teams:
+    count_home_matches = 0
+    count_away_matches = 0
+    for element in final_calendar:
+        if re.search(team, element[1]):
+            count_home_matches += 1
+            count_away_matches = 0
+            if count_home_matches > 2:
+                print(f'Error: more than 2 consecutive home matches for {team} on day {element[0]}')
+                error = True
+                break
+        elif re.search(team, element[2]):
+            count_away_matches += 1
+            count_home_matches = 0
+            if count_away_matches > 2:
+                print(f'Error: more than 2 consecutive away matches for {team} on day {element[0]}')
+                error = True
+                break
+if not error:
+    print('Test ok: there are maximum 2 consecutive home or away matches for each team')
+
 # print the final calendar
 # print(final_calendar)
 
