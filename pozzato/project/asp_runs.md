@@ -1,5 +1,7 @@
 # Note sulle run del progetto ASP
 
+Queste sono le migliori prestazioni ottenute, ma ogni run impiega tempi diversi. Non capisco perché.
+
 ## Run dei vincoli obbligatori
 
 Lanciare con 4 thread e nessun assegnamento.  

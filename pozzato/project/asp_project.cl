@@ -87,6 +87,10 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 % conta_partite_stessa_citta(S1, G, N) :- assegna(partita(S1, _), G), in(S1, C), N = #count{S2 : assegna(partita(S2, _), G), in(S2, C)}.
 % :- squadra(S1), giornata(G), in(S1, C), conta_partite_stessa_citta(S1, G, N), N > 1.
 
+
+% ---------------------------------------------------------------------------------------------
+% Vincoli facoltativi
+% ---------------------------------------------------------------------------------------------
 % Regola 7
 % La distanza tra una coppia di gare di andata e ritorno è di almeno 10 giornate
 :- assegna(partita(S1, S2), G1), assegna(partita(S2, S1), G2), G1 < G2, G2 - G1 < 10.
@@ -95,20 +99,20 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 % ciascuna squadra non gioca più di due partite consecutive in casa o fuori casa
 :- G > 3, assegna(partita(S1, _), G), assegna(partita(S1, _), G-1), assegna(partita(S1, _), G-2), assegna(partita(S1, _), G-3).
 :- G > 3, assegna(partita(_, S1), G), assegna(partita(_, S1), G-1), assegna(partita(_, S1), G-2), assegna(partita(_, S1), G-3).
-% :- assegna(partita(S1, _), G), assegna(partita(S1, _), G+1), assegna(partita(S1, _), G+2), assegna(partita(S1, _), G+3).
-% :- assegna(partita(_, S1), G), assegna(partita(_, S1), G+1), assegna(partita(_, S1), G+2), assegna(partita(_, S1), G+3).
+% :- G > 2, assegna(partita(S1, _), G), assegna(partita(S1, _), G-1), assegna(partita(S1, _), G-2).
+% :- G > 2, assegna(partita(_, S1), G), assegna(partita(_, S1), G-1), assegna(partita(_, S1), G-2).
 
 % prove con qualche assegnamento per velocizzare un po'
 % assegna(partita(milan,napoli),17).
-% assegna(partita(milan,inter),4).
-% assegna(partita(milan,juventus),5).
-% assegna(partita(milan,atalanta),7).
-% assegna(partita(milan,roma),26).
-% assegna(partita(milan,lazio),2).
-% assegna(partita(milan,fiorentina),35).
-% assegna(partita(milan,sassuolo),31).
-% assegna(partita(milan,torino),29).
-% assegna(partita(milan,udinese),22).
+assegna(partita(milan,inter),4).
+assegna(partita(milan,juventus),5).
+assegna(partita(milan,atalanta),7).
+assegna(partita(milan,roma),26).
+assegna(partita(milan,lazio),2).
+assegna(partita(milan,fiorentina),35).
+assegna(partita(milan,sassuolo),31).
+assegna(partita(milan,torino),29).
+assegna(partita(milan,udinese),22).
 
 assegna(partita(milan,napoli),1).
 assegna(partita(fiorentina,inter),1).
