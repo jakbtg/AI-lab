@@ -89,12 +89,14 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 
 % Regola 7
 % La distanza tra una coppia di gare di andata e ritorno è di almeno 10 giornate
-% :- assegna(partita(S1, S2), G1), assegna(partita(S2, S1), G2), G1 < G2, G2 - G1 < 10.
+:- assegna(partita(S1, S2), G1), assegna(partita(S2, S1), G2), G1 < G2, G2 - G1 < 10.
 
 % Regola 6
 % ciascuna squadra non gioca più di due partite consecutive in casa o fuori casa
-% :- assegna(partita(S1, _), G), assegna(partita(S1, _), G+1), assegna(partita(S1, _), G+2).
-% :- assegna(partita(_, S1), G), assegna(partita(_, S1), G+1), assegna(partita(_, S1), G+2).
+:- G > 3, assegna(partita(S1, _), G), assegna(partita(S1, _), G-1), assegna(partita(S1, _), G-2), assegna(partita(S1, _), G-3).
+:- G > 3, assegna(partita(_, S1), G), assegna(partita(_, S1), G-1), assegna(partita(_, S1), G-2), assegna(partita(_, S1), G-3).
+% :- assegna(partita(S1, _), G), assegna(partita(S1, _), G+1), assegna(partita(S1, _), G+2), assegna(partita(S1, _), G+3).
+% :- assegna(partita(_, S1), G), assegna(partita(_, S1), G+1), assegna(partita(_, S1), G+2), assegna(partita(_, S1), G+3).
 
 % prove con qualche assegnamento per velocizzare un po'
 % assegna(partita(milan,napoli),17).
@@ -108,16 +110,16 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 % assegna(partita(milan,torino),29).
 % assegna(partita(milan,udinese),22).
 
-% assegna(partita(milan,napoli),1).
-% assegna(partita(fiorentina,inter),1).
-% assegna(partita(atalanta,roma),1).
-% assegna(partita(lazio,juventus),1).
-% assegna(partita(sassuolo,empoli),1).
-% assegna(partita(torino,spezia),1).
-% assegna(partita(udinese,hellas_verona),1).
-% assegna(partita(bologna,sampdoria),1).
-% assegna(partita(salernitana,monza),1).
-% assegna(partita(lecce,cremonese),1).
+assegna(partita(milan,napoli),1).
+assegna(partita(fiorentina,inter),1).
+assegna(partita(atalanta,roma),1).
+assegna(partita(lazio,juventus),1).
+assegna(partita(sassuolo,empoli),1).
+assegna(partita(torino,spezia),1).
+assegna(partita(udinese,hellas_verona),1).
+assegna(partita(bologna,sampdoria),1).
+assegna(partita(salernitana,monza),1).
+assegna(partita(lecce,cremonese),1).
 
 
 
