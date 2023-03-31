@@ -6,9 +6,7 @@ with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_out.txt', '
     result = line.split()
     days = []
     for element in result:
-        if re.match(r'assegna', element):
-            days.append(element)
-            # print(f'{i}: {element}')
+        days.append(element)
 
 # check if there are 380 matches in the calendar
 total_days = len(days)
@@ -20,12 +18,10 @@ else:
 # create matrix 380x3 (380 matches, 3 columns: day, home team, away team)
 final_calendar = []
 for element in days:
-    day = re.findall(r'\d+', element)
-    day = int(day[0])
-    home_team = re.findall(r'(?<=\().*?(?=\,)', element)
-    home_team = home_team[0].replace('partita(', '')
-    away_team = re.findall(r'(?<=\,).*?(?=\))', element)
-    away_team = away_team[0]
+    element = element.replace('assegna(partita(', '')
+    element = element.replace(')', '')
+    home_team, away_team, day = element.split(',')
+    day = int(day)
     final_calendar.append([day, home_team, away_team])
 
 # add fake match -- for testing
