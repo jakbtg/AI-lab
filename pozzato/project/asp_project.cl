@@ -97,10 +97,10 @@ conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 :
 
 % Regola 6
 % ciascuna squadra non gioca più di due partite consecutive in casa o fuori casa
-:- G > 3, assegna(partita(S1, _), G), assegna(partita(S1, _), G-1), assegna(partita(S1, _), G-2), assegna(partita(S1, _), G-3).
-:- G > 3, assegna(partita(_, S1), G), assegna(partita(_, S1), G-1), assegna(partita(_, S1), G-2), assegna(partita(_, S1), G-3).
-% :- G > 2, assegna(partita(S1, _), G), assegna(partita(S1, _), G-1), assegna(partita(S1, _), G-2).
-% :- G > 2, assegna(partita(_, S1), G), assegna(partita(_, S1), G-1), assegna(partita(_, S1), G-2).
+% :- G > 3, assegna(partita(S1, _), G), assegna(partita(S1, _), G-1), assegna(partita(S1, _), G-2), assegna(partita(S1, _), G-3).
+% :- G > 3, assegna(partita(_, S1), G), assegna(partita(_, S1), G-1), assegna(partita(_, S1), G-2), assegna(partita(_, S1), G-3).
+:- G > 2, assegna(partita(S1, _), G), assegna(partita(S1, _), G-1), assegna(partita(S1, _), G-2).
+:- G > 2, assegna(partita(_, S1), G), assegna(partita(_, S1), G-1), assegna(partita(_, S1), G-2).
 
 % prove con qualche assegnamento per velocizzare un po'
 % assegna(partita(milan,napoli),17).
