@@ -73,9 +73,9 @@ giornata(1..38).
 :- assegna(partita(S1, S2), G), assegna(partita(S1, S3), G), S2 <> S3.
 
 % Conto le partite in trasferta ed elimino modelli in cui una squadra gioca più di una partita in trasferta nella stessa giornata
-conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 : assegna(partita(S2, S1), G)}.
-:- squadra(S1), giornata(G), conta_partite_trasferta(S1, G, N), N > 1.
-% :- assegna(partita(S2, S1), G), assegna(partita(S3, S1), G), S2 <> S3.
+% conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 : assegna(partita(S2, S1), G)}.
+% :- squadra(S1), giornata(G), conta_partite_trasferta(S1, G, N), N > 1.
+:- assegna(partita(S2, S1), G), assegna(partita(S3, S1), G), S2 <> S3.
 
 % Se una squadra gioca in casa in una giornata, non può giocare in trasferta in quella stessa giornata
 :- assegna(partita(S1, _), G), assegna(partita(_, S1), G).
