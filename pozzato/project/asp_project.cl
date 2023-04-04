@@ -60,30 +60,25 @@ giornata(1..38).
 % Regola 2
 % Ogni partita avviene in una giornata
 1 {assegna(partita(S1, S2), G) : giornata(G)} 1 :- partita(S1, S2).
-
 % Ogni giornata ha 10 partite
 10 {assegna(partita(S1, S2), G) : partita(S1,S2)} 10 :- giornata(G).
-
 % Ogni squadra gioca una sola partita per giornata
-% 0 {assegna(partita(S1, S2), G) : partita(S1, S2)} 1 :- squadra(S1), giornata(G).
-% 0 {assegna(partita(S2, S1), G) : partita(S2, S1)} 1 :- squadra(S1), giornata(G).
+% Ogni squadra gioca una sola partita in casa per giornata
+:- assegna(partita(S1, S2), G), assegna(partita(S1, S3), G), S2 <> S3.
+% Ogni squadra gioca una sola partita in trasferta per giornata
+:- assegna(partita(S2, S1), G), assegna(partita(S3, S1), G), S2 <> S3.
+% Se una squadra gioca in casa in una giornata, non può giocare in trasferta in quella stessa giornata
+:- assegna(partita(S1, _), G), assegna(partita(_, S1), G).
 % Conto le partite in casa ed elimino modelli in cui una squadra gioca più di una partita in casa nella stessa giornata
 % conta_partite_casa(S1, G, N) :- assegna(partita(S1, _), G), N = #count{S2 : assegna(partita(S1, S2), G)}.
 % :- squadra(S1), giornata(G), conta_partite_casa(S1, G, N), N > 1.
-:- assegna(partita(S1, S2), G), assegna(partita(S1, S3), G), S2 <> S3.
-
 % Conto le partite in trasferta ed elimino modelli in cui una squadra gioca più di una partita in trasferta nella stessa giornata
 % conta_partite_trasferta(S1, G, N) :- assegna(partita(_, S1), G), N = #count{S2 : assegna(partita(S2, S1), G)}.
 % :- squadra(S1), giornata(G), conta_partite_trasferta(S1, G, N), N > 1.
-:- assegna(partita(S2, S1), G), assegna(partita(S3, S1), G), S2 <> S3.
-
-% Se una squadra gioca in casa in una giornata, non può giocare in trasferta in quella stessa giornata
-:- assegna(partita(S1, _), G), assegna(partita(_, S1), G).
 
 % Regola 5
 % Squadre della stessa città non possono giocare entrambe in casa nella stessa giornata a meno che non giochino l'una contro l'altra
 :- assegna(partita(S1, _), G), assegna(partita(S2, _), G), in(S1, C), in(S2, C), S1 <> S2.
-% prova con il count che funziona ma è molto più lento
 % conta_partite_stessa_citta(S1, G, N) :- assegna(partita(S1, _), G), in(S1, C), N = #count{S2 : assegna(partita(S2, _), G), in(S2, C)}.
 % :- squadra(S1), giornata(G), in(S1, C), conta_partite_stessa_citta(S1, G, N), N > 1.
 
@@ -91,40 +86,42 @@ giornata(1..38).
 % ---------------------------------------------------------------------------------------------
 % Vincoli facoltativi
 % ---------------------------------------------------------------------------------------------
+
 % Regola 7
 % La distanza tra una coppia di gare di andata e ritorno è di almeno 10 giornate
-:- assegna(partita(S1, S2), G1), assegna(partita(S2, S1), G2), G1 < G2, G2 - G1 < 10.
+% :- assegna(partita(S1, S2), G1), assegna(partita(S2, S1), G2), G1 < G2, G2 - G1 < 10.
 
 % Regola 6
-% ciascuna squadra non gioca più di due partite consecutive in casa o fuori casa
+% Ciascuna squadra non gioca più di due partite consecutive in casa o fuori casa
+% :- G > 2, assegna(partita(S1, _), G), assegna(partita(S1, _), G-1), assegna(partita(S1, _), G-2).
+% :- G > 2, assegna(partita(_, S1), G), assegna(partita(_, S1), G-1), assegna(partita(_, S1), G-2).
+% Prova con 3 partite consecutive per rilassare il vincolo
 % :- G > 3, assegna(partita(S1, _), G), assegna(partita(S1, _), G-1), assegna(partita(S1, _), G-2), assegna(partita(S1, _), G-3).
 % :- G > 3, assegna(partita(_, S1), G), assegna(partita(_, S1), G-1), assegna(partita(_, S1), G-2), assegna(partita(_, S1), G-3).
-:- G > 2, assegna(partita(S1, _), G), assegna(partita(S1, _), G-1), assegna(partita(S1, _), G-2).
-:- G > 2, assegna(partita(_, S1), G), assegna(partita(_, S1), G-1), assegna(partita(_, S1), G-2).
+
 
 % prove con qualche assegnamento per velocizzare un po'
 % assegna(partita(milan,napoli),17).
-assegna(partita(milan,inter),4).
-assegna(partita(milan,juventus),5).
-assegna(partita(milan,atalanta),7).
-assegna(partita(milan,roma),26).
-assegna(partita(milan,lazio),2).
-assegna(partita(milan,fiorentina),35).
-assegna(partita(milan,sassuolo),31).
-assegna(partita(milan,torino),29).
-assegna(partita(milan,udinese),22).
+% assegna(partita(milan,inter),4).
+% assegna(partita(milan,juventus),5).
+% assegna(partita(milan,atalanta),7).
+% assegna(partita(milan,roma),26).
+% assegna(partita(milan,lazio),2).
+% assegna(partita(milan,fiorentina),35).
+% assegna(partita(milan,sassuolo),31).
+% assegna(partita(milan,torino),29).
+% assegna(partita(milan,udinese),22).
 
-assegna(partita(milan,napoli),1).
-assegna(partita(fiorentina,inter),1).
-assegna(partita(atalanta,roma),1).
-assegna(partita(lazio,juventus),1).
-assegna(partita(sassuolo,empoli),1).
-assegna(partita(torino,spezia),1).
-assegna(partita(udinese,hellas_verona),1).
-assegna(partita(bologna,sampdoria),1).
-assegna(partita(salernitana,monza),1).
-assegna(partita(lecce,cremonese),1).
-
+% assegna(partita(milan,napoli),1).
+% assegna(partita(fiorentina,inter),1).
+% assegna(partita(atalanta,roma),1).
+% assegna(partita(lazio,juventus),1).
+% assegna(partita(sassuolo,empoli),1).
+% assegna(partita(torino,spezia),1).
+% assegna(partita(udinese,hellas_verona),1).
+% assegna(partita(bologna,sampdoria),1).
+% assegna(partita(salernitana,monza),1).
+% assegna(partita(lecce,cremonese),1).
 
 
 #show assegna/2.
