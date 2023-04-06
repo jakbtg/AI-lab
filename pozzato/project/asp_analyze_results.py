@@ -1,5 +1,10 @@
 import re
 
+N_TEAMS = 16
+N_DAYS = N_TEAMS * 2 - 2
+N_MATCHES = N_TEAMS * (N_TEAMS - 1)
+N_MATCHES_PER_DAY = int(N_MATCHES / N_DAYS)
+
 # open file 'asp_out.txt' and read the output
 with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_out.txt', 'r') as f:
     line = f.readline()
@@ -9,11 +14,11 @@ with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_out.txt', '
         days.append(element)
 
 # check if there are 380 matches in the calendar
-total_days = len(days)
-if total_days == 380:
-    print(f'Test ok: there are 380 matches in the calendar')
+total_matches = len(days)
+if total_matches == N_MATCHES:
+    print(f'Test ok: there are {total_matches} matches in the calendar')
 else:
-    print(f'Error: {total_days} matches in the calendar')
+    print(f'Error: {total_matches} matches in the calendar')
 
 # create matrix 380x3 (380 matches, 3 columns: day, home team, away team)
 final_calendar = []
@@ -30,6 +35,10 @@ for element in days:
 # sort the calendar by day
 final_calendar.sort(key=lambda x: x[0])
 
+# print the final calendar
+# for element in final_calendar:
+#     print(element)
+
 # check if no team plays against itself
 error = False
 for element in final_calendar:
@@ -41,40 +50,43 @@ if not error:
 
 # check if there are 10 matches per day
 error = False
-for i in range(1, 39):
+for i in range(1, N_DAYS + 1):
     count_matches_per_day = {}
     for element in final_calendar:
         if element[0] == i:
             count_matches_per_day[element[0]] = count_matches_per_day.get(element[0], 0) + 1
-    if count_matches_per_day[i] != 10:
+    if count_matches_per_day[i] != N_MATCHES_PER_DAY:
         print(f'Error: {count_matches_per_day[i]} matches on day {i}')
         error = True
 if not error:
-    print('Test ok: there are 10 matches per each day')
+    print(f'Test ok: there are {N_MATCHES_PER_DAY} matches per day')
 
 # check number of matches for each team
-teams = ['napoli', 'milan', 'inter', 'juventus', 'atalanta', 'roma', 'lazio', 'fiorentina', 'sassuolo', 'torino', 'udinese', 'bologna', 'monza', 'empoli', 'salernitana', 'lecce', 'spezia', 'hellas_verona', 'sampdoria', 'cremonese']
+og_teams = ['napoli', 'milan', 'inter', 'juventus', 'atalanta', 'roma', 'lazio', 'fiorentina', 'sassuolo', 'torino', 'udinese', 'bologna', 'monza', 'empoli', 'salernitana', 'lecce', 'spezia', 'hellas_verona', 'sampdoria', 'cremonese']
+teams = []
+for i in range(1, N_TEAMS + 1):
+    teams.append(og_teams[i - 1])
 for team in teams:
     count_matches = 0
     for element in final_calendar:
         if re.search(team, element[1]) or re.search(team, element[2]):
             count_matches += 1
-    if count_matches != 38:
+    if count_matches != N_DAYS:
         print(f'Error: {count_matches} matches for {team}')
         break
 else:
-    print('Test ok: there are 38 total matches for each team')
+    print(f'Test ok: there are {N_DAYS} matches for each team')
 
 # helper function to fill a dictionary of 38 elements with 0
 def fill_dict():
     dict = {}
-    for i in range(1, 39):
+    for i in range(1, N_DAYS + 1):
         dict[i] = 0
     return dict
 
 # check if each team plays only once per day
 error = False
-for i in range(1, 39):
+for i in range(1, N_DAYS + 1):
     for team in teams:
         count_matches_per_day = fill_dict()
         for element in final_calendar:
@@ -88,7 +100,10 @@ if not error:
     print('Test ok: each team plays only once per day')
 
 # teams and respective cities
-cities = {'napoli': 'napoli', 'milan': 'milano', 'inter': 'milano', 'juventus': 'juventus', 'atalanta': 'brescia', 'roma': 'roma', 'lazio': 'lazio', 'fiorentina': 'firenze', 'sassuolo': 'sassuolo', 'torino': 'torino', 'udinese': 'udine', 'bologna': 'bologna', 'monza': 'monza', 'empoli': 'empoli', 'salernitana': 'salerno', 'lecce': 'lecce', 'spezia': 'spezia', 'hellas_verona': 'verona', 'sampdoria': 'genova', 'cremonese': 'cremona'}
+og_cities = {'napoli': 'napoli', 'milan': 'milano', 'inter': 'milano', 'juventus': 'juventus', 'atalanta': 'brescia', 'roma': 'roma', 'lazio': 'lazio', 'fiorentina': 'firenze', 'sassuolo': 'sassuolo', 'torino': 'torino', 'udinese': 'udine', 'bologna': 'bologna', 'monza': 'monza', 'empoli': 'empoli', 'salernitana': 'salerno', 'lecce': 'lecce', 'spezia': 'spezia', 'hellas_verona': 'verona', 'sampdoria': 'genova', 'cremonese': 'cremona'}
+cities = {}
+for i in range(1, N_TEAMS + 1):
+    cities[og_teams[i - 1]] = og_cities[og_teams[i - 1]]
 
 # reset n_match_per_city_per_day dictionary to 0
 def reset_dict():
@@ -100,7 +115,7 @@ def reset_dict():
 # check if only one from two teams from the same city plays per day
 error = False
 n_match_per_city_per_day = reset_dict()
-for i in range(1, 39):
+for i in range(1, N_DAYS + 1):
     for element in final_calendar:
         if element[0] == i:
             if element[1] in cities:
@@ -126,6 +141,7 @@ for team1 in teams:
                 teams_couples[f'{team1}-{team2}'] = 0
 
 # for each couple of teams, check the number of days between home and away matches
+n_days = 5
 for couple in teams_couples:
     team1 = couple.split('-')[0]
     team2 = couple.split('-')[1]
@@ -134,15 +150,15 @@ for couple in teams_couples:
             teams_couples[couple] = element[0] - teams_couples[couple]
         elif re.search(team2, element[1]) and re.search(team1, element[2]):
             teams_couples[couple] = element[0] - teams_couples[couple]
-    if teams_couples[couple] < 10:
-        print(f'Error: less than 10 days between matches between {couple} (days: {teams_couples[couple]})')
+    if teams_couples[couple] < n_days:
+        print(f'Error: less than {n_days} days between matches between {couple} (days: {teams_couples[couple]})')
         error = True
 if not error:
-    print('Test ok: there are at least 10 days between matches between each couple of teams')
+    print(f'Test ok: there are at least {n_days} days between matches between each couple of teams')
 
-# check if there are more than 2 consecutive home or away matches for each team
+# check if there are more than n consecutive home or away matches for each team
 error = False
-consecutive_days = 3
+consecutive_days = 4
 for team in teams:
     count_home_matches = 0
     count_away_matches = 0
@@ -164,9 +180,6 @@ for team in teams:
 if not error:
     print(f'Test ok: there are maximum {consecutive_days} consecutive home or away matches for each team')
 
-# print the final calendar
-# print(final_calendar)
-
 # create an output file 
 headers = ['Giornata', 'Squadra Casa', 'Squadra Ospite']
 with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_final_calendar.tsv', 'w') as f:
@@ -175,6 +188,6 @@ with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_final_calen
     for element in final_calendar:
         f.write('\t'.join(map(str, element)) + '\n')
         i += 1
-        if i == 11:
+        if i == N_DAYS + 1:
             f.write('-'*50 + '\n')
             i = 1
