@@ -8,7 +8,7 @@ Queste sono le migliori prestazioni ottenute, ma ogni run impiega tempi diversi.
 
 ## Run con vincolo di 10 giorni tra stesse partite
 
-2 thread e 10 assegnamenti per la squadra Milan: circa 12 secondi. Senza assegnamenti invece: circa 210 secondi. Mai più ricapitati questi risultati, non ho idea del perché. Tutte le altre prove con 10 giornate tra stesse partite ho dovuto interromperle dopo circa 30 minuti, anche prove con le stesse condizioni precedenti.    
+2 thread e 10 assegnamenti per la squadra Milan: circa 12 secondi. Senza assegnamenti invece: circa 210 secondi. Mai più ricapitati questi risultati, non ho idea del perché. Tutte le altre prove con 10 giornate tra stesse partite ho dovuto interromperle dopo circa 30 minuti, anche quelle con le stesse condizioni precedenti.    
 Vincolo rilassato a 6 giornate tra stesse partite, 6 thread, prima giornata assegnata e 10 assegnamenti per squadra Milan: circa 54 secondi.
 
 ## Run con vincolo di massimo 2 partite consecutive in casa o in trasferta
