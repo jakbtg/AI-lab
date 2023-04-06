@@ -15,5 +15,5 @@ Risultati in circa 12 secondi. (Senza assegnamenti invece circa 210 secondi).
 ## Run con vincolo di massimo 2 partite consecutive in casa o in trasferta
 
 Per ora provato solo con massimo 3 partite consecutive in casa o in trasferta e togliendo il vincolo di 10 giorni tra stesse partite.  
-6 thread, 10 assegnamenti per la squadra Milan e la prima giornata assegnata.  
+6 thread, 10 assegnamenti per la squadra Milan e tutta la prima giornata assegnata.  
 Risultati in circa 2 secondi.
