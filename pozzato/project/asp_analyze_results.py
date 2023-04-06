@@ -1,6 +1,6 @@
 import re
 
-N_TEAMS = 16
+N_TEAMS = 20
 N_DAYS = N_TEAMS * 2 - 2
 N_MATCHES = N_TEAMS * (N_TEAMS - 1)
 N_MATCHES_PER_DAY = int(N_MATCHES / N_DAYS)
@@ -128,8 +128,6 @@ for i in range(1, N_DAYS + 1):
 if not error:
     print('Test ok: there is maximum one match per city per day')
 
-# check number of days between home and away matches for each couple of teams
-error = False
 # create dictionary with teams couples as keys and 0 as values (e.g. {'napoli-milan': 0, 'napoli-inter': 0, ...})
 teams_couples = {}
 for team1 in teams:
@@ -141,7 +139,8 @@ for team1 in teams:
                 teams_couples[f'{team1}-{team2}'] = 0
 
 # for each couple of teams, check the number of days between home and away matches
-n_days = 5
+error = False
+n_days = 6
 for couple in teams_couples:
     team1 = couple.split('-')[0]
     team2 = couple.split('-')[1]
@@ -158,7 +157,7 @@ if not error:
 
 # check if there are more than n consecutive home or away matches for each team
 error = False
-consecutive_days = 4
+consecutive_days = 3
 for team in teams:
     count_home_matches = 0
     count_away_matches = 0
@@ -188,6 +187,6 @@ with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_final_calen
     for element in final_calendar:
         f.write('\t'.join(map(str, element)) + '\n')
         i += 1
-        if i == N_DAYS + 1:
-            f.write('-'*50 + '\n')
+        if i == N_MATCHES_PER_DAY + 1:
+            # f.write('-'*50 + '\n') # to improve readability for tests
             i = 1
