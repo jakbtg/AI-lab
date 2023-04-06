@@ -4,11 +4,11 @@ Queste sono le migliori prestazioni ottenute, ma ogni run impiega tempi diversi.
 
 ## Run dei vincoli obbligatori
 
-4 thread e nessun assegnamento: circa 5-6 secondi. (Oppure con assegnamento prima giornata e 6 thread in circa 2 secondi).
+4 thread e nessun assegnamento: circa 5-6 secondi. Oppure con assegnamento prima giornata e 6 thread: circa 2 secondi.
 
 ## Run con vincolo di 10 giorni tra stesse partite
 
-2 thread e 10 assegnamenti per la squadra Milan: circa 12 secondi. (Senza assegnamenti invece circa 210 secondi). Mai più ricapitati questi risultati.  
+2 thread e 10 assegnamenti per la squadra Milan: circa 12 secondi. Senza assegnamenti invece: circa 210 secondi. Mai più ricapitati questi risultati.  
 Vincolo rilassato a 6 giornate tra stesse partite, 6 thread, prima giornata assegnata e 10 assegnamenti per squadra Milan: circa 54 secondi.
 
 ## Run con vincolo di massimo 2 partite consecutive in casa o in trasferta
