@@ -11,13 +11,13 @@ applicabile(aspetta, stazione(S)) :-
 
 
 % Definisco le transizioni
-trasforma(scendi, Stazione, Stazione) :-
+trasforma(scendi, stazione(S), stazione(S)) :-
     retract(stato(sulla_metro)),
     assert(stato(in_stazione)).
 
-trasforma(sali, Stazione, Stazione) :-
+trasforma(sali, stazione(S), stazione(S)) :-
     retract(stato(in_stazione)),
     assert(stato(sulla_metro)).
 
-trasforma(aspetta, Stazione, Stazione) :-
-    true.
+trasforma(aspetta, stazione(S), stazione(S1)) :-
+    S1 is S + 1.
