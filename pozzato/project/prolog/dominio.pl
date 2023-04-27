@@ -57,3 +57,13 @@ cambio(garibaldi, [verde, lilla]).
 cambio(centrale, [verde, gialla]).
 cambio(zara, [gialla, lilla]).
 
+% Definisco le stazioni finali
+finale(sesto_primo_maggio).
+finale(rho_fiera).
+finale(cologno_nord).
+finale(assago_milanofiori_forum).
+finale(san_donato).
+finale(comasina).
+finale(bignami).
+finale(san_siro_stadio).
+
