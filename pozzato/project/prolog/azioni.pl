@@ -1,12 +1,14 @@
 % Definisco le azioni che possono essere applicate in un certo stato
-applicabile(scendi, Stazione) :- 
+applicabile(scendi, stazione(S)) :- 
     stato(sulla_metro).
 
-applicabile(sali, Stazione) :-
+applicabile(sali, stazione(S)) :-
     stato(in_stazione).
 
-applicabile(aspetta, Stazione) :-
-    stato(sulla_metro).
+applicabile(aspetta, stazione(S)) :-
+    stato(sulla_metro),
+    \+ finale(stazione(S)).
+
 
 % Definisco le transizioni
 trasforma(scendi, Stazione, Stazione) :-
