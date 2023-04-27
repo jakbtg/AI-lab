@@ -6,7 +6,7 @@ N_MATCHES = N_TEAMS * (N_TEAMS - 1)
 N_MATCHES_PER_DAY = int(N_MATCHES / N_DAYS)
 
 # open file 'asp_out.txt' and read the output
-with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_out.txt', 'r') as f:
+with open('pozzato/project/asp/asp_out.txt', 'r') as f:
     line = f.readline()
     result = line.split()
     days = []
@@ -181,12 +181,13 @@ if not error:
 
 # create an output file 
 headers = ['Giornata', 'Squadra Casa', 'Squadra Ospite']
-with open('/Users/jak/Documents/Uni/IALab/AI-lab/pozzato/project/asp_final_calendar.tsv', 'w') as f:
+with open('pozzato/project/asp/asp_final_calendar.tsv', 'w') as f:
     f.write('\t'.join(headers) + '\n')
     i = 1
     for element in final_calendar:
         f.write('\t'.join(map(str, element)) + '\n')
         i += 1
-        if i == N_MATCHES_PER_DAY + 1:
-            # f.write('-'*50 + '\n') # to improve readability for tests
-            i = 1
+        # to improve readability for tests
+        # if i == N_MATCHES_PER_DAY + 1:
+        #     f.write('-'*50 + '\n')
+        #     i = 1
