@@ -67,3 +67,6 @@ finale(comasina).
 finale(bignami).
 finale(san_siro_stadio).
 
+% Per prova: stato iniziale e goal
+iniziale(uruguay).
+goal(zara).
