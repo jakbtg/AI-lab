@@ -44,3 +44,16 @@ linea(lilla, bignami,
 linea(lilla, san_siro_stadio,
     [bignami, ponale, bicocca, ca_granda, istria, marche, zara, isola, garibaldi, monumentale, cenisio, gerusalemme,
     domodossola, tre_torri, portello, lotto, segesta, san_siro_ippodromo, san_siro_stadio]).
+
+
+% Definisco le stazioni di cambio
+% cambio(nome, lista di linee)
+% nome = nome della stazione
+cambio(cadorna, [rossa, verde]).
+cambio(duomo, [rossa, gialla]).
+cambio(loreto, [rossa, verde]).
+cambio(lotto, [rossa, lilla]).
+cambio(garibaldi, [verde, lilla]).
+cambio(centrale, [verde, gialla]).
+cambio(zara, [gialla, lilla]).
+
