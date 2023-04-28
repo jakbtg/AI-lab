@@ -1,12 +1,12 @@
 % Definisco le azioni che possono essere applicate in un certo stato
-applicabile(scendi, stato(_, Posizione, Linea)) :-
-    Posizione = "in_metro".
-
 applicabile(sali, stato(_, Posizione, Linea)) :-
     Posizione = "in_stazione".
 
 applicabile(aspetta, stato(Stazione, Posizione, Linea)) :-
     \+ finale(Stazione),
+    Posizione = "in_metro".
+
+applicabile(scendi, stato(_, Posizione, Linea)) :-
     Posizione = "in_metro".
 
 
