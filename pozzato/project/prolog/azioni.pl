@@ -25,7 +25,7 @@ trasforma(aspetta, stato(Stazione, Posizione, Linea), stato(NuovaStazione, Posiz
 
 % Funzione di utilità per trovare la linea di una stazione
 trovaLinea(Stazione, Linea) :- 
-    linea(X, Y, Fermate), member(Stazione, Fermate), Linea = linea(X, Y, Fermate).
+    linea(X, Y, Fermate), member(Stazione, Fermate), Linea = (X, Y).
 
 % Funzione di utilità per trovare la fermata successiva
 successiva(Stazione, Linea, StazioneSuccessiva) :-
@@ -34,5 +34,7 @@ successiva(Stazione, Linea, StazioneSuccessiva) :-
     nth0(Index, Fermate, Stazione),
     Index1 is Index + 1,
     nth0(Index1, Fermate, StazioneSuccessiva).
+
+
     
 
