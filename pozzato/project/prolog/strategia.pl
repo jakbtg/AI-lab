@@ -6,6 +6,7 @@ risolvi(S, [], _) :- goal(S), !.
 risolvi(Stato, [Azione|ListaAzioni], Visitati) :-
     applicabile(Azione, Stato),
     trasforma(Azione, Stato, NuovoStato),
+    write(NuovoStato), nl,
     \+ member(NuovoStato, Visitati),
     risolvi(NuovoStato, ListaAzioni, [NuovoStato|Visitati]).
 
