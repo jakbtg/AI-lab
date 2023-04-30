@@ -11,16 +11,16 @@ applicabile(scendi, stato(_, Posizione, Linea)) :-
 
 
 % Definisco le transizioni
-trasforma(scendi, stato(Stazione, Posizione, Linea), stato(Stazione, NuovaPosizione, NuovaLinea)) :-
-    NuovaPosizione = "in_stazione",
-    NuovaLinea = "nessuna".
-
 trasforma(sali, stato(Stazione, Posizione, Linea), stato(Stazione, NuovaPosizione, NuovaLinea)) :-
     NuovaPosizione = "in_metro",
     trovaLinea(Stazione, NuovaLinea).
 
 trasforma(aspetta, stato(Stazione, Posizione, Linea), stato(NuovaStazione, Posizione, Linea)) :-
     successiva(Stazione, Linea, NuovaStazione).
+
+trasforma(scendi, stato(Stazione, Posizione, Linea), stato(Stazione, NuovaPosizione, NuovaLinea)) :-
+    NuovaPosizione = "in_stazione",
+    NuovaLinea = "nessuna".
 
 
 % Funzione di utilità per trovare la linea di una stazione
