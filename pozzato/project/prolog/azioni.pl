@@ -35,6 +35,6 @@ successiva(Stazione, Linea, StazioneSuccessiva) :-
     Index1 is Index + 1,
     nth0(Index1, Fermate, StazioneSuccessiva).
 
-
-    
+% Funzione di utilità per trovare la stazione dato uno stato
+trovaStazione(stato(S, _, _), Stazione) :- Stazione = S.
 

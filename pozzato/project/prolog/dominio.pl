@@ -70,3 +70,5 @@ finale(san_siro_stadio).
 % Per prova: stato iniziale e goal
 iniziale(stato(uruguay, "in_stazione", "nessuna")).
 goal(stato(zara, "in_stazione", "nessuna")).
+stazioneIniziale(uruguay).
+stazioneFinale(zara).
