@@ -6,8 +6,8 @@ risolvi(S, [], _, _) :- goal(S), !.
 
 risolvi(Stato, [Azione|ListaAzioni], Visitati, ProfMax) :-
     ProfMax > 0,
-    applicabile(Azione, Stato),
-    trasforma(Azione, Stato, NuovoStato),
+    applicabile(Az, Stato),
+    trasforma(Az, Stato, NuovoStato, Azione),
     \+ member(NuovoStato, Visitati),
     NuovaProfMax is ProfMax - 1,
     risolvi(NuovoStato, ListaAzioni, [NuovoStato|Visitati], NuovaProfMax).

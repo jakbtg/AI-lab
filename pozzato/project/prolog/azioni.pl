@@ -12,16 +12,21 @@ applicabile(aspetta, stato(Stazione, Posizione, _)) :-
 
 
 % Definisco le transizioni
-trasforma(sali, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea)) :-
+trasforma(sali, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea), Azione) :-
     NuovaPosizione = "in_metro",
-    trovaLinea(Stazione, NuovaLinea).
+    trovaLinea(Stazione, NuovaLinea),
+    Azione = format("Sali sulla linea ~w alla fermata ~w", [NuovaLinea, Stazione]).
+    
+    
 
-trasforma(aspetta, stato(Stazione, Posizione, Linea), stato(NuovaStazione, Posizione, Linea)) :-
-    successiva(Stazione, Linea, NuovaStazione).
+trasforma(aspetta, stato(Stazione, Posizione, Linea), stato(NuovaStazione, Posizione, Linea), Azione) :-
+    successiva(Stazione, Linea, NuovaStazione),
+    Azione = format("Prosegui sulla linea ~w alla fermata ~w", [Linea, NuovaStazione]).
 
-trasforma(scendi, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea)) :-
+trasforma(scendi, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea), Azione) :-
     NuovaPosizione = "in_stazione",
-    NuovaLinea = "nessuna".
+    NuovaLinea = "nessuna",
+    Azione = format("Scendi alla fermata ~w", [Stazione]).
 
 
 % Funzione di utilità per trovare la linea di una stazione
@@ -42,4 +47,9 @@ fermateLinea(Linea, Fermate) :-
 
 % Funzione di utilità per trovare la stazione dato uno stato
 trovaStazione(stato(S, _, _), Stazione) :- Stazione = S.
+
+% Funzione di utilità per trovare la linea dato uno stato se l'azione è sali
+trovaLineaStatoAttuale(stato(_, _, L), Azione, Linea) :- 
+    Azione == sali, 
+    Linea = L.
 
