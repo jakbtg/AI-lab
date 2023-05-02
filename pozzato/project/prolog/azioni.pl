@@ -15,18 +15,18 @@ applicabile(aspetta, stato(Stazione, Posizione, _)) :-
 trasforma(sali, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea), Azione) :-
     NuovaPosizione = "in_metro",
     trovaLinea(Stazione, NuovaLinea),
-    Azione = format("Sali sulla linea ~w alla fermata ~w", [NuovaLinea, Stazione]).
+    Azione = "Sali sulla linea " + NuovaLinea.
     
     
 
 trasforma(aspetta, stato(Stazione, Posizione, Linea), stato(NuovaStazione, Posizione, Linea), Azione) :-
     successiva(Stazione, Linea, NuovaStazione),
-    Azione = format("Prosegui sulla linea ~w alla fermata ~w", [Linea, NuovaStazione]).
+    Azione = "Prosegui verso la fermata " + NuovaStazione.
 
 trasforma(scendi, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea), Azione) :-
     NuovaPosizione = "in_stazione",
     NuovaLinea = "nessuna",
-    Azione = format("Scendi alla fermata ~w", [Stazione]).
+    Azione = "Scendi alla fermata " + Stazione.
 
 
 % Funzione di utilità per trovare la linea di una stazione
