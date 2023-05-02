@@ -7,14 +7,14 @@ risolvi(S, [], _) :- goal(S), !.
 risolvi(Stato, [Azione|ListaAzioni], Visitati) :-
     applicabile(Azione, Stato),
     trasforma(Azione, Stato, NuovoStato),
-    write(NuovoStato), nl,
     \+ member(NuovoStato, Visitati),
+    write(NuovoStato), nl,
     risolvi(NuovoStato, ListaAzioni, [NuovoStato|Visitati]).
 
 
 % prova con trovaPercorso
-trovaPercorso(Stato, []) :- goal(Stato), !.
-trovaPercorso(Stato, [Azione|ListaAzioni]).
+% trovaPercorso(Stato, []) :- goal(Stato), !.
+% trovaPercorso(Stato, [Azione|ListaAzioni]).
     
 
 
