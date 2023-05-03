@@ -74,15 +74,3 @@ luogo(concerto, stato(assago_milanofiori_forum, "in_stazione", "nessuna")).
 luogo(partita, stato(san_siro_stadio, "in_stazione", "nessuna")).
 luogo(lavoro, stato(uruguay, "in_stazione", "nessuna")).
 luogo(shopping, stato(zara, "in_stazione", "nessuna")).
-% centro(stato(centrale, "in_stazione", "nessuna")).
-% shopping(stato(zara, "in_stazione", "nessuna")).
-% casa(stato(porta_venezia, "in_stazione", "nessuna")).
-% concerto(stato(assago_milanofiori_forum, "in_stazione", "nessuna")).
-% partita(stato(san_siro_stadio, "in_stazione", "nessuna")).
-% lavoro(stato(uruguay, "in_stazione", "nessuna")).
-% goal(centro, stato(centrale, "in_stazione", "nessuna")).
-% goal(casa, stato(porta_venezia, "in_stazione", "nessuna")).
-% goal(concerto, stato(assago_milanofiori_forum, "in_stazione", "nessuna")).
-% goal(partita, stato(san_siro_stadio, "in_stazione", "nessuna")).
-% goal(lavoro, stato(uruguay, "in_stazione", "nessuna")).
-% goal(shopping, stato(zara, "in_stazione", "nessuna")).
