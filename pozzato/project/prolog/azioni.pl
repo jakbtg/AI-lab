@@ -4,7 +4,7 @@ applicabile(sali, stato(_, Posizione, _)) :-
 
 applicabile(scendi, stato(Stazione, Posizione, _)) :-
     Posizione == "in_metro",
-    (finale(Stazione); cambio(Stazione,_)).
+    (finale(Stazione); cambio(Stazione,_); statoFinale(stato(Stazione, _, _))).
 
 applicabile(aspetta, stato(Stazione, Posizione, _)) :-
     \+ finale(Stazione),
