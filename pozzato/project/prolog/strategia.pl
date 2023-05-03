@@ -30,7 +30,7 @@ prova(Cammino) :-
 % Passo ricorsivo: proseguo incrementando la profondità
 prova(Cammino) :-
     current_depth(P),
-    P < 100,
+    P < 40,
     NuovaProfondita is P + 1,
     retractall(current_depth(_)),
     assert(current_depth(NuovaProfondita)),
