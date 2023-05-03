@@ -1,9 +1,23 @@
 % Inizializzazione del programma
-initialize :- retractall(current_depth(_)), assert(current_depth(1)).
+initialize(Iniziale, Goal) :- 
+    retractall(current_depth(_)), assert(current_depth(1)),
+    retractall(statoIniziale(_)),
+    initialStateAssignment(Iniziale, StatoIniziale),
+    assert(statoIniziale(StatoIniziale)),
+    retractall(statoFinale(_)),
+    goalStateAssignment(Goal, StatoFinale),
+    assert(statoFinale(StatoFinale)).
+
+initialStateAssignment(Iniziale, StatoIniziale) :-
+    iniziale(Iniziale, X), 
+    StatoIniziale = X.
+goalStateAssignment(Goal, StatoFinale) :-
+    goal(Goal, X), 
+    StatoFinale = X.
 
 % Definisco la strategia di ricerca
 prova(Cammino) :-
-    iniziale(S),
+    statoIniziale(S),
     current_depth(P),
     risolvi(S, Cammino, [], P),
     stampaCammino(Cammino),
@@ -23,7 +37,7 @@ prova(Cammino) :-
 % prova(Cammino) :- iniziale(S), risolvi(S, Cammino, [], 25), stampaCammino(Cammino), length(Cammino, L), write('Lunghezza cammino: '), write(L).
 
 % Caso base: se sono arrivato allo stato finale, non devo fare niente
-risolvi(S, [], _, _) :- goal(S), !.
+risolvi(S, [], _, _) :- statoFinale(S), !.
 % Caso ricorsivo: se non sono arrivato allo stato finale, continuo a cercare
 risolvi(Stato, [Azione|ListaAzioni], Visitati, ProfMax) :-
     ProfMax > 0,
