@@ -8,11 +8,12 @@ initialize(Iniziale, Goal) :-
     goalStateAssignment(Goal, StatoFinale),
     assert(statoFinale(StatoFinale)).
 
+% Definizione dei luoghi di partenza e di arrivo
 initialStateAssignment(Iniziale, StatoIniziale) :-
-    iniziale(Iniziale, X), 
+    luogo(Iniziale, X), 
     StatoIniziale = X.
 goalStateAssignment(Goal, StatoFinale) :-
-    goal(Goal, X), 
+    luogo(Goal, X), 
     StatoFinale = X.
 
 % Definisco la strategia di ricerca
@@ -22,12 +23,14 @@ prova(Cammino) :-
     risolvi(S, Cammino, [], P),
     stampaCammino(Cammino),
     length(Cammino, L),
-    write('Lunghezza cammino: '), write(L).
+    write('Lunghezza cammino: '), write(L), !.
+% Ho inserito il cut finale per trovare solamente il primo cammino 
+% (utile per la ricerca di tutti i cammini tra tutti i luoghi)
 
 % Passo ricorsivo: proseguo incrementando la profondità
 prova(Cammino) :-
     current_depth(P),
-    P < 50,
+    P < 100,
     NuovaProfondita is P + 1,
     retractall(current_depth(_)),
     assert(current_depth(NuovaProfondita)),
@@ -52,3 +55,13 @@ stampaCammino([]).
 stampaCammino([Azione|ListaAzioni]) :-
     format('~w ~w ~w ~w \n', Azione),
     stampaCammino(ListaAzioni).
+
+% Trova tutti i percorsi tra tutti i luogi presenti
+trovaTutti(Cammino) :-
+    luogo(X, _),
+    luogo(Y, _),
+    X \= Y,
+    nl, write('----------------------------------------------------------------------------------------------'), nl,
+    format('Trovo il cammino tra ~w e ~w \n', [X, Y]),
+    initialize(X, Y),
+    prova(Cammino), nl, nl.
