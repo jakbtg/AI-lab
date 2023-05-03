@@ -74,3 +74,4 @@ luogo(concerto, stato(assago_milanofiori_forum, "in_stazione", "nessuna")).
 luogo(partita, stato(san_siro_stadio, "in_stazione", "nessuna")).
 luogo(lavoro, stato(uruguay, "in_stazione", "nessuna")).
 luogo(shopping, stato(zara, "in_stazione", "nessuna")).
+luogo(universita, stato(assago_milanofiori_nord, "in_stazione", "nessuna")).
