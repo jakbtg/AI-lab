@@ -2,13 +2,24 @@
 applicabile(sali, stato(_, Posizione, _)) :-
     Posizione == "in_stazione".
 
+% applicabile(scendi, stato(Stazione, Posizione, _)) :-
+%     Posizione == "in_metro",
+%     trovaStazione(statoIniziale(stato(Stazione, _, _)), X),
+%     X \== Stazione,
+%     (finale(Stazione); cambio(Stazione,_); statoFinale(stato(Stazione, _, _))).
+
 applicabile(scendi, stato(Stazione, Posizione, _)) :-
     Posizione == "in_metro",
     \+ statoIniziale(stato(Stazione, _, _)),
     (finale(Stazione); cambio(Stazione,_); statoFinale(stato(Stazione, _, _))).
 
+% applicabile(aspetta, stato(Stazione, Posizione, _)) :-
+%     trovaStazione(statoIniziale(stato(Stazione, _, _)), X),
+%     (X == Stazione; \+ finale(Stazione)),
+%     Posizione == "in_metro".
+
 applicabile(aspetta, stato(Stazione, Posizione, _)) :-
-    \+ finale(Stazione),
+    (statoIniziale(stato(Stazione, _, _)); \+ finale(Stazione)),
     Posizione == "in_metro".
 
 
@@ -36,7 +47,6 @@ trovaLinea(Stazione, Linea) :-
 
 % Funzione di utilità per trovare la fermata successiva
 successiva(Stazione, Linea, StazioneSuccessiva) :-
-    \+ finale(Stazione),
     fermateLinea(Linea, Fermate),
     nth0(Index, Fermate, Stazione),
     Index1 is Index + 1,
@@ -47,10 +57,10 @@ fermateLinea(Linea, Fermate) :-
     linea(X, Y, Fermate), Linea = (X, Y).
 
 % Funzione di utilità per trovare la stazione dato uno stato
-trovaStazione(stato(S, _, _), Stazione) :- Stazione = S.
+% trovaStazione(statoIniziale(stato(S, _, _)), Stazione) :- Stazione = S.
 
 % Funzione di utilità per trovare la linea dato uno stato se l'azione è sali
-trovaLineaStatoAttuale(stato(_, _, L), Azione, Linea) :- 
-    Azione == sali, 
-    Linea = L.
+% trovaLineaStatoAttuale(stato(_, _, L), Azione, Linea) :- 
+%     Azione == sali, 
+%     Linea = L.
 
