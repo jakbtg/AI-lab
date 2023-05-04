@@ -1,6 +1,6 @@
 % Inizializzazione del programma
 initialize(Iniziale, Goal) :- 
-    retractall(current_depth(_)), assert(current_depth(1)),
+    retractall(current_depth(_)), assert(current_depth(3)),
     retractall(statoIniziale(_)),
     initialStateAssignment(Iniziale, StatoIniziale),
     assert(statoIniziale(StatoIniziale)),
