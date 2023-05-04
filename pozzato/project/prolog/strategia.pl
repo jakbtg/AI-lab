@@ -61,7 +61,7 @@ stampaCammino([Azione|ListaAzioni]) :-
 trovaTutti(Cammino) :-
     luogo(X, _),
     luogo(Y, _),
-    X \= Y,
+    X \== Y,
     nl, nl, write('----------------------------------------------------------------------------------------------'), nl,
     format('Trovo il cammino tra ~w e ~w \n', [X, Y]),
     initialize(X, Y),
