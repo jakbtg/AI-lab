@@ -17,6 +17,7 @@ goalStateAssignment(Goal, StatoFinale) :-
     StatoFinale = X.
 
 
+
 % Definisco la strategia di ricerca
 prova(Cammino) :-
     statoIniziale(S),
@@ -38,6 +39,7 @@ prova(Cammino) :-
     prova(Cammino).
 
 
+
 % Caso base: se sono arrivato allo stato finale, non devo fare niente
 risolvi(S, [], _, _) :- statoFinale(S), !.
 % Caso ricorsivo: se non sono arrivato allo stato finale, continuo a cercare
@@ -50,11 +52,13 @@ risolvi(Stato, [Azione|ListaAzioni], Visitati, ProfMax) :-
     risolvi(NuovoStato, ListaAzioni, [NuovoStato|Visitati], NuovaProfMax).
 
 
+
 % Stampa il cammino formattato
 stampaCammino([]).
 stampaCammino([Azione|ListaAzioni]) :-
     format('~w ~w ~w ~w \n', Azione),
     stampaCammino(ListaAzioni).
+
 
 
 % Trova tutti i percorsi tra tutti i luogi presenti
