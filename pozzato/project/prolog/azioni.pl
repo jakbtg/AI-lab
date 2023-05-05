@@ -1,4 +1,4 @@
-% Definisco le azioni che possono essere applicate in un certo stato
+%%%%%%%%%% AZIONI APPLICABILI %%%%%%%%%%
 applicabile(sali, stato(_, Posizione, _)) :-
     Posizione == "in_stazione".
 
@@ -31,7 +31,7 @@ euristica(Stazione, Linea) :-
     
 
 
-% Definisco le transizioni
+%%%%%%%%%% TRASFORMAZIONI DI STATO %%%%%%%%%%
 trasforma(sali, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea), Azione) :-
     NuovaPosizione = "in_metro",
     trovaLinea(Stazione, NuovaLinea),
@@ -49,18 +49,18 @@ trasforma(scendi, stato(Stazione, _, Linea), stato(Stazione, NuovaPosizione, Nuo
 
 
 %%%%%%%%%%% FUNZIONI DI UTILITÀ %%%%%%%%%%%
-% Funzione di utilità per trovare la linea di una stazione
+% Trova le linee di una stazione
 trovaLinea(Stazione, Linea) :- 
     linea(X, Y, Fermate), member(Stazione, Fermate), Linea = (X, Y).
 
-% Funzione di utilità per trovare la fermata successiva
+% Trova la fermata successiva
 successiva(Stazione, Linea, StazioneSuccessiva) :-
     fermateLinea(Linea, Fermate),
     nth0(Index, Fermate, Stazione),
     Index1 is Index + 1,
     nth0(Index1, Fermate, StazioneSuccessiva).
 
-% Funzione di utilità per trovare la lista di fermate di una linea
+% Trova la lista di fermate di una linea
 fermateLinea(Linea, Fermate) :- 
     linea(X, Y, Fermate), Linea = (X, Y).
 
@@ -70,6 +70,6 @@ manhattan(Stazione1, Stazione2, Distanza) :-
     posizione(Stazione2, pos(X2, Y2)),
     Distanza is abs(X1 - X2) + abs(Y1 - Y2).
 
-% Trova stazione dello stato finale
+% Trova la stazione dello stato finale
 trovaStazioneFinale(Stazione) :-
     statoFinale(stato(Stazione, _, _)).
