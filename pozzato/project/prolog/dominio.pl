@@ -1,5 +1,4 @@
-% In questo file sono presenti tutti i fatti che definiscono il dominio del problema.
-
+%%%%%%%%%% DOMINIO DELLA METROPOLITANA DI MILANO %%%%%%%%%%
 % Definizione delle linee della metro:
 % linea(nome, direzione, lista di fermate)
 % nome = colore della linea
@@ -46,9 +45,8 @@ linea(lilla, san_siro_stadio,
     domodossola, tre_torri, portello, lotto, segesta, san_siro_ippodromo, san_siro_stadio]).
 
 
+
 % Definisco le stazioni di cambio
-% cambio(nome, lista di linee)
-% nome = nome della stazione
 cambio(cadorna).
 cambio(duomo).
 cambio(loreto).
@@ -57,7 +55,9 @@ cambio(garibaldi).
 cambio(centrale).
 cambio(zara).
 
-% Definisco le stazioni finali
+
+
+% Definisco le stazioni finali (capolinea)
 finale(sesto_primo_maggio).
 finale(rho_fiera).
 finale(cologno_nord).
@@ -66,6 +66,8 @@ finale(san_donato).
 finale(comasina).
 finale(bignami).
 finale(san_siro_stadio).
+
+
 
 % Luoghi di interesse
 luogo(centro, stato(centrale, "in_stazione", "nessuna")).
@@ -77,7 +79,8 @@ luogo(shopping, stato(zara, "in_stazione", "nessuna")).
 luogo(universita, stato(lanza, "in_stazione", "nessuna")).
 
 
-% Prova per aggiungere ad ogni fermata una posizione sulla griglia
+
+% Posizioni delle fermate sulla griglia: pozzato/project/prolog/griglia_metro.pdf
 % Posizioni Linea ROSSA
 posizione(rho_fiera, pos(3,1)).
 posizione(pero, pos(4,2)).
@@ -111,7 +114,6 @@ posizione(sesto_marelli, pos(3,21)).
 posizione(sesto_rondò, pos(2,21)).
 posizione(sesto_primo_maggio, pos(1,21)).
 
-
 % Posizioni Linea VERDE
 posizione(assago_milanofiori_forum, pos(21,14)).
 posizione(assago_milanofiori_nord, pos(20,14)).
@@ -138,7 +140,6 @@ posizione(cologno_sud, pos(5,28)).
 posizione(cologno_centro, pos(4,29)).
 posizione(cologno_nord, pos(3,30)).
 
-
 % Posizioni Linea GIALLA
 posizione(comasina, pos(2,13)).
 posizione(affori, pos(3,14)).
@@ -161,7 +162,6 @@ posizione(corvetto, pos(20,22)).
 posizione(porto_di_mare, pos(21,23)).
 posizione(rogoredo, pos(22,24)).
 posizione(san_donato, pos(23,25)).
-
 
 % Posizioni Linea LILLA
 posizione(bignami, pos(1,19)).
