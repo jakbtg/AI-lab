@@ -14,7 +14,8 @@ applicabile(aspetta, stato(Stazione, Posizione, Linea)) :-
     successiva(Stazione, Linea, StazioneSuccessiva),
     manhattan(Stazione, StazioneFinale, D1),
     manhattan(StazioneSuccessiva, StazioneFinale, D2),
-    D2 =< D1.
+    numeroLinee(Stazione, N),
+    (D2 =< D1; N == 2).
     
 
 
@@ -60,3 +61,8 @@ manhattan(Stazione1, Stazione2, Distanza) :-
 % Trova stazione dello stato finale
 trovaStazioneFinale(Stazione) :-
     statoFinale(stato(Stazione, _, _)).
+
+% Trova numero linee disponibili per una stazione
+numeroLinee(Stazione, NumeroLinee) :-
+    findall(Linea, trovaLinea(Stazione, Linea), LineeStazione),
+    length(LineeStazione, NumeroLinee).
