@@ -7,9 +7,14 @@ applicabile(scendi, stato(Stazione, Posizione, _)) :-
     \+ statoIniziale(stato(Stazione, _, _)),
     (finale(Stazione); cambio(Stazione,_); statoFinale(stato(Stazione, _, _))).
 
-applicabile(aspetta, stato(Stazione, Posizione, _)) :-
+applicabile(aspetta, stato(Stazione, Posizione, Linea)) :-
     Posizione == "in_metro",
-    (statoIniziale(stato(Stazione, _, _)); \+ finale(Stazione)).
+    (statoIniziale(stato(Stazione, _, _)); \+ finale(Stazione)),
+    trovaStazioneFinale(StazioneFinale),
+    successiva(Stazione, Linea, StazioneSuccessiva),
+    manhattan(Stazione, StazioneFinale, D1),
+    manhattan(StazioneSuccessiva, StazioneFinale, D2),
+    D2 =< D1.
     
 
 
@@ -45,3 +50,13 @@ successiva(Stazione, Linea, StazioneSuccessiva) :-
 % Funzione di utilità per trovare la lista di fermate di una linea
 fermateLinea(Linea, Fermate) :- 
     linea(X, Y, Fermate), Linea = (X, Y).
+
+% Calcola la distanza di Manhattan tra due fermate
+manhattan(Stazione1, Stazione2, Distanza) :-
+    posizione(Stazione1, pos(X1, Y1)),
+    posizione(Stazione2, pos(X2, Y2)),
+    Distanza is abs(X1 - X2) + abs(Y1 - Y2).
+
+% Trova stazione dello stato finale
+trovaStazioneFinale(Stazione) :-
+    statoFinale(stato(Stazione, _, _)).
