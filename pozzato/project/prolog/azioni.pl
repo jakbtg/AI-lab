@@ -17,12 +17,42 @@ applicabile(aspetta, stato(Stazione, Posizione, Linea)) :-
     (\+ cambio(Stazione); euristica(Stazione, Linea)).
 
 % Euristica - se è vera vuol dire che la stazione successiva è più vicina alla stazione finale e quindi posso proseguire
-euristica(Stazione, Linea) :-
+% euristica(Stazione, Linea) :-
+%     trovaStazioneFinale(StazioneFinale),
+%     successiva(Stazione, Linea, StazioneSuccessiva),
+%     manhattan(Stazione, StazioneFinale, D1),
+%     manhattan(StazioneSuccessiva, StazioneFinale, D2),
+%     D2 =< D1.
+
+euristica(Stazione) :-
+    findall(Linea, trovaLinea(Stazione, Linea), Linee),
+    write(Linee), nl,
+    generaStazioniSuccessive(Stazione, Linee, StazioniSuccessive),
+    write(StazioniSuccessive), nl,
     trovaStazioneFinale(StazioneFinale),
+    write(StazioneFinale), nl,
+    generaDistanze(StazioniSuccessive, StazioneFinale, Distanze),
+    write(Distanze), nl,
+    associaDistanze(Linee, Distanze, Associazioni),
+    write(Associazioni), nl.
+    
+    
+generaStazioniSuccessive(_, [], []).
+generaStazioniSuccessive(Stazione, [Linea|AltreLinee], [StazioneSuccessiva|AltreStazioni]) :-
     successiva(Stazione, Linea, StazioneSuccessiva),
-    manhattan(Stazione, StazioneFinale, D1),
-    manhattan(StazioneSuccessiva, StazioneFinale, D2),
-    D2 =< D1.
+    generaStazioniSuccessive(Stazione, AltreLinee, AltreStazioni).
+
+generaDistanze([], _, []).
+generaDistanze([StazioneSuccessiva|AltreStazioni], StazioneFinale, [Distanza|AltreDistanze]) :-
+    manhattan(StazioneSuccessiva, StazioneFinale, Distanza),
+    generaDistanze(AltreStazioni, StazioneFinale, AltreDistanze).
+
+associaDistanze([], [], []).
+associaDistanze([Linea|AltreLinee], [Distanza|AltreDistanze], [Associazione|AltreAssociazioni]) :-
+    Associazione = (Linea, Distanza),
+    associaDistanze(AltreLinee, AltreDistanze, AltreAssociazioni).
+
+    
 
 % AZIONE SENZA EURISTICA
 % applicabile(aspetta, stato(Stazione, Posizione, _)) :-
@@ -73,3 +103,13 @@ manhattan(Stazione1, Stazione2, Distanza) :-
 % Trova la stazione dello stato finale
 trovaStazioneFinale(Stazione) :-
     statoFinale(stato(Stazione, _, _)).
+
+% Itera su lista di linee
+iteraLinee([], _).
+iteraLinee([Linea], Out) :-
+    Out = Linea,
+    write(Out).
+iteraLinee([Linea|AltreLinee], Out) :-
+    Out = Linea,
+    write(Out),
+    iteraLinee(AltreLinee, Out).
