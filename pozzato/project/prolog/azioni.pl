@@ -5,17 +5,24 @@ applicabile(sali, stato(_, Posizione, _)) :-
 applicabile(scendi, stato(Stazione, Posizione, _)) :-
     Posizione == "in_metro",
     \+ statoIniziale(stato(Stazione, _, _)),
-    (finale(Stazione); cambio(Stazione,_); statoFinale(stato(Stazione, _, _))).
+    (finale(Stazione); cambio(Stazione); statoFinale(stato(Stazione, _, _))).
 
 % AZIONE CON EURISTICA
+% In pratica se non è una stazione di cambio vuol dire che posso proseguire solamente su una linea.
+% Se invece è una stazione di cambio provo se proseguendo su questa linea mi avvicino di più alla stazione finale,
+% altrimenti la scarto.
 applicabile(aspetta, stato(Stazione, Posizione, Linea)) :-
     Posizione == "in_metro",
     (statoIniziale(stato(Stazione, _, _)); \+ finale(Stazione)),
+    (\+ cambio(Stazione); euristica(Stazione, Linea)).
+
+% Euristica - se è vera vuol dire che la stazione successiva è più vicina alla stazione finale e quindi posso proseguire
+euristica(Stazione, Linea) :-
     trovaStazioneFinale(StazioneFinale),
     successiva(Stazione, Linea, StazioneSuccessiva),
     manhattan(Stazione, StazioneFinale, D1),
     manhattan(StazioneSuccessiva, StazioneFinale, D2),
-    (D2 =< D1; numeroLinee(Stazione, N), N == 2).
+    D2 =< D1.
 
 % AZIONE SENZA EURISTICA
 % applicabile(aspetta, stato(Stazione, Posizione, _)) :-
@@ -66,8 +73,3 @@ manhattan(Stazione1, Stazione2, Distanza) :-
 % Trova stazione dello stato finale
 trovaStazioneFinale(Stazione) :-
     statoFinale(stato(Stazione, _, _)).
-
-% Trova numero linee disponibili per una stazione
-numeroLinee(Stazione, NumeroLinee) :-
-    findall(Linea, trovaLinea(Stazione, Linea), LineeStazione),
-    length(LineeStazione, NumeroLinee).
