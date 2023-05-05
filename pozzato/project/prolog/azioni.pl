@@ -7,6 +7,7 @@ applicabile(scendi, stato(Stazione, Posizione, _)) :-
     \+ statoIniziale(stato(Stazione, _, _)),
     (finale(Stazione); cambio(Stazione,_); statoFinale(stato(Stazione, _, _))).
 
+% AZIONE CON EURISTICA
 applicabile(aspetta, stato(Stazione, Posizione, Linea)) :-
     Posizione == "in_metro",
     (statoIniziale(stato(Stazione, _, _)); \+ finale(Stazione)),
@@ -14,8 +15,12 @@ applicabile(aspetta, stato(Stazione, Posizione, Linea)) :-
     successiva(Stazione, Linea, StazioneSuccessiva),
     manhattan(Stazione, StazioneFinale, D1),
     manhattan(StazioneSuccessiva, StazioneFinale, D2),
-    numeroLinee(Stazione, N),
-    (D2 =< D1; N == 2).
+    (D2 =< D1; numeroLinee(Stazione, N), N == 2).
+
+% AZIONE SENZA EURISTICA
+% applicabile(aspetta, stato(Stazione, Posizione, _)) :-
+%     Posizione == "in_metro",
+%     (statoIniziale(stato(Stazione, _, _)); \+ finale(Stazione)).
     
 
 
