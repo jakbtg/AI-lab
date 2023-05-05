@@ -8,8 +8,9 @@ applicabile(scendi, stato(Stazione, Posizione, _)) :-
     (finale(Stazione); cambio(Stazione,_); statoFinale(stato(Stazione, _, _))).
 
 applicabile(aspetta, stato(Stazione, Posizione, _)) :-
-    (statoIniziale(stato(Stazione, _, _)); \+ finale(Stazione)),
-    Posizione == "in_metro".
+    Posizione == "in_metro",
+    (statoIniziale(stato(Stazione, _, _)); \+ finale(Stazione)).
+    
 
 
 % Definisco le transizioni
@@ -28,6 +29,8 @@ trasforma(scendi, stato(Stazione, _, Linea), stato(Stazione, NuovaPosizione, Nuo
     Azione = ["Scendi dalla linea", Linea, "alla fermata", Stazione].
 
 
+
+%%%%%%%%%%% FUNZIONI DI UTILITÀ %%%%%%%%%%%
 % Funzione di utilità per trovare la linea di una stazione
 trovaLinea(Stazione, Linea) :- 
     linea(X, Y, Fermate), member(Stazione, Fermate), Linea = (X, Y).
