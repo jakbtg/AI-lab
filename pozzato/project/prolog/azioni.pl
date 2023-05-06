@@ -32,16 +32,16 @@ applicabile(aspetta, stato(Stazione, Posizione, _)) :-
 
 
 %%%%%%%%%% TRASFORMAZIONI DI STATO %%%%%%%%%%
-trasforma(sali, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea), Azione) :-
-    NuovaPosizione = "in_metro",
-    trovaLinea(Stazione, NuovaLinea),
-    Azione = ["Sali sulla linea", NuovaLinea, "alla fermata", Stazione].
-
 % trasforma(sali, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea), Azione) :-
 %     NuovaPosizione = "in_metro",
-%     euristica(Stazione, Linee),
-%     member(NuovaLinea, Linee),
+%     trovaLinea(Stazione, NuovaLinea),
 %     Azione = ["Sali sulla linea", NuovaLinea, "alla fermata", Stazione].
+
+trasforma(sali, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea), Azione) :-
+    NuovaPosizione = "in_metro",
+    euristica(Stazione, Linee),
+    member(NuovaLinea, Linee),
+    Azione = ["Sali sulla linea", NuovaLinea, "alla fermata", Stazione].
 
 trasforma(aspetta, stato(Stazione, Posizione, Linea), stato(NuovaStazione, Posizione, Linea), Azione) :-
     successiva(Stazione, Linea, NuovaStazione),
@@ -62,7 +62,7 @@ euristica(Stazione, ListaLinee) :-
     findall(Linea, trovaLinea(Stazione, Linea), Linee),
     generaStazioniSuccessive(Stazione, Linee, StazioniSuccessive),
     trovaStazioneFinale(StazioneFinale),
-    generaDistanze(StazioniSuccessive, StazioneFinale, Distanze),
+    calcolaDistanze(StazioniSuccessive, StazioneFinale, Distanze),
     associaDistanze(Linee, Distanze, Associazioni),
     ordinaLinee(Associazioni, LineeOrdinate),
     ListaLinee = LineeOrdinate.
@@ -74,10 +74,10 @@ generaStazioniSuccessive(Stazione, [Linea|AltreLinee], [StazioneSuccessiva|Altre
     generaStazioniSuccessive(Stazione, AltreLinee, AltreStazioni).
 
 % Calcola la distanza di manhattan tra la lista di stazioni successive e la stazione finale
-generaDistanze([], _, []).
-generaDistanze([StazioneSuccessiva|AltreStazioni], StazioneFinale, [Distanza|AltreDistanze]) :-
+calcolaDistanze([], _, []).
+calcolaDistanze([StazioneSuccessiva|AltreStazioni], StazioneFinale, [Distanza|AltreDistanze]) :-
     manhattan(StazioneSuccessiva, StazioneFinale, Distanza),
-    generaDistanze(AltreStazioni, StazioneFinale, AltreDistanze).
+    calcolaDistanze(AltreStazioni, StazioneFinale, AltreDistanze).
 
 % Associa le distanze alle linee 
 associaDistanze([], [], []).
