@@ -32,16 +32,16 @@ applicabile(aspetta, stato(Stazione, Posizione, _)) :-
 
 
 %%%%%%%%%% TRASFORMAZIONI DI STATO %%%%%%%%%%
-% trasforma(sali, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea), Azione) :-
-%     NuovaPosizione = "in_metro",
-%     trovaLinea(Stazione, NuovaLinea),
-%     Azione = ["Sali sulla linea", NuovaLinea, "alla fermata", Stazione].
-
 trasforma(sali, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea), Azione) :-
     NuovaPosizione = "in_metro",
-    euristica(Stazione, Linee),
-    member(NuovaLinea, Linee),
+    trovaLinea(Stazione, NuovaLinea),
     Azione = ["Sali sulla linea", NuovaLinea, "alla fermata", Stazione].
+
+% trasforma(sali, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea), Azione) :-
+%     NuovaPosizione = "in_metro",
+%     euristica(Stazione, Linee),
+%     member(NuovaLinea, Linee),
+%     Azione = ["Sali sulla linea", NuovaLinea, "alla fermata", Stazione].
 
 trasforma(aspetta, stato(Stazione, Posizione, Linea), stato(NuovaStazione, Posizione, Linea), Azione) :-
     successiva(Stazione, Linea, NuovaStazione),
