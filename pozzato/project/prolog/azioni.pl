@@ -42,6 +42,11 @@ generaStazioniSuccessive(_, [], []).
 generaStazioniSuccessive(Stazione, [Linea|AltreLinee], [StazioneSuccessiva|AltreStazioni]) :-
     successiva(Stazione, Linea, StazioneSuccessiva),
     generaStazioniSuccessive(Stazione, AltreLinee, AltreStazioni).
+
+% rimuoviDoppioni(_, [], []).
+% rimuoviDoppioni(Stazione, ListaStazioniSuccessive, StazioniRimanenti) :-
+%     delete(ListaStazioniSuccessive, Stazione, ListaStazioniSuccessiveTemp),
+
     
 generaDistanze([], _, []).
 generaDistanze([StazioneSuccessiva|AltreStazioni], StazioneFinale, [Distanza|AltreDistanze]) :-
@@ -53,7 +58,7 @@ associaDistanze([Linea|AltreLinee], [Distanza|AltreDistanze], [Associazione|Altr
     Associazione = (Linea, Distanza),
     associaDistanze(AltreLinee, AltreDistanze, AltreAssociazioni).
     
-    % trovaLineaMigliore([], _, _).
+% trovaLineaMigliore([], _, _).
 trovaLineaMigliore([(Linea, Distanza)], LineaMigliore, DistanzaMigliore) :-
     LineaMigliore = Linea,
     DistanzaMigliore = Distanza.
@@ -111,7 +116,10 @@ successiva(Stazione, Linea, StazioneSuccessiva) :-
     fermateLinea(Linea, Fermate),
     nth0(Index, Fermate, Stazione),
     Index1 is Index + 1,
-    nth0(Index1, Fermate, StazioneSuccessiva).
+    length(Fermate, L),
+    (Index1 < L, nth0(Index1, Fermate, StazioneSuccessiva); 
+    StazioneSuccessiva = Stazione).
+    
 
 % Trova la lista di fermate di una linea
 fermateLinea(Linea, Fermate) :- 
