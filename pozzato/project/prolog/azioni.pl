@@ -13,24 +13,6 @@ applicabile(aspetta, stato(Stazione, Posizione, _)) :-
 
 
 
-% AZIONE CON EURISTICA --- OLD VERSION
-% In pratica se non è una stazione di cambio vuol dire che posso proseguire solamente su una linea.
-% Se invece è una stazione di cambio provo se proseguendo su questa linea mi avvicino di più alla stazione finale,
-% altrimenti la scarto.
-% applicabile(aspetta, stato(Stazione, Posizione, Linea)) :-
-%     Posizione == "in_metro",
-%     (statoIniziale(stato(Stazione, _, _)); \+ finale(Stazione)),
-%     (\+ cambio(Stazione); euristica(Stazione, Linea)).
-% Euristica - se è vera vuol dire che la stazione successiva è più vicina alla stazione finale e quindi posso proseguire
-% euristica(Stazione, Linea) :-
-%     trovaStazioneFinale(StazioneFinale),
-%     successiva(Stazione, Linea, StazioneSuccessiva),
-%     manhattan(Stazione, StazioneFinale, D1),
-%     manhattan(StazioneSuccessiva, StazioneFinale, D2),
-%     D2 =< D1.
-
-
-
 %%%%%%%%%% TRASFORMAZIONI DI STATO %%%%%%%%%%
 % trasforma(sali, stato(Stazione, _, _), stato(Stazione, NuovaPosizione, NuovaLinea), Azione) :-
 %     NuovaPosizione = "in_metro",
@@ -56,8 +38,8 @@ trasforma(scendi, stato(Stazione, _, Linea), stato(Stazione, NuovaPosizione, Nuo
 
 %%%%%%%%%% EURISTICA %%%%%%%%%%
 % Restituisce la lista delle linee disponibili ordinate in base alla distanza di manhattan della ipotetica 
-% stazione successiva della linea corrispondente alla stazione finale.
-% Viene applicata con l'azione sali, in modo da provare a salire sulla line più promettente.
+% stazione successiva delle linee corrispondenti alla stazione finale.
+% Viene applicata con l'azione sali, in modo da provare a salire sulla linea più promettente.
 euristica(Stazione, ListaLinee) :-
     findall(Linea, trovaLinea(Stazione, Linea), Linee),
     generaStazioniSuccessive(Stazione, Linee, StazioniSuccessive),
