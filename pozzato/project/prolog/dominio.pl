@@ -1,8 +1,6 @@
 %%%%%%%%%% DOMINIO DELLA METROPOLITANA DI MILANO %%%%%%%%%%
 % Definizione delle linee della metro:
 % linea(nome, direzione, lista di fermate)
-% nome = colore della linea
-% direzione = stazione di arrivo
 
 % Linea rossa - M1
 linea(rossa, sesto_primo_maggio, 
@@ -81,6 +79,8 @@ luogo(universita, stato(lanza, "in_stazione", "nessuna")).
 
 
 % Posizioni delle fermate sulla griglia: pozzato/project/prolog/griglia_metro.pdf
+% Griglia creata a mano per poter utilizzare le posizioni delle fermate per calcolare distanze tra esse
+
 % Posizioni Linea ROSSA
 posizione(rho_fiera, pos(3,1)).
 posizione(pero, pos(4,2)).
