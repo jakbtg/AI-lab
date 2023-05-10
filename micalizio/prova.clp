@@ -11,3 +11,14 @@
     (person (name "Marco") (age 25) (eye-color brown) (hair-color brown))
     (person (name "Lisa") (age 20) (eye-color blue) (hair-color blonde))
 )
+
+(defrule birthday-FLV
+    (person (name "Luigi")
+            (age 46)
+            (eye-color brown)
+            (hair-color brown))
+    (date-today April-13-02)
+    =>
+    (printout t "Buon compleanno, Luigi!" crlf)
+    (assert (there-s-a-party))
+)
