@@ -31,5 +31,5 @@
 (defrule find-blue-eyes
     (person (name ?name) (eye-color blue))
     =>
-    (printout t ?name " ha gli occhi azzurri" crlf)
+    (printout t ?name " ha gli occhi azzurri." crlf)
 )
