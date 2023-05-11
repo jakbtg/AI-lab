@@ -1,4 +1,4 @@
-;;;REGOLE DI ESEMPIO PER SLIDE 40 - 42
+;;; REGOLE DI ESEMPIO PER SLIDE 40 - 42 ;;;
 
 
 (deftemplate person "commento opzionale"
@@ -30,7 +30,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;ALTRE REGOLE DI ESEMPIO PER PATTERN MATCHING
+;;; ALTRE REGOLE DI ESEMPIO PER PATTERN MATCHING ;;;
+
 (deftemplate studente  (slot matr) (slot nome) (slot cl) (slot univ))
 
 
@@ -45,7 +46,7 @@
         (studente (matr 22005) (nome Sara) (cl BIO) (univ UniTo))
         (studente (matr 22003) (nome Marco) (cl ING) (univ PoliTo))
         (studente (matr 22008) (nome Paolo) (cl INF) (univ UniTo))
-        )
+)
  
 
 (defrule r1
@@ -131,10 +132,11 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;REGOLE DI ESEMPIO PER SLIDE 48 - 56
+;;; REGOLE DI ESEMPIO PER SLIDE 48 - 56 ;;;
 
 
 (deftemplate box (slot id) (multislot cont))
+
 (deffacts init 
         (box (id A) (cont a1 a1 a3))
         (box (id B) (cont b1 b2))
