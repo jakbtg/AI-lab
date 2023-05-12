@@ -49,8 +49,6 @@
 
   (visitato (id gen0) (agent A) (pos 4))
   (visitato (id gen0) (agent B) (pos 8))
-
- 
 )
 
 

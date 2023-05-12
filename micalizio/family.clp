@@ -65,7 +65,7 @@
 
 (defrule rule-parent-1
 	(or (mother (x ?x) (y ?y))
-	     (father (x ?x) (y ?y)) )
+	    (father (x ?x) (y ?y)) )
 =>
 	(assert (parent (x ?x) (y ?y)))
 )
