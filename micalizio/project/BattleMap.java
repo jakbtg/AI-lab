@@ -27,7 +27,7 @@ public class BattleMap {
 		frame.pack(); // sets appropriate size for frame
 		frame.setVisible(true); // makes frame visible
 		frame.setTitle("BATTLE MAP");
-		frame.setSize(1000, 800);
+		frame.setSize(1200, 800);
 
 		// make the frame scrollable so that we can see all the buttons
 		JScrollPane scrollPane = new JScrollPane(frame.getContentPane());
