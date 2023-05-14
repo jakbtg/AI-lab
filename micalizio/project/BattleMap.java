@@ -26,6 +26,14 @@ public class BattleMap {
 
 		frame.pack(); // sets appropriate size for frame
 		frame.setVisible(true); // makes frame visible
+		frame.setTitle("BATTLE MAP");
+		frame.setSize(1000, 800);
+
+		// make the frame scrollable so that we can see all the buttons
+		JScrollPane scrollPane = new JScrollPane(frame.getContentPane());
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		frame.setContentPane(scrollPane);
 
 	}
 
@@ -56,7 +64,7 @@ public class BattleMap {
 				counter++;
 				if (matrix[x][y].isWater())
 					grid[x][y].setIcon(water);
-				grid[x][y].setPreferredSize(new Dimension(100, 100));
+				grid[x][y].setPreferredSize(new Dimension(70, 70));
 				panGrid.add(grid[x][y]); // adds button to grid
 
 				grid[x][y].addActionListener(new ActionListener() {
