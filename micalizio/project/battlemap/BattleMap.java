@@ -1,3 +1,5 @@
+package battlemap;
+
 import javax.swing.JFrame; //imports JFrame library
 import javax.swing.JButton; //imports JButton library
 import java.awt.GridLayout; //imports GridLayout library
