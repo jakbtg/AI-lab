@@ -11,7 +11,7 @@
 	(moves (fires 0) (guesses ?ng&:(> ?ng 0)))
 =>
 	(assert (exec (step ?s) (action guess) (x 0) (y 0)))
-     (pop-focus)
+    (pop-focus)
 
 )
 

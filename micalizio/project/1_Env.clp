@@ -10,7 +10,7 @@
 
 
 (deftemplate boat-hor
-        (slot name)
+	(slot name)
 	(slot x)
 	(multislot ys)
 	(slot size)
@@ -19,7 +19,7 @@
 
 
 (deftemplate boat-ver
-        (slot name)
+    (slot name)
 	(multislot xs)
 	(slot y)
 	(slot size)
@@ -45,46 +45,46 @@
 
 
 (defrule action-fire 
-        ?us <- (status (step ?s) (currently running))
+    ?us <- (status (step ?s) (currently running))
 	(exec (step ?s) (action fire) (x ?x) (y ?y))
 	?mvs <- (moves (fires ?nf &:(> ?nf 0)))
 =>
 	(assert (fire ?x ?y))
-        (modify ?us (step (+ ?s 1)) )
+    (modify ?us (step (+ ?s 1)) )
 	(modify ?mvs (fires (- ?nf 1)))
 )
 
 
 
 (defrule action-guess
-        ?us <- (status (step ?s) (currently running))
+    ?us <- (status (step ?s) (currently running))
 	(exec (step ?s) (action guess) (x ?x) (y ?y))
 	?mvs <- (moves (guesses ?ng &:(> ?ng 0)))
 =>
 	(assert (guess ?x ?y))
-        (modify ?us (step (+ ?s 1)) )
+    (modify ?us (step (+ ?s 1)) )
 	(modify ?mvs (guesses (- ?ng 1)))
 )
 
 (defrule action-unguess
-        ?us <- (status (step ?s) (currently running))
+    ?us <- (status (step ?s) (currently running))
 	(exec (step ?s) (action unguess) (x ?x) (y ?y))
 	?gu <- (guess ?x ?y)
 	?mvs <- (moves (guesses ?ng &:(< ?ng 20)))
 =>	
 	(retract ?gu)
-        (modify ?us (step (+ ?s 1)) )
+    (modify ?us (step (+ ?s 1)) )
 	(modify ?mvs (guesses (+ ?ng 1)))
 )
 
 
 
 (defrule action-solve
-        ?us <- (status (step ?s) (currently running))
+    ?us <- (status (step ?s) (currently running))
 	(exec (step ?s) (action solve))
 =>
 	(assert (solve))
-        (modify ?us (step (+ ?s 1)) (currently stopped) )
+    (modify ?us (step (+ ?s 1)) (currently stopped) )
 )
 
 
@@ -94,7 +94,7 @@
 	?st <- (statistics (num_fire_ok ?fok))
 =>
 	(modify ?fc (content hit-boat) (status fired))
-        (modify ?st (num_fire_ok (+ ?fok 1)))
+    (modify ?st (num_fire_ok (+ ?fok 1)))
 )
 
 
@@ -104,32 +104,28 @@
 	?st <- (statistics (num_fire_ko ?fko))
 =>
 	(modify ?fc (status missed))
-        (modify ?st (num_fire_ko (+ ?fko 1)))
+    (modify ?st (num_fire_ko (+ ?fko 1)))
 )
 
 (defrule hit-boat-hor-trace
-
 	(cell (x ?x) (y ?y) (content hit-boat))
 	?b<- (boat-hor (x ?x) (ys $? ?y $?) (size ?s) (status $?prima safe $?dopo))
-        (not (considered ?x ?y))
-
+    (not (considered ?x ?y))
 =>
 	(modify ?b (status ?prima hit ?dopo))
-        (assert (considered ?x ?y))
+    (assert (considered ?x ?y))
 )
 
 (defrule hit-boat-ver-trace
-
 	(cell (x ?x) (y ?y) (content hit-boat))
-        (not (considered ?x ?y))
+    (not (considered ?x ?y))
 	?b <-(boat-ver (xs $? ?x $?) (y ?y) (size ?s) (status $?prima safe $?dopo))
 =>
 	(modify ?b (status ?prima hit ?dopo))
-        (assert (considered ?x ?y))
+    (assert (considered ?x ?y))
 )
 
 (defrule sink-boat-hor
-
 	(cell (x ?x) (y ?y) (content hit-boat))
 	(boat-hor (name ?n) (x ?x) (ys $? ?y $?) (size ?s) (status $?ss))
         
@@ -149,16 +145,12 @@
 		(and (test (eq ?s 4))
 		     (test (subsetp $?ss (create$ hit hit hit hit)))
                 )
-
-
 	)
 =>
-
 	(assert (sink-boat ?n ))
 )
 
 (defrule sink-boat-ver
-
 	(cell (x ?x) (y ?y) (content hit-boat))
 	(boat-ver (name ?n) (xs $? ?x $?) (y ?y) (size ?s) (status $?ss))
         
@@ -186,10 +178,10 @@
 
 
 (defrule solve-count-guessed-ok
-        (solve)
-        (guess ?x ?y)
-        ?c <- (cell (x ?x) (y ?y) (content boat) (status none))
-        ?st <- (statistics (num_guess_ok ?gok))
+    (solve)
+    (guess ?x ?y)
+    ?c <- (cell (x ?x) (y ?y) (content boat) (status none))
+    ?st <- (statistics (num_guess_ok ?gok))
 =>
 	(modify ?st (num_guess_ok (+ 1 ?gok)))
 	(modify ?c (content hit-boat) (status guessed))
@@ -218,7 +210,7 @@
 (defrule solve-sink-count
 	(solve)
 	?s<- (sink-boat ?n)
-        (not (sink-checked ?n))
+    (not (sink-checked ?n))
 	?st <- (statistics (num_sink ?sink))
 =>
 	(modify ?st (num_sink (+ 1 ?sink)))
@@ -323,5 +315,3 @@
 	(assert (k-cell (x ?x) (y ?y) (content water)))
 	(assert (resetted ?x ?y))
 )
-
-
