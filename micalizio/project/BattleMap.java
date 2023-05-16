@@ -16,7 +16,7 @@ public class BattleMap {
 
 	static Cell[][] matrix;
 
-	ImageIcon water = new ImageIcon("water.png");
+	ImageIcon water = new ImageIcon("images/water.png");
 
 	public BattleMap() {// constructor
 
@@ -117,7 +117,7 @@ public class BattleMap {
 	}
 
 	private void updateButton(int x, int y, String s) {
-		ImageIcon ico = new ImageIcon(s + ".png");
+		ImageIcon ico = new ImageIcon("images/" + s + ".png");
 		grid[x][y].setIcon(ico);
 		if (matrix[x][y].isInitial()) {
 			grid[x][y].setBackground(Color.RED);
