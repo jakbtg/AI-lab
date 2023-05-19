@@ -140,7 +140,7 @@ public class BattleMap {
 	private void saveMap() {
 
 		try {
-			File file = new File("mapEnvironment.clp");
+			File file = new File("../maps/mapEnvironment.clp");
 
 			file.createNewFile();
 			FileWriter writer = new FileWriter(file);
