@@ -3,4 +3,4 @@
 (load /Users/jak/Documents/Uni/IALab/AI-lab/micalizio/project/maps/2_map1_4obs.clp)
 (load /Users/jak/Documents/Uni/IALab/AI-lab/micalizio/project/3_Agent.clp)
 (reset)
-(watch activations)
+(run)
