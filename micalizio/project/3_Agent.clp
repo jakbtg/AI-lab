@@ -20,19 +20,19 @@
 ;  ---------------------------------------------
 ;  --- Print delle informazioni iniziali -------
 ;  ---------------------------------------------
-(defrule print-what-i-know-since-the-beginning (declare (salience 10))
+(defrule print-what-i-know-since-the-beginning (declare (salience 20))
 	(k-cell (x ?x) (y ?y) (content ?t))
 =>
 	(printout t "I know that cell [" ?x ", " ?y "] contains " ?t "." crlf)
 )
 
-(defrule print-rows-since-the-beginning (declare (salience 10))
+(defrule print-rows-since-the-beginning (declare (salience 20))
 	(k-per-row (row ?x) (num ?n))
 =>
 	(printout t "I know that row " ?x " contains " ?n " pieces." crlf)
 )
 
-(defrule print-columns-since-the-beginning (declare (salience 10))
+(defrule print-columns-since-the-beginning (declare (salience 20))
 	(k-per-col (col ?y) (num ?n))
 =>
 	(printout t "I know that column " ?y " contains " ?n " pieces." crlf)
@@ -42,7 +42,7 @@
 ;  ------------------------------------------------
 ;  --- Inizialmente fa guess sulle info di base ---
 ;  ------------------------------------------------
-(defrule guess-what-is-known (declare (salience 5))
+(defrule guess-what-is-known (declare (salience 15))
 	(status (step ?s) (currently running))
 	(k-cell (x ?x) (y ?y) (content ?t & ~water))
 	(not (exec (action guess) (x ?x) (y ?y)))
@@ -59,7 +59,7 @@
 ;  --- ho la certezza che la barca continui di almeno un altro pezzo ---
 ;  --- o in verticale o in orizzontale a seconda del bordo su cui è ----
 ;  ---------------------------------------------------------------------
-(defrule guess-up-given-middle-piece-on-left-border
+(defrule guess-up-given-middle-piece-on-left-border (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x ?x) (y 0) (content middle))
 	(not (exec (action guess) (x ?x2 &: (eq ?x2 (- ?x 1))) (y 0)))
@@ -70,7 +70,7 @@
 	(pop-focus)
 )
 
-(defrule guess-down-given-middle-piece-on-left-border
+(defrule guess-down-given-middle-piece-on-left-border (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x ?x) (y 0) (content middle))
 	(not (exec (action guess) (x ?x2 &: (eq ?x2 (+ ?x 1))) (y 0)))
@@ -81,7 +81,7 @@
 	(pop-focus)
 )
 
-(defrule guess-left-given-middle-piece-on-top-border
+(defrule guess-left-given-middle-piece-on-top-border (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x 0) (y ?y) (content middle))
 	(not (exec (action guess) (x 0) (y ?y2 &: (eq ?y2 (- ?y 1)))))
@@ -92,7 +92,7 @@
 	(pop-focus)
 )
 
-(defrule guess-right-given-middle-piece-on-top-border
+(defrule guess-right-given-middle-piece-on-top-border (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x 0) (y ?y) (content middle))
 	(not (exec (action guess) (x 0) (y ?y2 &: (eq ?y2 (+ ?y 1)))))
@@ -103,7 +103,7 @@
 	(pop-focus)
 )
 
-(defrule guess-up-given-middle-piece-on-right-border
+(defrule guess-up-given-middle-piece-on-right-border (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x ?x) (y 9) (content middle))
 	(not (exec (action guess) (x ?x2 &: (eq ?x2 (- ?x 1))) (y 9)))
@@ -114,7 +114,7 @@
 	(pop-focus)
 )
 
-(defrule guess-down-given-middle-piece-on-right-border
+(defrule guess-down-given-middle-piece-on-right-border (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x ?x) (y 9) (content middle))
 	(not (exec (action guess) (x ?x2 &: (eq ?x2 (+ ?x 1))) (y 9)))
@@ -125,7 +125,7 @@
 	(pop-focus)
 )
 
-(defrule guess-left-given-middle-piece-on-bottom-border
+(defrule guess-left-given-middle-piece-on-bottom-border (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x 9) (y ?y) (content middle))
 	(not (exec (action guess) (x 9) (y ?y2 &: (eq ?y2 (- ?y 1)))))
@@ -136,7 +136,7 @@
 	(pop-focus)
 )
 
-(defrule guess-right-given-middle-piece-on-bottom-border
+(defrule guess-right-given-middle-piece-on-bottom-border (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x 9) (y ?y) (content middle))
 	(not (exec (action guess) (x 9) (y ?y2 &: (eq ?y2 (+ ?y 1)))))
@@ -152,7 +152,7 @@
 ;  --- Dato un pezzo left/right/top/bottom so che la barca ------------
 ;  --- continua di almeno un altro pezzo nella rispettiva direzione ---
 ;  --------------------------------------------------------------------
-(defrule guess-right-given-left-piece
+(defrule guess-right-given-left-piece (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x ?x) (y ?y) (content left))
 	(not (exec (action guess) (x ?x) (y ?y2 &: (eq ?y2 (+ ?y 1)))))
@@ -163,7 +163,7 @@
 	(pop-focus)
 )
 
-(defrule guess-left-given-right-piece
+(defrule guess-left-given-right-piece (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x ?x) (y ?y) (content right))
 	(not (exec (action guess) (x ?x) (y ?y2 &: (eq ?y2 (- ?y 1)))))
@@ -174,7 +174,7 @@
 	(pop-focus)
 )
 
-(defrule guess-down-given-top-piece
+(defrule guess-down-given-top-piece (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x ?x) (y ?y) (content top))
 	(not (exec (action guess) (x ?x2 &: (eq ?x2 (+ ?x 1))) (y ?y)))
@@ -185,7 +185,7 @@
 	(pop-focus)
 )
 
-(defrule guess-up-given-bottom-piece
+(defrule guess-up-given-bottom-piece (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x ?x) (y ?y) (content bot))
 	(not (exec (action guess) (x ?x2 &: (eq ?x2 (- ?x 1))) (y ?y)))
@@ -203,7 +203,7 @@
 ;  --- 3 pezzi) allora posso fare guess nelle due celle adiacenti ----
 ;  --- sulla stessa riga. O viceversa. -------------------------------
 ;  -------------------------------------------------------------------
-(defrule guess-left-when-col-less-than-3
+(defrule guess-left-when-col-less-than-3 (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x ?x) (y ?y) (content middle))
 	(k-per-col (col ?y) (num ?n &: (< ?n 3)))
@@ -215,7 +215,7 @@
 	(pop-focus)
 )
 
-(defrule guess-right-when-col-less-than-3
+(defrule guess-right-when-col-less-than-3 (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x ?x) (y ?y) (content middle))
 	(k-per-col (col ?y) (num ?n &: (< ?n 3)))
@@ -227,7 +227,7 @@
 	(pop-focus)
 )
 
-(defrule guess-up-when-row-less-than-3
+(defrule guess-up-when-row-less-than-3 (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x ?x) (y ?y) (content middle))
 	(k-per-row (row ?x) (num ?n &: (< ?n 3)))
@@ -239,7 +239,7 @@
 	(pop-focus)
 )
 
-(defrule guess-down-when-row-less-than-3
+(defrule guess-down-when-row-less-than-3 (declare (salience 10))
 	(status (step ?s) (currently running))
 	(sure-guess (x ?x) (y ?y) (content middle))
 	(k-per-row (row ?x) (num ?n &: (< ?n 3)))
