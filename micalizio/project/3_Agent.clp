@@ -8,10 +8,12 @@
 ;  -------- Templates utili --------------------
 ;  ---------------------------------------------
 ; Template per memorizzare le guess fatte con certezza
+; piece lo uso quando sono sicuro che contiene una parte di barca ma non mi interessa
+; sapere quale e faccio semplicemente una guess in quella posizione
 (deftemplate sure-guess
 	(slot x)
 	(slot y)
-	(slot content (allowed-values water left right middle top bot sub))
+	(slot content (allowed-values water left right middle top bot sub piece))
 )
 
 
@@ -63,6 +65,7 @@
 	(not (exec (action guess) (x ?x2 &: (eq ?x2 (- ?x 1))) (y 0)))
 =>
 	(printout t "I guess that cell [" (- ?x 1) ", " 0 "] contains a piece." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y 0) (content piece)))
 	(assert (exec (step ?s) (action guess) (x (- ?x 1)) (y 0)))
 	(pop-focus)
 )
@@ -73,6 +76,7 @@
 	(not (exec (action guess) (x ?x2 &: (eq ?x2 (+ ?x 1))) (y 0)))
 =>
 	(printout t "I guess that cell [" (+ ?x 1) ", " 0 "] contains a piece." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y 0) (content piece)))
 	(assert (exec (step ?s) (action guess) (x (+ ?x 1)) (y 0)))
 	(pop-focus)
 )
@@ -83,6 +87,7 @@
 	(not (exec (action guess) (x 0) (y ?y2 &: (eq ?y2 (- ?y 1)))))
 =>
 	(printout t "I guess that cell [" 0 ", " (- ?y 1) "] contains a piece." crlf)
+	(assert (sure-guess (x 0) (y (- ?y 1)) (content piece)))
 	(assert (exec (step ?s) (action guess) (x 0) (y (- ?y 1))))
 	(pop-focus)
 )
@@ -93,6 +98,7 @@
 	(not (exec (action guess) (x 0) (y ?y2 &: (eq ?y2 (+ ?y 1)))))
 =>
 	(printout t "I guess that cell [" 0 ", " (+ ?y 1) "] contains a piece." crlf)
+	(assert (sure-guess (x 0) (y (+ ?y 1)) (content piece)))
 	(assert (exec (step ?s) (action guess) (x 0) (y (+ ?y 1))))
 	(pop-focus)
 )
@@ -103,6 +109,7 @@
 	(not (exec (action guess) (x ?x2 &: (eq ?x2 (- ?x 1))) (y 9)))
 =>
 	(printout t "I guess that cell [" (- ?x 1) ", " 9 "] contains a piece." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y 9) (content piece)))
 	(assert (exec (step ?s) (action guess) (x (- ?x 1)) (y 9)))
 	(pop-focus)
 )
@@ -113,6 +120,7 @@
 	(not (exec (action guess) (x ?x2 &: (eq ?x2 (+ ?x 1))) (y 9)))
 =>
 	(printout t "I guess that cell [" (+ ?x 1) ", " 9 "] contains a piece." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y 9) (content piece)))
 	(assert (exec (step ?s) (action guess) (x (+ ?x 1)) (y 9)))
 	(pop-focus)
 )
@@ -123,6 +131,7 @@
 	(not (exec (action guess) (x 9) (y ?y2 &: (eq ?y2 (- ?y 1)))))
 =>
 	(printout t "I guess that cell [" 9 ", " (- ?y 1) "] contains a piece." crlf)
+	(assert (sure-guess (x 9) (y (- ?y 1)) (content piece)))
 	(assert (exec (step ?s) (action guess) (x 9) (y (- ?y 1))))
 	(pop-focus)
 )
@@ -133,6 +142,7 @@
 	(not (exec (action guess) (x 9) (y ?y2 &: (eq ?y2 (+ ?y 1)))))
 =>
 	(printout t "I guess that cell [" 9 ", " (+ ?y 1) "] contains a piece." crlf)
+	(assert (sure-guess (x 9) (y (+ ?y 1)) (content piece)))
 	(assert (exec (step ?s) (action guess) (x 9) (y (+ ?y 1))))
 	(pop-focus)
 )
@@ -148,6 +158,7 @@
 	(not (exec (action guess) (x ?x) (y ?y2 &: (eq ?y2 (+ ?y 1)))))
 =>
 	(printout t "I guess that cell [" ?x ", " (+ ?y 1) "] contains a piece." crlf)
+	(assert (sure-guess (x ?x) (y (+ ?y 1)) (content piece)))
 	(assert (exec (step ?s) (action guess) (x ?x) (y (+ ?y 1))))
 	(pop-focus)
 )
@@ -158,6 +169,7 @@
 	(not (exec (action guess) (x ?x) (y ?y2 &: (eq ?y2 (- ?y 1)))))
 =>
 	(printout t "I guess that cell [" ?x ", " (- ?y 1) "] contains a piece." crlf)
+	(assert (sure-guess (x ?x) (y (- ?y 1)) (content piece)))
 	(assert (exec (step ?s) (action guess) (x ?x) (y (- ?y 1))))
 	(pop-focus)
 )
@@ -168,6 +180,7 @@
 	(not (exec (action guess) (x ?x2 &: (eq ?x2 (+ ?x 1))) (y ?y)))
 =>
 	(printout t "I guess that cell [" (+ ?x 1) ", " ?y "] contains a piece." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y ?y) (content piece)))
 	(assert (exec (step ?s) (action guess) (x (+ ?x 1)) (y ?y)))
 	(pop-focus)
 )
@@ -178,9 +191,74 @@
 	(not (exec (action guess) (x ?x2 &: (eq ?x2 (- ?x 1))) (y ?y)))
 =>
 	(printout t "I guess that cell [" (- ?x 1) ", " ?y "] contains a piece." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y ?y) (content piece)))
 	(assert (exec (step ?s) (action guess) (x (- ?x 1)) (y ?y)))
 	(pop-focus)
 )
+
+
+;  -------------------------------------------------------------------
+;  --- Se ho un middle ma il numero di pezzi presenti nella sua ------
+;  --- colonna è minore di 3 (se c'è un middle la barca ha almeno ----
+;  --- 3 pezzi) allora posso fare guess nelle due celle adiacenti ----
+;  --- sulla stessa riga. O viceversa. -------------------------------
+;  -------------------------------------------------------------------
+(defrule guess-left-when-col-less-than-3
+	(status (step ?s) (currently running))
+	(sure-guess (x ?x) (y ?y) (content middle))
+	(k-per-col (col ?y) (num ?n &: (< ?n 3)))
+	(not (exec (action guess) (x ?x) (y ?y1 &: (eq ?y1 (- ?y 1)))))
+=>
+	(printout t "I guess that cell [" ?x ", " (- ?y 1) "] contains a piece." crlf)
+	(assert (sure-guess (x ?x) (y (- ?y 1)) (content piece)))
+	(assert (exec (step ?s) (action guess) (x ?x) (y (- ?y 1))))
+	(pop-focus)
+)
+
+(defrule guess-right-when-col-less-than-3
+	(status (step ?s) (currently running))
+	(sure-guess (x ?x) (y ?y) (content middle))
+	(k-per-col (col ?y) (num ?n &: (< ?n 3)))
+	(not (exec (action guess) (x ?x) (y ?y1 &: (eq ?y1 (+ ?y 1)))))
+=>
+	(printout t "I guess that cell [" ?x ", " (+ ?y 1) "] contains a piece." crlf)
+	(assert (sure-guess (x ?x) (y (+ ?y 1)) (content piece)))
+	(assert (exec (step ?s) (action guess) (x ?x) (y (+ ?y 1))))
+	(pop-focus)
+)
+
+(defrule guess-up-when-row-less-than-3
+	(status (step ?s) (currently running))
+	(sure-guess (x ?x) (y ?y) (content middle))
+	(k-per-row (row ?x) (num ?n &: (< ?n 3)))
+	(not (exec (action guess) (x ?x1 &: (eq ?x1 (- ?x 1))) (y ?y)))	
+=>
+	(printout t "I guess that cell [" (- ?x 1) ", " ?y "] contains a piece." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y ?y) (content piece)))
+	(assert (exec (step ?s) (action guess) (x (- ?x 1)) (y ?y)))
+	(pop-focus)
+)
+
+(defrule guess-down-when-row-less-than-3
+	(status (step ?s) (currently running))
+	(sure-guess (x ?x) (y ?y) (content middle))
+	(k-per-row (row ?x) (num ?n &: (< ?n 3)))
+	(not (exec (action guess) (x ?x1 &: (eq ?x1 (+ ?x 1))) (y ?y)))
+=>
+	(printout t "I guess that cell [" (+ ?x 1) ", " ?y "] contains a piece." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y ?y) (content piece)))
+	(assert (exec (step ?s) (action guess) (x (+ ?x 1)) (y ?y)))
+	(pop-focus)
+)
+
+
+
+
+;  -------------------------------------------------------------------
+;  --- Riempio con water tutte le celle che circondano delle  --------
+;  --- sure-guess che contengono qualsiasi pezzo che non sia acqua ---
+;  -------------------------------------------------------------------
+
 
 
 
