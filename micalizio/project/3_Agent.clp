@@ -791,15 +791,15 @@
 ;  -------------------------------------------------------------------
 (defrule update-num-pieces-in-row-and-col
 	(sure-guess (x ?x) (y ?y) (content ?p &~water))
-	?r <- (row-pieces (row ?x) (num ?num))
-	?c <- (col-pieces (col ?y) (num ?num))
+	?r <- (row-pieces (row ?x) (num ?numr))
+	?c <- (col-pieces (col ?y) (num ?numc))
 	(not (counted (x ?x) (y ?y)))
 =>
-	(modify ?r (num (- ?num 1)))
-	(modify ?c (num (- ?num 1)))
+	(modify ?r (num (- ?numr 1)))
+	(modify ?c (num (- ?numc 1)))
 	(assert (counted (x ?x) (y ?y)))
-	(printout t "Update row " ?x " num pieces to " (- ?num 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
-	(printout t "Update col " ?y " num pieces to " (- ?num 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
+	(printout t "Update row " ?x " num pieces to " (- ?numr 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
+	(printout t "Update col " ?y " num pieces to " (- ?numc 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
 )
 
 
