@@ -257,10 +257,35 @@
 ;  -------------------------------------------------------------------
 ;  --- Riempio con water tutte le celle che circondano delle  --------
 ;  --- sure-guess che contengono qualsiasi pezzo che non sia acqua ---
+;  --- e tutte le celle di righe e colonne il cui numero di pezzi ----
+;  --- contenuti è 0 -------------------------------------------------
 ;  -------------------------------------------------------------------
+; Riempio di acqua righe e colonne vuote
+(defrule fill-water-row-when-no-pieces
+	(k-per-row (row ?x) (num 0))
+	(k-per-col (col ?y))
+	(not (sure-guess (x ?x) (y ?y) (content water)))
+=>
+	(printout t "Fill cell [" ?x ", " ?y "] with water." crlf)
+	(assert (sure-guess (x ?x) (y ?y) (content water)))
+)
+
+(defrule fill-water-col-when-no-pieces
+	(k-per-row (row ?x))
+	(k-per-col (col ?y) (num 0))
+	(not (sure-guess (x ?x) (y ?y) (content water)))
+=>
+	(printout t "Fill cell [" ?x ", " ?y "] with water." crlf)
+	(assert (sure-guess (x ?x) (y ?y) (content water)))
+)
+
+
+; Riempio di acqua le celle attorno a pezzi right
 (defrule fill-water-up-left-around-right-piece
 	(sure-guess (x ?x) (y ?y) (content right))
-	(not (sure-guess (x ?x1 &: (and (eq ?x1 (- ?x 1)) (> ?x1 0))) (y ?y1 &: (and (eq ?y1 (- ?y 1)) (> ?y1 0))) (content water)))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water)))
+	(test (>= (- ?x 1) 0))
+	(test (>= (- ?y 1) 0))
 =>
 	(printout t "Fill cell [" (- ?x 1) ", " (- ?y 1) "] with water." crlf)
 	(assert (sure-guess (x (- ?x 1)) (y (- ?y 1)) (content water)))
@@ -268,7 +293,8 @@
 
 (defrule fill-water-up-mid-around-right-piece
 	(sure-guess (x ?x) (y ?y) (content right))
-	(not (sure-guess (x ?x1 &: (and (eq ?x1 (- ?x 1)) (> ?x1 0))) (y ?y) (content water)))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water)))
+	(test (>= (- ?x 1) 0))
 =>
 	(printout t "Fill cell [" (- ?x 1) ", " ?y "] with water." crlf)
 	(assert (sure-guess (x (- ?x 1)) (y ?y) (content water)))
@@ -276,7 +302,9 @@
 
 (defrule fill-water-up-right-around-right-piece
 	(sure-guess (x ?x) (y ?y) (content right))
-	(not (sure-guess (x ?x1 &: (and (eq ?x1 (- ?x 1)) (> ?x1 0))) (y ?y1 &: (and (eq ?y1 (+ ?y 1)) (< ?y1 9))) (content water)))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water)))
+	(test (>= (- ?x 1) 0))
+	(test (<= (+ ?y 1) 9))
 =>
 	(printout t "Fill cell [" (- ?x 1) ", " (+ ?y 1) "] with water." crlf)
 	(assert (sure-guess (x (- ?x 1)) (y (+ ?y 1)) (content water)))
@@ -284,7 +312,8 @@
 
 (defrule fill-water-mid-right-around-right-piece
 	(sure-guess (x ?x) (y ?y) (content right))
-	(not (sure-guess (x ?x) (y ?y1 &: (and (eq ?y1 (+ ?y 1)) (< ?y1 9))) (content water)))
+	(not (sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water)))
+	(test (<= (+ ?y 1) 9))
 =>
 	(printout t "Fill cell [" ?x ", " (+ ?y 1) "] with water." crlf)
 	(assert (sure-guess (x ?x) (y (+ ?y 1)) (content water)))
@@ -292,7 +321,9 @@
 
 (defrule fill-water-down-right-around-right-piece
 	(sure-guess (x ?x) (y ?y) (content right))
-	(not (sure-guess (x ?x1 &: (and (eq ?x1 (+ ?x 1)) (< ?x1 9))) (y ?y1 &: (and (eq ?y1 (+ ?y 1)) (< ?y1 9))) (content water)))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water)))
+	(test (<= (+ ?x 1) 9))
+	(test (<= (+ ?y 1) 9))
 =>
 	(printout t "Fill cell [" (+ ?x 1) ", " (+ ?y 1) "] with water." crlf)
 	(assert (sure-guess (x (+ ?x 1)) (y (+ ?y 1)) (content water)))
@@ -300,7 +331,8 @@
 
 (defrule fill-water-down-mid-around-right-piece
 	(sure-guess (x ?x) (y ?y) (content right))
-	(not (sure-guess (x ?x1 &: (and (eq ?x1 (+ ?x 1)) (< ?x1 9))) (y ?y) (content water)))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y) (content water)))
+	(test (<= (+ ?x 1) 9))
 =>
 	(printout t "Fill cell [" (+ ?x 1) ", " ?y "] with water." crlf)
 	(assert (sure-guess (x (+ ?x 1)) (y ?y) (content water)))
@@ -308,12 +340,220 @@
 
 (defrule fill-water-down-left-around-right-piece
 	(sure-guess (x ?x) (y ?y) (content right))
-	(not (sure-guess (x ?x1 &: (and (eq ?x1 (+ ?x 1)) (< ?x1 9))) (y ?y1 &: (and (eq ?y1 (- ?y 1)) (> ?y1 0))) (content water)))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water)))
+	(test (<= (+ ?x 1) 9))
+	(test (>= (- ?y 1) 0))
 =>
 	(printout t "Fill cell [" (+ ?x 1) ", " (- ?y 1) "] with water." crlf)
 	(assert (sure-guess (x (+ ?x 1)) (y (- ?y 1)) (content water)))
 )
 
+
+; Riempio di acqua le celle attorno a pezzi left
+(defrule fill-water-up-left-around-left-piece
+	(sure-guess (x ?x) (y ?y) (content left))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water)))
+	(test (>= (- ?x 1) 0))
+	(test (>= (- ?y 1) 0))
+=>
+	(printout t "Fill cell [" (- ?x 1) ", " (- ?y 1) "] with water." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y (- ?y 1)) (content water)))
+)
+
+(defrule fill-water-up-mid-around-left-piece
+	(sure-guess (x ?x) (y ?y) (content left))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water)))
+	(test (>= (- ?x 1) 0))
+=>
+	(printout t "Fill cell [" (- ?x 1) ", " ?y "] with water." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y ?y) (content water)))
+)
+
+(defrule fill-water-up-right-around-left-piece
+	(sure-guess (x ?x) (y ?y) (content left))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water)))
+	(test (>= (- ?x 1) 0))
+	(test (<= (+ ?y 1) 9))
+=>
+	(printout t "Fill cell [" (- ?x 1) ", " (+ ?y 1) "] with water." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y (+ ?y 1)) (content water)))
+)
+
+(defrule fill-water-mid-left-around-left-piece
+	(sure-guess (x ?x) (y ?y) (content left))
+	(not (sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water)))
+	(test (>= (- ?y 1) 0))
+=>
+	(printout t "Fill cell [" ?x ", " (- ?y 1) "] with water." crlf)
+	(assert (sure-guess (x ?x) (y (- ?y 1)) (content water)))
+)
+
+(defrule fill-water-down-left-around-left-piece
+	(sure-guess (x ?x) (y ?y) (content left))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water)))
+	(test (<= (+ ?x 1) 9))
+	(test (>= (- ?y 1) 0))
+=>
+	(printout t "Fill cell [" (+ ?x 1) ", " (- ?y 1) "] with water." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y (- ?y 1)) (content water)))
+)
+
+(defrule fill-water-down-mid-around-left-piece
+	(sure-guess (x ?x) (y ?y) (content left))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y) (content water)))
+	(test (<= (+ ?x 1) 9))
+=>
+	(printout t "Fill cell [" (+ ?x 1) ", " ?y "] with water." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y ?y) (content water)))
+)
+
+(defrule fill-water-down-right-around-left-piece
+	(sure-guess (x ?x) (y ?y) (content left))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water)))
+	(test (<= (+ ?x 1) 9))
+	(test (<= (+ ?y 1) 9))
+=>
+	(printout t "Fill cell [" (+ ?x 1) ", " (+ ?y 1) "] with water." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y (+ ?y 1)) (content water)))
+)
+
+
+; Riempio di acqua le celle attorno a pezzi top
+(defrule fill-water-up-left-around-top-piece
+	(sure-guess (x ?x) (y ?y) (content top))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water)))
+	(test (>= (- ?x 1) 0))
+	(test (>= (- ?y 1) 0))
+=>
+	(printout t "Fill cell [" (- ?x 1) ", " (- ?y 1) "] with water." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y (- ?y 1)) (content water)))
+)
+
+(defrule fill-water-up-mid-around-top-piece
+	(sure-guess (x ?x) (y ?y) (content top))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water)))
+	(test (>= (- ?x 1) 0))
+=>
+	(printout t "Fill cell [" (- ?x 1) ", " ?y "] with water." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y ?y) (content water)))
+)
+
+(defrule fill-water-up-right-around-top-piece
+	(sure-guess (x ?x) (y ?y) (content top))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water)))
+	(test (>= (- ?x 1) 0))
+	(test (<= (+ ?y 1) 9))
+=>
+	(printout t "Fill cell [" (- ?x 1) ", " (+ ?y 1) "] with water." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y (+ ?y 1)) (content water)))
+)
+
+(defrule fill-water-mid-left-around-top-piece
+	(sure-guess (x ?x) (y ?y) (content top))
+	(not (sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water)))
+	(test (>= (- ?y 1) 0))
+=>
+	(printout t "Fill cell [" ?x ", " (- ?y 1) "] with water." crlf)
+	(assert (sure-guess (x ?x) (y (- ?y 1)) (content water)))
+)
+
+(defrule fill-water-mid-right-around-top-piece
+	(sure-guess (x ?x) (y ?y) (content top))
+	(not (sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water)))
+	(test (<= (+ ?y 1) 9))
+=>
+	(printout t "Fill cell [" ?x ", " (+ ?y 1) "] with water." crlf)
+	(assert (sure-guess (x ?x) (y (+ ?y 1)) (content water)))
+)
+
+(defrule fill-water-down-left-around-top-piece
+	(sure-guess (x ?x) (y ?y) (content top))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water)))
+	(test (<= (+ ?x 1) 9))
+	(test (>= (- ?y 1) 0))
+=>
+	(printout t "Fill cell [" (+ ?x 1) ", " (- ?y 1) "] with water." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y (- ?y 1)) (content water)))
+)
+
+(defrule fill-water-down-right-around-top-piece
+	(sure-guess (x ?x) (y ?y) (content top))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water)))
+	(test (<= (+ ?x 1) 9))
+	(test (<= (+ ?y 1) 9))
+=>
+	(printout t "Fill cell [" (+ ?x 1) ", " (+ ?y 1) "] with water." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y (+ ?y 1)) (content water)))
+)
+
+
+; Riempio di acqua le celle attorno a pezzi bottom
+(defrule fill-water-up-left-around-bot-piece
+	(sure-guess (x ?x) (y ?y) (content bot))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water)))
+	(test (>= (- ?x 1) 0))
+	(test (>= (- ?y 1) 0))
+=>
+	(printout t "Fill cell [" (- ?x 1) ", " (- ?y 1) "] with water." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y (- ?y 1)) (content water)))
+)
+
+(defrule fill-water-up-right-around-bot-piece
+	(sure-guess (x ?x) (y ?y) (content bot))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water)))
+	(test (>= (- ?x 1) 0))
+	(test (<= (+ ?y 1) 9))
+=>
+	(printout t "Fill cell [" (- ?x 1) ", " (+ ?y 1) "] with water." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y (+ ?y 1)) (content water)))
+)
+
+(defrule fill-water-mid-left-around-bot-piece
+	(sure-guess (x ?x) (y ?y) (content bot))
+	(not (sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water)))
+	(test (>= (- ?y 1) 0))
+=>
+	(printout t "Fill cell [" ?x ", " (- ?y 1) "] with water." crlf)
+	(assert (sure-guess (x ?x) (y (- ?y 1)) (content water)))
+)
+
+(defrule fill-water-mid-right-around-bot-piece
+	(sure-guess (x ?x) (y ?y) (content bot))
+	(not (sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water)))
+	(test (<= (+ ?y 1) 9))
+=>
+	(printout t "Fill cell [" ?x ", " (+ ?y 1) "] with water." crlf)
+	(assert (sure-guess (x ?x) (y (+ ?y 1)) (content water)))
+)
+
+(defrule fill-water-down-left-around-bot-piece
+	(sure-guess (x ?x) (y ?y) (content bot))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water)))
+	(test (<= (+ ?x 1) 9))
+	(test (>= (- ?y 1) 0))
+=>
+	(printout t "Fill cell [" (+ ?x 1) ", " (- ?y 1) "] with water." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y (- ?y 1)) (content water)))
+)
+
+(defrule fill-water-down-mid-around-bot-piece
+	(sure-guess (x ?x) (y ?y) (content bot))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y) (content water)))
+	(test (<= (+ ?x 1) 9))
+=>
+	(printout t "Fill cell [" (+ ?x 1) ", " ?y "] with water." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y ?y) (content water)))
+)
+
+(defrule fill-water-down-right-around-bot-piece
+	(sure-guess (x ?x) (y ?y) (content bot))
+	(not (sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water)))
+	(test (<= (+ ?x 1) 9))
+	(test (<= (+ ?y 1) 9))
+=>
+	(printout t "Fill cell [" (+ ?x 1) ", " (+ ?y 1) "] with water." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y (+ ?y 1)) (content water)))
+)
 
 
 
