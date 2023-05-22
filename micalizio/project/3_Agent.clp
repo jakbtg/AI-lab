@@ -217,6 +217,7 @@
 )
 
 
+
 ;  -------------------------------------------------------------------
 ;  --- Se ho un middle ma il numero di pezzi presenti nella sua ------
 ;  --- colonna è minore di 3 (se c'è un middle la barca ha almeno ----
@@ -273,7 +274,6 @@
 
 
 
-
 ;  -------------------------------------------------------------------
 ;  --- Riempio con water tutte le celle che circondano delle  --------
 ;  --- sure-guess che contengono qualsiasi pezzo che non sia acqua ---
@@ -282,8 +282,6 @@
 ;  -------------------------------------------------------------------
 ; Riempio di acqua righe e colonne vuote
 (defrule fill-water-row-when-no-pieces
-	; (k-per-row (row ?x) (num 0))
-	; (k-per-col (col ?y))
 	(row-pieces (row ?x) (num 0))
 	(col-pieces (col ?y))
 	(not (sure-guess (x ?x) (y ?y)))
@@ -293,8 +291,6 @@
 )
 
 (defrule fill-water-col-when-no-pieces
-	; (k-per-row (row ?x))
-	; (k-per-col (col ?y) (num 0))
 	(row-pieces (row ?x))
 	(col-pieces (col ?y) (num 0))
 	(not (sure-guess (x ?x) (y ?y)))
@@ -783,7 +779,6 @@
 
 
 
-
 ;  -------------------------------------------------------------------
 ;  --- Aggiorno il numero di pezzi presenti in ogni riga e -----------
 ;  --- colonna sottraendoci il numero di sure-guess fatte su ---------
@@ -801,6 +796,25 @@
 	(printout t "Update row " ?x " num pieces to " (- ?numr 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
 	(printout t "Update col " ?y " num pieces to " (- ?numc 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
 )
+
+
+
+;  -------------------------------------------------------------------
+;  --- Se il numero di pezzi rimasti in una riga o colonna è ---------
+;  --- uguale al numero di celle vuote, allora posso dedurre ---------
+;  --- che ci sono dei pezzi di barca in quelle celle ----------------
+;  -------------------------------------------------------------------
+
+
+
+
+
+
+;  -------------------------------------------------------------------
+;  --- Tengo traccia dei vari tipi di barca affondati e --------------
+;  --- di quelle che restano da affondare ----------------------------
+;  -------------------------------------------------------------------
+
 
 
 
