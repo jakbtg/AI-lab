@@ -34,6 +34,9 @@
 	(slot y)
 )
 
+; Template per tenere traccia celle libere per righe e colonne ?? da aggiornare probabilmente ad ogni guess
+; TODO!!
+
 
 ;  ---------------------------------------------
 ;  --- Print delle informazioni iniziali -------
