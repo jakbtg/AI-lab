@@ -29,13 +29,58 @@
 )
 
 ; Template per tenere traccia dei pezzi già contati per l'aggiornamento delle righe e delle colonne
-(deftemplate counted
+(deftemplate counted-piece
 	(slot x)
 	(slot y)
 )
 
-; Template per tenere traccia celle libere per righe e colonne ?? da aggiornare probabilmente ad ogni guess
-; TODO!!
+; Template per tenere traccia celle libere per riga
+(deftemplate empty-cells-per-row
+	(slot row)
+	(slot num (default 10))
+)
+
+; Template per tenere traccia celle libere per colonna
+(deftemplate empty-cells-per-col
+	(slot col)
+	(slot num (default 10))
+)
+
+; Template per tenere traccia delle celle già contate per l'aggiornamento delle righe e delle colonne
+(deftemplate counted-cell
+	(slot x)
+	(slot y)
+)
+
+
+
+;  ---------------------------------------------
+;  -------- Fatti iniziali utili ---------------
+;  ---------------------------------------------
+; Inizializzo per ogni riga e colonna il numero di celle libere (inizialmente 10)
+(deffacts empty-cells-per-rows-and-cols
+	(empty-cells-per-row (row 0))
+	(empty-cells-per-row (row 1))
+	(empty-cells-per-row (row 2))
+	(empty-cells-per-row (row 3))
+	(empty-cells-per-row (row 4))
+	(empty-cells-per-row (row 5))
+	(empty-cells-per-row (row 6))
+	(empty-cells-per-row (row 7))
+	(empty-cells-per-row (row 8))
+	(empty-cells-per-row (row 9))
+	(empty-cells-per-col (col 0))
+	(empty-cells-per-col (col 1))
+	(empty-cells-per-col (col 2))
+	(empty-cells-per-col (col 3))
+	(empty-cells-per-col (col 4))
+	(empty-cells-per-col (col 5))
+	(empty-cells-per-col (col 6))
+	(empty-cells-per-col (col 7))
+	(empty-cells-per-col (col 8))
+	(empty-cells-per-col (col 9))
+)
+
 
 
 ;  ---------------------------------------------
@@ -787,17 +832,36 @@
 ;  --- colonna sottraendoci il numero di sure-guess fatte su ---------
 ;  --- quelle righe e colonne ----------------------------------------
 ;  -------------------------------------------------------------------
-(defrule update-num-pieces-in-row-and-col
+(defrule update-num-pieces-per-row-and-col
 	(sure-guess (x ?x) (y ?y) (content ?p &~water))
 	?r <- (row-pieces (row ?x) (num ?numr))
 	?c <- (col-pieces (col ?y) (num ?numc))
-	(not (counted (x ?x) (y ?y)))
+	(not (counted-piece (x ?x) (y ?y)))
 =>
 	(modify ?r (num (- ?numr 1)))
 	(modify ?c (num (- ?numc 1)))
-	(assert (counted (x ?x) (y ?y)))
+	(assert (counted-piece (x ?x) (y ?y)))
 	(printout t "Update row " ?x " num pieces to " (- ?numr 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
 	(printout t "Update col " ?y " num pieces to " (- ?numc 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
+)
+
+
+
+
+;  -------------------------------------------------------------------
+;  --- Aggiorno il numero di celle vuote in ogni riga e colonna ------
+;  -------------------------------------------------------------------
+(defrule update-empty-cells-per-row-and-col
+	(sure-guess (x ?x) (y ?y) (content ?p))
+	?r <- (empty-cells-per-row (row ?x) (num ?numr))
+	?c <- (empty-cells-per-col (col ?y) (num ?numc))
+	(not (counted-cell (x ?x) (y ?y)))
+=>
+	(modify ?r (num (- ?numr 1)))
+	(modify ?c (num (- ?numc 1)))
+	(assert (counted-cell (x ?x) (y ?y)))
+	(printout t "Update row " ?x " num empty cells to " (- ?numr 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
+	(printout t "Update col " ?y " num empty cells to " (- ?numc 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
 )
 
 
