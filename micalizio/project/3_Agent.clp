@@ -869,8 +869,40 @@
 ;  -------------------------------------------------------------------
 ;  --- Se il numero di pezzi rimasti in una riga o colonna è ---------
 ;  --- uguale al numero di celle vuote, allora posso dedurre ---------
-;  --- che ci sono dei pezzi di barca in quelle celle ----------------
+;  --- che ci sono dei pezzi di barca in quelle celle. ---------------
+;  --- Importante che vengano eseguite dopo aver aggiornato ----------
+;  --- il numero di pezzi e celle vuote per riga e colonna -----------
 ;  -------------------------------------------------------------------
+(defrule deduce-pieces-in-empty-cell-per-row (declare (salience -10))
+	(status (step ?s) (currently running))
+	(row-pieces (row ?x) (num ?numr))
+	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
+	(empty-cells-per-row (row ?x) (num ?nume))
+	(test (eq ?numr ?nume))
+	(not (sure-guess (x ?x) (y ?y)))
+	(not (exec (action guess) (x ?x) (y ?y)))
+=>
+	(printout t "Guess piece in cell [" ?x ", " ?y "]." crlf)
+	(assert (sure-guess (x ?x) (y ?y) (content piece)))
+	(assert (exec (step ?s) (action guess) (x ?x) (y ?y)))
+	(pop-focus)
+)
+
+(defrule deduce-pieces-in-empty-cell-per-col (declare (salience -10))
+	(status (step ?s) (currently running))
+	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
+	(col-pieces (col ?y) (num ?numc))
+	(empty-cells-per-col (col ?y) (num ?nume))
+	(test (eq ?numc ?nume))
+	(not (sure-guess (x ?x) (y ?y)))
+	(not (exec (action guess) (x ?x) (y ?y)))
+=>
+	(printout t "Guess piece in cell [" ?x ", " ?y "]." crlf)
+	(assert (sure-guess (x ?x) (y ?y) (content piece)))
+	(assert (exec (step ?s) (action guess) (x ?x) (y ?y)))
+	(pop-focus)
+)
+
 
 
 
@@ -890,7 +922,7 @@
 ;  ---------------------------------------------
 ;  --- Quando non ho più azioni da eseguire ----
 ;  ---------------------------------------------
-(defrule finished (declare (salience -10))
+(defrule finished (declare (salience -20))
 	(status (step ?s) (currently running))
 => 
 	(printout t "Finished." crlf)
