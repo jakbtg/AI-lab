@@ -52,13 +52,23 @@
 	(slot y)
 )
 
+; Template per tenere traccia delle navi completamente affondate
+(deftemplate sunk-boats
+	(slot one (default 0) (range 0 4))
+	(slot two (default 0) (range 0 3))
+	(slot three (default 0) (range 0 2))
+	(slot four (default 0) (range 0 1))
+)
+
+
 
 
 ;  ---------------------------------------------
 ;  -------- Fatti iniziali utili ---------------
 ;  ---------------------------------------------
 ; Inizializzo per ogni riga e colonna il numero di celle libere (inizialmente 10)
-(deffacts empty-cells-per-rows-and-cols
+; e il contenitore delle barche affondate
+(deffacts initialize
 	(empty-cells-per-row (row 0))
 	(empty-cells-per-row (row 1))
 	(empty-cells-per-row (row 2))
@@ -79,6 +89,7 @@
 	(empty-cells-per-col (col 7))
 	(empty-cells-per-col (col 8))
 	(empty-cells-per-col (col 9))
+	(sunk-boats)
 )
 
 
@@ -863,6 +874,58 @@
 	(printout t "Update row " ?x " num empty cells to " (- ?numr 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
 	(printout t "Update col " ?y " num empty cells to " (- ?numc 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
 )
+
+
+
+
+;  -------------------------------------------------------------------
+;  --- Cerco, date le sure-guess che ho fatto le barche --------------
+;  --- completamente affondate ---------------------------------------
+;  -------------------------------------------------------------------
+; Trovo i sub affondati
+(defrule sunk-one
+	?s <- (sunk-boats (one ?n &:(< ?n 4)))
+	(sure-guess (x ?x) (y ?y) (content ?p &~water))
+	(or 
+		(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water))
+		(eq ?y 0)
+	)
+	(or
+		(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (+ ?y 1))) (content water))
+		(eq ?y 9)
+	)
+	(or
+		(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water))
+		(eq ?x 0)
+	)
+	(or
+		(sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y) (content water))
+		(eq ?x 9)
+	)
+=>
+	(printout t "Sunk sub in cell [" ?x ", " ?y "]." crlf)
+	(modify ?s (one (+ ?n 1)))
+)
+
+; Trovo le barche da due pezzi affondate
+(defrule sunk-two-horizontal
+	?s <- (sunk-boats (two ?n &:(< ?n 3)))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
+	(or 
+		(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2))) (content water))
+		(eq ?y 1)
+	)
+	(or
+		(sure-guess (x ?x) (y ?y3 &:(eq ?y3 (+ ?y 1))) (content water))
+		(eq ?y 9)
+	)
+=>
+	(printout t "Sunk two pieces boat in cells [" ?x ", " ?y "] and [" ?x ", " (- ?y 1) "]." crlf)
+	(modify ?s (two (+ ?n 1)))
+)
+
+
 
 
 
