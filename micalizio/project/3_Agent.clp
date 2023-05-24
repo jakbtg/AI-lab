@@ -1072,7 +1072,7 @@
 ;  --- Importante che vengano eseguite dopo aver aggiornato ----------
 ;  --- il numero di pezzi e celle vuote per riga e colonna -----------
 ;  -------------------------------------------------------------------
-(defrule deduce-pieces-in-empty-cell-per-row (declare (salience -10))
+(defrule deduce-pieces-in-empty-cells-row (declare (salience -10))
 	(status (step ?s) (currently running))
 	(row-pieces (row ?x) (num ?numr))
 	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
@@ -1087,7 +1087,7 @@
 	(pop-focus)
 )
 
-(defrule deduce-pieces-in-empty-cell-per-col (declare (salience -10))
+(defrule deduce-pieces-in-empty-cells-col (declare (salience -10))
 	(status (step ?s) (currently running))
 	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
 	(col-pieces (col ?y) (num ?numc))
