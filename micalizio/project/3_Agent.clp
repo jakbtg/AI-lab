@@ -1013,14 +1013,6 @@
 	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
 	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2))) (content ?p3 &~water))
 	(sure-guess (x ?x) (y ?y3 &:(eq ?y3 (- ?y 3))) (content ?p4 &~water))
-	(or 
-		(sure-guess (x ?x) (y ?y4 &:(eq ?y4 (- ?y 4))) (content water))
-		(eq ?y 3)
-	)
-	(or
-		(sure-guess (x ?x) (y ?y5 &:(eq ?y5 (+ ?y 1))) (content water))
-		(eq ?y 9)
-	)
 	(not (sunk-check (x ?x) (y ?y)))
 	(not (sunk-check (x ?x) (y ?y1)))
 	(not (sunk-check (x ?x) (y ?y2)))
@@ -1040,14 +1032,6 @@
 	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
 	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
 	(sure-guess (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y) (content ?p4 &~water))
-	(or 
-		(sure-guess (x ?x4 &:(eq ?x4 (- ?x 4))) (y ?y) (content water))
-		(eq ?x 3)
-	)
-	(or
-		(sure-guess (x ?x5 &:(eq ?x5 (+ ?x 1))) (y ?y) (content water))
-		(eq ?x 9)
-	)
 	(not (sunk-check (x ?x) (y ?y)))
 	(not (sunk-check (x ?x1) (y ?y)))
 	(not (sunk-check (x ?x2) (y ?y)))
@@ -1210,6 +1194,22 @@
 
 
 
+;  ---------------------------------------------
+;  --- Prima fire ------------------------------
+;  ---------------------------------------------
+(defrule fire-up-3-pieces-ver (declare (salience -15))
+	(status (step ?s) (currently running))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
+	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
+	(not (sure-guess (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y)))
+	(not (exec (action fire) (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y)))
+	(test (>= (- ?x 3) 0))
+=>
+	(printout t "Fire in cell [" (- ?x 3) ", " ?y "]." crlf)
+	(assert (exec (step ?s) (action fire) (x (- ?x 3)) (y ?y)))
+	(pop-focus)
+)
 
 
 

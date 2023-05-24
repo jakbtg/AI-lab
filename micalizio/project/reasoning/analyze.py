@@ -56,7 +56,7 @@ for line in lines:
         empty_cells_per_column[y] -= 1
 
 # for line in lines:
-    if re.search(r'water', line, re.IGNORECASE) and re.search(r'fill', line, re.IGNORECASE):
+    if re.search(r'water', line, re.IGNORECASE) and (re.search(r'fill', line, re.IGNORECASE) or re.search(r'deduce', line, re.IGNORECASE)):
         # find coordinates: row is after '[' and before ','
         # find coordinates: column is after ',' and before ']'
         row = re.search(r'\[(\d)', line).group(1)
@@ -87,6 +87,14 @@ print(f'Sunk sub: {sunk_one}')
 print(f'Sunk two-pieces: {sunk_two}')
 print(f'Sunk three-pieces: {sunk_three}')
 print(f'Sunk four-pieces: {sunk_four}')
+
+# check number of fire used
+fire_used = 0
+for line in lines:
+    if re.search(r'fire', line, re.IGNORECASE):
+        fire_used += 1
+
+print(f'Fire used: {fire_used}')
 
 # print the grid with pretty table
 table = PrettyTable()

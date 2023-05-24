@@ -260,3 +260,52 @@ Update col 1 num empty cells to 0 given water in cell [9, 1].
 Fill cell [9, 9] with water.
 Update row 9 num empty cells to 3 given water in cell [9, 9].
 Update col 9 num empty cells to 0 given water in cell [9, 9].
+Fire in cell [3, 0].
+I know that cell [3, 0] contains top.
+I guess that cell [3, 0] contains top.
+Fill cell [2, 0] with water.
+Update row 2 num empty cells to 5 given water in cell [2, 0].
+Update col 0 num empty cells to 4 given water in cell [2, 0].
+Update row 3 num empty cells to 6 given top in cell [3, 0].
+Update col 0 num empty cells to 3 given top in cell [3, 0].
+Update row 3 num pieces to 0 given top in cell [3, 0].
+Update col 0 num pieces to 1 given top in cell [3, 0].
+Fill cell [3, 8] with water.
+Update row 3 num empty cells to 5 given water in cell [3, 8].
+Update col 8 num empty cells to 4 given water in cell [3, 8].
+Fill cell [3, 2] with water.
+Update row 3 num empty cells to 4 given water in cell [3, 2].
+Update col 2 num empty cells to 2 given water in cell [3, 2].
+Fill cell [3, 4] with water.
+Update row 3 num empty cells to 3 given water in cell [3, 4].
+Update col 4 num empty cells to 2 given water in cell [3, 4].
+Fill cell [3, 5] with water.
+Update row 3 num empty cells to 2 given water in cell [3, 5].
+Update col 5 num empty cells to 3 given water in cell [3, 5].
+Fill cell [3, 6] with water.
+Update row 3 num empty cells to 1 given water in cell [3, 6].
+Update col 6 num empty cells to 3 given water in cell [3, 6].
+Fill cell [3, 7] with water.
+Update row 3 num empty cells to 0 given water in cell [3, 7].
+Update col 7 num empty cells to 3 given water in cell [3, 7].
+Sink four-pieces boat in cells [6, 0], [5, 0], [4, 0] and [3, 0].
+Deduce water in cell [7, 0].
+Update row 7 num empty cells to 2 given water in cell [7, 0].
+Update col 0 num empty cells to 2 given water in cell [7, 0].
+Guess piece in cell [7, 7].
+Update row 7 num pieces to 1 given piece in cell [7, 7].
+Update col 7 num pieces to 0 given piece in cell [7, 7].
+Fill cell [9, 7] with water.
+Update row 9 num empty cells to 2 given water in cell [9, 7].
+Update col 7 num empty cells to 2 given water in cell [9, 7].
+Update row 7 num empty cells to 1 given piece in cell [7, 7].
+Update col 7 num empty cells to 1 given piece in cell [7, 7].
+Fill cell [4, 7] with water.
+Update row 4 num empty cells to 3 given water in cell [4, 7].
+Update col 7 num empty cells to 0 given water in cell [4, 7].
+Guess piece in cell [7, 8].
+Update row 7 num pieces to 0 given piece in cell [7, 8].
+Update col 8 num pieces to 2 given piece in cell [7, 8].
+Sink two-pieces boat in cells [7, 8] and [7, 7].
+Update row 7 num empty cells to 0 given piece in cell [7, 8].
+Update col 8 num empty cells to 3 given piece in cell [7, 8].
