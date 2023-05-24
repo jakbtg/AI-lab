@@ -83,10 +83,13 @@ for line in lines:
         if re.search(r'four', line, re.IGNORECASE):
             sunk_four += 1
 
-print(f'Sunk sub: {sunk_one}')
-print(f'Sunk two-pieces: {sunk_two}')
-print(f'Sunk three-pieces: {sunk_three}')
-print(f'Sunk four-pieces: {sunk_four}')
+sink_table = PrettyTable()
+sink_table.field_names = ['Boat', 'Sunk']
+sink_table.add_row(['Sub', sunk_one])
+sink_table.add_row(['Two-pieces', sunk_two])
+sink_table.add_row(['Three-pieces', sunk_three])
+sink_table.add_row(['Four-pieces', sunk_four])
+print(sink_table)
 
 # check number of fire used
 fire_used = 0
