@@ -60,9 +60,11 @@
 	(slot four (default 0) (range 0 1))
 )
 
-;; DEVO AGGIUNGERE UN TEMPLATE SINK CHECK PROBABILMENTE
-;; PER CONTARE LE BARCHE AFFONDATE SOLO UNA VOLTA
-;; TODO
+; Template per tenere traccia delle barche affondate già contate
+(deftemplate sunk-check
+	(slot x)
+	(slot y)
+)
 
 
 
@@ -905,9 +907,11 @@
 		(sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y) (content water))
 		(eq ?x 9)
 	)
+	(not (sunk-check (x ?x) (y ?y)))
 =>
 	(printout t "Sunk sub in cell [" ?x ", " ?y "]." crlf)
 	(modify ?s (one (+ ?n 1)))
+	(assert (sunk-check (x ?x) (y ?y)))
 )
 
 ; Trovo le barche da due pezzi affondate
@@ -923,9 +927,138 @@
 		(sure-guess (x ?x) (y ?y3 &:(eq ?y3 (+ ?y 1))) (content water))
 		(eq ?y 9)
 	)
+	(not (sunk-check (x ?x) (y ?y)))
+	(not (sunk-check (x ?x) (y ?y1)))
 =>
-	(printout t "Sunk two pieces boat in cells [" ?x ", " ?y "] and [" ?x ", " (- ?y 1) "]." crlf)
+	(printout t "Sink two-pieces boat in cells [" ?x ", " ?y "] and [" ?x ", " ?y1 "]." crlf)
 	(modify ?s (two (+ ?n 1)))
+	(assert (sunk-check (x ?x) (y ?y)))
+	(assert (sunk-check (x ?x) (y ?y1)))
+)
+
+(defrule sunk-two-vertical
+	?s <- (sunk-boats (two ?n &:(< ?n 3)))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
+	(or 
+		(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content water))
+		(eq ?x 1)
+	)
+	(or
+		(sure-guess (x ?x3 &:(eq ?x3 (+ ?x 1))) (y ?y) (content water))
+		(eq ?x 9)
+	)
+	(not (sunk-check (x ?x) (y ?y)))
+	(not (sunk-check (x ?x1) (y ?y)))
+=>
+	(printout t "Sink two-pieces boat in cells [" ?x ", " ?y "] and [" ?x1 ", " ?y "]." crlf)
+	(modify ?s (two (+ ?n 1)))
+	(assert (sunk-check (x ?x) (y ?y)))
+	(assert (sunk-check (x ?x1) (y ?y)))
+)
+
+; Trovo le barche da tre pezzi affondate
+(defrule sunk-three-horizontal
+	?s <- (sunk-boats (three ?n &:(< ?n 2)))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
+	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2))) (content ?p3 &~water))
+	(or 
+		(sure-guess (x ?x) (y ?y3 &:(eq ?y3 (- ?y 3))) (content water))
+		(eq ?y 2)
+	)
+	(or
+		(sure-guess (x ?x) (y ?y4 &:(eq ?y4 (+ ?y 1))) (content water))
+		(eq ?y 9)
+	)
+	(not (sunk-check (x ?x) (y ?y)))
+	(not (sunk-check (x ?x) (y ?y1)))
+	(not (sunk-check (x ?x) (y ?y2)))
+=>
+	(printout t "Sink three-pieces boat in cells [" ?x ", " ?y "], [" ?x ", " ?y1 "] and [" ?x ", " ?y2 "]." crlf)
+	(modify ?s (three (+ ?n 1)))
+	(assert (sunk-check (x ?x) (y ?y)))
+	(assert (sunk-check (x ?x) (y ?y1)))
+	(assert (sunk-check (x ?x) (y ?y2)))
+)
+
+(defrule sunk-three-vertical
+	?s <- (sunk-boats (three ?n &:(< ?n 2)))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
+	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
+	(or 
+		(sure-guess (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y) (content water))
+		(eq ?x 2)
+	)
+	(or
+		(sure-guess (x ?x4 &:(eq ?x4 (+ ?x 1))) (y ?y) (content water))
+		(eq ?x 9)
+	)
+	(not (sunk-check (x ?x) (y ?y)))
+	(not (sunk-check (x ?x1) (y ?y)))
+	(not (sunk-check (x ?x2) (y ?y)))
+=>
+	(printout t "Sink three-pieces boat in cells [" ?x ", " ?y "], [" ?x1 ", " ?y "] and [" ?x2 ", " ?y "]." crlf)
+	(modify ?s (three (+ ?n 1)))
+	(assert (sunk-check (x ?x) (y ?y)))
+	(assert (sunk-check (x ?x1) (y ?y)))
+	(assert (sunk-check (x ?x2) (y ?y)))
+)
+
+; Trovo la barca da quattro pezzi affondata
+(defrule sunk-four-horizontal
+	?s <- (sunk-boats (four ?n &:(< ?n 1)))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
+	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2))) (content ?p3 &~water))
+	(sure-guess (x ?x) (y ?y3 &:(eq ?y3 (- ?y 3))) (content ?p4 &~water))
+	(or 
+		(sure-guess (x ?x) (y ?y4 &:(eq ?y4 (- ?y 4))) (content water))
+		(eq ?y 3)
+	)
+	(or
+		(sure-guess (x ?x) (y ?y5 &:(eq ?y5 (+ ?y 1))) (content water))
+		(eq ?y 9)
+	)
+	(not (sunk-check (x ?x) (y ?y)))
+	(not (sunk-check (x ?x) (y ?y1)))
+	(not (sunk-check (x ?x) (y ?y2)))
+	(not (sunk-check (x ?x) (y ?y3)))
+=>
+	(printout t "Sink four-pieces boat in cells [" ?x ", " ?y "], [" ?x ", " ?y1 "], [" ?x ", " ?y2 "] and [" ?x ", " ?y3 "]." crlf)
+	(modify ?s (four (+ ?n 1)))
+	(assert (sunk-check (x ?x) (y ?y)))
+	(assert (sunk-check (x ?x) (y ?y1)))
+	(assert (sunk-check (x ?x) (y ?y2)))
+	(assert (sunk-check (x ?x) (y ?y3)))
+)
+
+(defrule sunk-four-vertical
+	?s <- (sunk-boats (four ?n &:(< ?n 1)))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
+	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
+	(sure-guess (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y) (content ?p4 &~water))
+	(or 
+		(sure-guess (x ?x4 &:(eq ?x4 (- ?x 4))) (y ?y) (content water))
+		(eq ?x 3)
+	)
+	(or
+		(sure-guess (x ?x5 &:(eq ?x5 (+ ?x 1))) (y ?y) (content water))
+		(eq ?x 9)
+	)
+	(not (sunk-check (x ?x) (y ?y)))
+	(not (sunk-check (x ?x1) (y ?y)))
+	(not (sunk-check (x ?x2) (y ?y)))
+	(not (sunk-check (x ?x3) (y ?y)))
+=>
+	(printout t "Sink four-pieces boat in cells [" ?x ", " ?y "], [" ?x1 ", " ?y "], [" ?x2 ", " ?y "] and [" ?x3 ", " ?y "]." crlf)
+	(modify ?s (four (+ ?n 1)))
+	(assert (sunk-check (x ?x) (y ?y)))
+	(assert (sunk-check (x ?x1) (y ?y)))
+	(assert (sunk-check (x ?x2) (y ?y)))
+	(assert (sunk-check (x ?x3) (y ?y)))
 )
 
 
