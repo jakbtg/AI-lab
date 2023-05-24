@@ -1063,6 +1063,103 @@
 
 
 
+;  -------------------------------------------------------------------
+;  --- Se ho già affondato la nave da 4 e ho tre pezzi di fila -------
+;  --- posso dedurre che quei tre pezzi rappresentano una barca ------
+;  --- da tre pezzi e quindi posso asserire che ho acqua intorno -----
+;  --- ecc ecc per gli altri casi ------------------------------------
+;  -------------------------------------------------------------------
+(defrule deduce-water-left-3-hor-when-4-sunk
+	(sunk-boats (four 1))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
+	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2))) (content ?p3 &~water))
+	(test (> (- ?y 3) 0))
+=>
+	(printout t "Deduce water in cell [" ?x ", " (- ?y 3) "]." crlf)
+	(assert (sure-guess (x ?x) (y (- ?y 3)) (content water)))
+)
+
+(defrule deduce-water-right-3-hor-when-4-sunk
+	(sunk-boats (four 1))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
+	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2))) (content ?p3 &~water))
+	(test (< (+ ?y 1) 10))
+=>
+	(printout t "Deduce water in cell [" ?x ", " (+ ?y 1) "]." crlf)
+	(assert (sure-guess (x ?x) (y (+ ?y 1)) (content water)))
+)
+
+(defrule deduce-water-up-3-ver-when-4-sunk
+	(sunk-boats (four 1))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
+	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
+	(test (> (- ?x 3) 0))
+=>
+	(printout t "Deduce water in cell [" (- ?x 3) ", " ?y "]." crlf)
+	(assert (sure-guess (x (- ?x 3)) (y ?y) (content water)))
+)
+
+(defrule deduce-water-down-3-ver-when-4-sunk
+	(sunk-boats (four 1))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
+	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
+	(test (< (+ ?x 1) 10))
+=>
+	(printout t "Deduce water in cell [" (+ ?x 1) ", " ?y "]." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y ?y) (content water)))
+)
+
+(defrule deduce-water-left-2-hor-when-3-4-sunk
+	(sunk-boats (four 1))
+	(sunk-boats (three 2))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
+	(test (> (- ?y 2) 0))
+=>
+	(printout t "Deduce water in cell [" ?x ", " (- ?y 2) "]." crlf)
+	(assert (sure-guess (x ?x) (y (- ?y 2)) (content water)))
+)
+
+(defrule deduce-water-right-2-hor-when-3-4-sunk
+	(sunk-boats (four 1))
+	(sunk-boats (three 2))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
+	(test (< (+ ?y 1) 10))
+=>
+	(printout t "Deduce water in cell [" ?x ", " (+ ?y 1) "]." crlf)
+	(assert (sure-guess (x ?x) (y (+ ?y 1)) (content water)))
+)
+
+(defrule deduce-water-up-2-ver-when-3-4-sunk
+	(sunk-boats (four 1))
+	(sunk-boats (three 2))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
+	(test (> (- ?x 2) 0))
+=>
+	(printout t "Deduce water in cell [" (- ?x 2) ", " ?y "]." crlf)
+	(assert (sure-guess (x (- ?x 2)) (y ?y) (content water)))
+)
+
+(defrule deduce-water-down-2-ver-when-3-4-sunk
+	(sunk-boats (four 1))
+	(sunk-boats (three 2))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
+	(test (< (+ ?x 1) 10))
+=>
+	(printout t "Deduce water in cell [" (+ ?x 1) ", " ?y "]." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y ?y) (content water)))
+)
+
+
+
+
 
 
 ;  -------------------------------------------------------------------
@@ -1102,16 +1199,6 @@
 	(pop-focus)
 )
 
-
-
-
-
-
-
-;  -------------------------------------------------------------------
-;  --- Tengo traccia dei vari tipi di barca affondati e --------------
-;  --- di quelle che restano da affondare ----------------------------
-;  -------------------------------------------------------------------
 
 
 
