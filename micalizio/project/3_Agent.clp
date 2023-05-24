@@ -1074,7 +1074,8 @@
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
 	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2))) (content ?p3 &~water))
-	(test (> (- ?y 3) 0))
+	(not (sure-guess (x ?x) (y ?y3 &:(eq ?y3 (- ?y 3)))))
+	(test (>= (- ?y 3) 0))
 =>
 	(printout t "Deduce water in cell [" ?x ", " (- ?y 3) "]." crlf)
 	(assert (sure-guess (x ?x) (y (- ?y 3)) (content water)))
@@ -1085,6 +1086,7 @@
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
 	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2))) (content ?p3 &~water))
+	(not (sure-guess (x ?x) (y ?y3 &:(eq ?y3 (+ ?y 1)))))
 	(test (< (+ ?y 1) 10))
 =>
 	(printout t "Deduce water in cell [" ?x ", " (+ ?y 1) "]." crlf)
@@ -1096,7 +1098,8 @@
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
 	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
-	(test (> (- ?x 3) 0))
+	(not (sure-guess (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y)))
+	(test (>= (- ?x 3) 0))
 =>
 	(printout t "Deduce water in cell [" (- ?x 3) ", " ?y "]." crlf)
 	(assert (sure-guess (x (- ?x 3)) (y ?y) (content water)))
@@ -1107,6 +1110,7 @@
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
 	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
+	(not (sure-guess (x ?x3 &:(eq ?x3 (+ ?x 1))) (y ?y)))
 	(test (< (+ ?x 1) 10))
 =>
 	(printout t "Deduce water in cell [" (+ ?x 1) ", " ?y "]." crlf)
@@ -1118,7 +1122,8 @@
 	(sunk-boats (three 2))
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
-	(test (> (- ?y 2) 0))
+	(not (sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2)))))
+	(test (>= (- ?y 2) 0))
 =>
 	(printout t "Deduce water in cell [" ?x ", " (- ?y 2) "]." crlf)
 	(assert (sure-guess (x ?x) (y (- ?y 2)) (content water)))
@@ -1129,6 +1134,7 @@
 	(sunk-boats (three 2))
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
+	(not (sure-guess (x ?x) (y ?y2 &:(eq ?y2 (+ ?y 1)))))
 	(test (< (+ ?y 1) 10))
 =>
 	(printout t "Deduce water in cell [" ?x ", " (+ ?y 1) "]." crlf)
@@ -1140,7 +1146,8 @@
 	(sunk-boats (three 2))
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
-	(test (> (- ?x 2) 0))
+	(not (sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y)))
+	(test (>= (- ?x 2) 0))
 =>
 	(printout t "Deduce water in cell [" (- ?x 2) ", " ?y "]." crlf)
 	(assert (sure-guess (x (- ?x 2)) (y ?y) (content water)))
@@ -1151,6 +1158,7 @@
 	(sunk-boats (three 2))
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
+	(not (sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y)))
 	(test (< (+ ?x 1) 10))
 =>
 	(printout t "Deduce water in cell [" (+ ?x 1) ", " ?y "]." crlf)
