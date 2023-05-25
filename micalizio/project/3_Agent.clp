@@ -78,6 +78,12 @@
 	(slot ratio (default 0) (range 0 10))
 )
 
+; Template per tenere traccia delle celle già contate per l'aggiornamento del ratio
+(deftemplate counted-for-ratio
+	(slot x)
+	(slot y)
+)
+
 
 
 ;  ---------------------------------------------
@@ -919,6 +925,31 @@
 	(printout t "Update row " ?x " num empty cells to " (- ?numr 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
 	(printout t "Update col " ?y " num empty cells to " (- ?numc 1) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
 )
+
+
+
+
+;  -------------------------------------------------------------------
+;  --- Aggiorno il rapporto tra pezzi rimasti e celle libere ---------
+;  --- in ogni riga e colonna ----------------------------------------
+;  -------------------------------------------------------------------
+(defrule update-ratio-per-row-and-col (declare (salience -5))
+	(sure-guess (x ?x) (y ?y) (content ?p))
+	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
+	(empty-cells-per-row (row ?x) (num ?numer&:(> ?numer 0)))
+	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
+	(empty-cells-per-col (col ?y) (num ?numec&:(> ?numec 0)))
+	(not (counted-for-ratio (x ?x) (y ?y)))
+	?r <- (row-ratio (row ?x) (ratio ?ratior))
+	?c <- (col-ratio (col ?y) (ratio ?ratioc))
+=>
+	(modify ?r (ratio (/ ?numr ?numer)))
+	(modify ?c (ratio (/ ?numc ?numec)))
+	(assert (counted-for-ratio (x ?x) (y ?y)))
+	(printout t "Update row " ?x " ratio to " (/ ?numr ?numer) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
+	(printout t "Update col " ?y " ratio to " (/ ?numc ?numec) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
+)
+
 
 
 
