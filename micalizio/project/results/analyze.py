@@ -5,7 +5,7 @@ with open ('micalizio/project/results/result.txt', 'r') as f:
     lines = f.readlines()
 
 # select only the first 262 lines
-lines = lines[:262]
+# lines = lines[:262]
 
 
 # find total pieces per column and row

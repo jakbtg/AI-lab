@@ -950,7 +950,22 @@
 	(printout t "Update col " ?y " ratio to " (/ ?numc ?numec) " given " ?p " in cell [" ?x ", " ?y "]." crlf)
 )
 
-
+(defrule update-ratio-per-row-and-col-when-0 (declare (salience -5))
+	(sure-guess (x ?x) (y ?y) (content ?p))
+	(row-pieces (row ?x) (num 0))
+	(empty-cells-per-row (row ?x) (num 0))
+	(col-pieces (col ?y) (num 0))
+	(empty-cells-per-col (col ?y) (num 0))
+	(not (counted-for-ratio (x ?x) (y ?y)))
+	?r <- (row-ratio (row ?x) (ratio ?ratior))
+	?c <- (col-ratio (col ?y) (ratio ?ratioc))
+=>
+	(modify ?r (ratio 0))
+	(modify ?c (ratio 0))
+	(assert (counted-for-ratio (x ?x) (y ?y)))
+	(printout t "Update row " ?x " ratio to 0 given " ?p " in cell [" ?x ", " ?y "]." crlf)
+	(printout t "Update col " ?y " ratio to 0 given " ?p " in cell [" ?x ", " ?y "]." crlf)
+)
 
 
 
@@ -1269,26 +1284,44 @@
 ;  --- num pezzi rimasti / num celle vuote, considerando -------------
 ;  --- sia righe che colonne -----------------------------------------
 ;  -------------------------------------------------------------------
-(defrule fire-most-probable-cell (declare (salience -15))
-	(status (step ?s) (currently running))
-	(moves (fires ?nf&:(> ?nf 0)))
-	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
-	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
-	(empty-cells-per-row (row ?x) (num ?numer&:(> ?numer 0)))
-	(empty-cells-per-col (col ?y) (num ?numec&:(> ?numec 0)))
-	(row-pieces (row ?x2&~?x) (num ?numr2&:(> ?numr2 0)))
-	(col-pieces (col ?y2&~?y) (num ?numc2&:(> ?numc2 0)))
-	(empty-cells-per-row (row ?x2) (num ?numer2&:(> ?numer2 0)))
-	(empty-cells-per-col (col ?y2) (num ?numec2&:(> ?numec2 0)))
-	(test (not (> (/ ?numr2 ?numer2) (/ ?numr ?numer))))
-	(test (not (> (/ ?numc2 ?numec2) (/ ?numc ?numec))))
-	(not (sure-guess (x ?x) (y ?y)))
-	(not (exec (action fire) (x ?x) (y ?y)))
-=>
-	(printout t "Fire in cell [" ?x ", " ?y "]." crlf)
-	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
-	(pop-focus)
-)
+
+; questa non si attiva mai
+; (defrule fire-most-probable-cell (declare (salience -15))
+; 	(status (step ?s) (currently running))
+; 	(moves (fires ?nf&:(> ?nf 0)))
+; 	(not (sure-guess (x ?x) (y ?y)))
+; 	(not (exec (action fire) (x ?x) (y ?y)))
+; 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
+; 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
+; 	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
+; 	(not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
+; =>
+; 	(printout t "Fire in cell [" ?x ", " ?y "]." crlf)
+; 	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
+; 	(pop-focus)
+; )
+
+; questa si attiva su celle sbagliate
+; (defrule fire-most-probable-cell (declare (salience -15))
+; 	(status (step ?s) (currently running))
+; 	(moves (fires ?nf&:(> ?nf 0)))
+; 	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
+; 	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
+; 	(empty-cells-per-row (row ?x) (num ?numer&:(> ?numer 0)))
+; 	(empty-cells-per-col (col ?y) (num ?numec&:(> ?numec 0)))
+; 	(row-pieces (row ?x2&~?x) (num ?numr2&:(> ?numr2 0)))
+; 	(col-pieces (col ?y2&~?y) (num ?numc2&:(> ?numc2 0)))
+; 	(empty-cells-per-row (row ?x2) (num ?numer2&:(> ?numer2 0)))
+; 	(empty-cells-per-col (col ?y2) (num ?numec2&:(> ?numec2 0)))
+; 	(test (not (> (/ ?numr2 ?numer2) (/ ?numr ?numer))))
+; 	(test (not (> (/ ?numc2 ?numec2) (/ ?numc ?numec))))
+; 	(not (sure-guess (x ?x) (y ?y)))
+; 	(not (exec (action fire) (x ?x) (y ?y)))
+; =>
+; 	(printout t "Fire in cell [" ?x ", " ?y "]." crlf)
+; 	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
+; 	(pop-focus)
+; )
 
 
 
