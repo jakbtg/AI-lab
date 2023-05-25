@@ -4,6 +4,10 @@ from prettytable import PrettyTable
 with open ('micalizio/project/results/result.txt', 'r') as f:
     lines = f.readlines()
 
+# select only the first 262 lines
+lines = lines[:262]
+
+
 # find total pieces per column and row
 pieces_per_row = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
 pieces_per_column = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
@@ -74,7 +78,7 @@ sunk_three = 0
 sunk_four = 0
 for line in lines:
     if re.search(r'sink', line, re.IGNORECASE):
-        if re.search(r'one', line, re.IGNORECASE):
+        if re.search(r'sub', line, re.IGNORECASE):
             sunk_one += 1
         if re.search(r'two', line, re.IGNORECASE):
             sunk_two += 1
