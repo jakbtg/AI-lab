@@ -280,3 +280,38 @@ Update row 1 ratio to 0
 Update col 8 ratio to 0.6
 Update row 8 ratio to 0
 Update col 0 ratio to 0.4
+Fire in cell [7, 8].
+I know that cell [7, 8] contains right.
+I guess that cell [7, 8] contains right.
+I guess that cell [7, 7] contains a piece.
+Update row 7 num pieces to 1 given piece in cell [7, 7].
+Update col 7 num pieces to 0 given piece in cell [7, 7].
+Fill cell [9, 7] with water.
+Update row 9 num empty cells to 2 given water in cell [9, 7].
+Update col 7 num empty cells to 3 given water in cell [9, 7].
+Update row 7 num empty cells to 2 given piece in cell [7, 7].
+Update col 7 num empty cells to 2 given piece in cell [7, 7].
+Update row 7 num empty cells to 1 given right in cell [7, 8].
+Update col 8 num empty cells to 4 given right in cell [7, 8].
+Fill cell [3, 7] with water.
+Update row 3 num empty cells to 6 given water in cell [3, 7].
+Update col 7 num empty cells to 1 given water in cell [3, 7].
+Fill cell [4, 7] with water.
+Update row 4 num empty cells to 3 given water in cell [4, 7].
+Update col 7 num empty cells to 0 given water in cell [4, 7].
+Update row 7 num pieces to 0 given right in cell [7, 8].
+Update col 8 num pieces to 2 given right in cell [7, 8].
+Fill cell [7, 0] with water.
+Update row 7 num empty cells to 0 given water in cell [7, 0].
+Update col 0 num empty cells to 4 given water in cell [7, 0].
+Sink two-pieces boat in cells [7, 8] and [7, 7].
+Fire in cell [2, 8].
+I know that cell [2, 8] contains bot.
+I guess that cell [2, 8] contains bot.
+Fill cell [3, 8] with water.
+Update row 3 num empty cells to 5 given water in cell [3, 8].
+Update col 8 num empty cells to 3 given water in cell [3, 8].
+Update row 2 num empty cells to 5 given bot in cell [2, 8].
+Update col 8 num empty cells to 2 given bot in cell [2, 8].
+Update row 2 num pieces to 3 given bot in cell [2, 8].
+Update col 8 num pieces to 1 given bot in cell [2, 8].

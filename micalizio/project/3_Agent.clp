@@ -1322,43 +1322,17 @@
 (defrule fire-most-probable-cell (declare (salience -15))
 	(status (step ?s) (currently running))
 	(moves (fires ?nf&:(> ?nf 0)))
-	(not (sure-guess (x ?x) (y ?y)))
-	(not (exec (action fire) (x ?x) (y ?y)))
 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
-	; (not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
-	; (not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
-	(row-ratio (row ?x2&~?x) (ratio ?rx2&~?rx))
-	(col-ratio (col ?y2&~?y) (ratio ?ry2&~?ry))
-	(test (not (> (* ?rx2 100) (* ?rx 100))))
-	(test (not (> (* ?ry2 100) (* ?ry 100))))
+	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
+	(not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
+	(not (sure-guess (x ?x) (y ?y)))
+	(not (exec (action fire) (x ?x) (y ?y)))
 =>
 	(printout t "Fire in cell [" ?x ", " ?y "]." crlf)
 	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
 	(pop-focus)
 )
-
-; questa si attiva su celle sbagliate
-; (defrule fire-most-probable-cell (declare (salience -15))
-; 	(status (step ?s) (currently running))
-; 	(moves (fires ?nf&:(> ?nf 0)))
-; 	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
-; 	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
-; 	(empty-cells-per-row (row ?x) (num ?numer&:(> ?numer 0)))
-; 	(empty-cells-per-col (col ?y) (num ?numec&:(> ?numec 0)))
-; 	(row-pieces (row ?x2&~?x) (num ?numr2&:(> ?numr2 0)))
-; 	(col-pieces (col ?y2&~?y) (num ?numc2&:(> ?numc2 0)))
-; 	(empty-cells-per-row (row ?x2) (num ?numer2&:(> ?numer2 0)))
-; 	(empty-cells-per-col (col ?y2) (num ?numec2&:(> ?numec2 0)))
-; 	(test (not (> (/ ?numr2 ?numer2) (/ ?numr ?numer))))
-; 	(test (not (> (/ ?numc2 ?numec2) (/ ?numc ?numec))))
-; 	(not (sure-guess (x ?x) (y ?y)))
-; 	(not (exec (action fire) (x ?x) (y ?y)))
-; =>
-; 	(printout t "Fire in cell [" ?x ", " ?y "]." crlf)
-; 	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
-; 	(pop-focus)
-; )
 
 
 
@@ -1385,7 +1359,7 @@
 ;  ---------------------------------------------
 ;  --- Quando non ho più azioni da eseguire ----
 ;  ---------------------------------------------
-(defrule finished (declare (salience -20))
+(defrule finished (declare (salience -25))
 	(status (step ?s) (currently running))
 => 
 	(printout t "Finished." crlf)
