@@ -1,7 +1,7 @@
 import re
 from prettytable import PrettyTable
 
-with open ('micalizio/project/reasoning/result.txt', 'r') as f:
+with open ('micalizio/project/results/result.txt', 'r') as f:
     lines = f.readlines()
 
 # find total pieces per column and row
