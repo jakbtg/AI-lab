@@ -931,7 +931,8 @@
 
 ;  -------------------------------------------------------------------
 ;  --- Aggiorno il rapporto tra pezzi rimasti e celle libere ---------
-;  --- in ogni riga e colonna ----------------------------------------
+;  --- in ogni riga e colonna. Importante che vengano aggiornati -----
+;  --- dopo aver aggiornato il numero di pezzi e celle libere --------
 ;  -------------------------------------------------------------------
 (defrule update-ratio-per-row-and-col (declare (salience -5))
 	(sure-guess (x ?x) (y ?y) (content ?p))
@@ -1318,22 +1319,20 @@
 ;  --- num pezzi rimasti / num celle vuote, considerando -------------
 ;  --- sia righe che colonne -----------------------------------------
 ;  -------------------------------------------------------------------
-
-; questa non si attiva mai
-; (defrule fire-most-probable-cell (declare (salience -15))
-; 	(status (step ?s) (currently running))
-; 	(moves (fires ?nf&:(> ?nf 0)))
-; 	(not (sure-guess (x ?x) (y ?y)))
-; 	(not (exec (action fire) (x ?x) (y ?y)))
-; 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
-; 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
-; 	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
-; 	(not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
-; =>
-; 	(printout t "Fire in cell [" ?x ", " ?y "]." crlf)
-; 	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
-; 	(pop-focus)
-; )
+(defrule fire-most-probable-cell (declare (salience -15))
+	(status (step ?s) (currently running))
+	(moves (fires ?nf&:(> ?nf 0)))
+	(not (sure-guess (x ?x) (y ?y)))
+	(not (exec (action fire) (x ?x) (y ?y)))
+	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
+	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
+	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(>f ?rx2 ?rx))))
+	(not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(>f ?ry2 ?ry))))
+=>
+	(printout t "Fire in cell [" ?x ", " ?y "]." crlf)
+	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
+	(pop-focus)
+)
 
 ; questa si attiva su celle sbagliate
 ; (defrule fire-most-probable-cell (declare (salience -15))
