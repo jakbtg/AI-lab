@@ -66,6 +66,18 @@
 	(slot y)
 )
 
+; Template per tenere traccia del rapporto tra pezzi e celle libere per riga
+(deftemplate row-ratio
+	(slot row)
+	(slot ratio (default 0) (range 0 10))
+)
+
+; Template per tenere traccia del rapporto tra pezzi e celle libere per colonna
+(deftemplate col-ratio
+	(slot col)
+	(slot ratio (default 0) (range 0 10))
+)
+
 
 
 ;  ---------------------------------------------
@@ -95,6 +107,26 @@
 	(empty-cells-per-col (col 8))
 	(empty-cells-per-col (col 9))
 	(sunk-boats)
+	(row-ratio (row 0))
+	(row-ratio (row 1))
+	(row-ratio (row 2))
+	(row-ratio (row 3))
+	(row-ratio (row 4))
+	(row-ratio (row 5))
+	(row-ratio (row 6))
+	(row-ratio (row 7))
+	(row-ratio (row 8))
+	(row-ratio (row 9))
+	(col-ratio (col 0))
+	(col-ratio (col 1))
+	(col-ratio (col 2))
+	(col-ratio (col 3))
+	(col-ratio (col 4))
+	(col-ratio (col 5))
+	(col-ratio (col 6))
+	(col-ratio (col 7))
+	(col-ratio (col 8))
+	(col-ratio (col 9))
 )
 
 
@@ -126,7 +158,7 @@
 ;  ------------------------------------------------
 ;  --- Inizialmente fa guess sulle info di base ---
 ;  ------------------------------------------------
-(defrule guess-what-is-known (declare (salience 15))
+(defrule guess-known-boat-pieces (declare (salience 15))
 	(status (step ?s) (currently running))
 	(k-cell (x ?x) (y ?y) (content ?t & ~water))
 	(not (exec (action guess) (x ?x) (y ?y)))
@@ -135,6 +167,14 @@
 	(assert (sure-guess (x ?x) (y ?y) (content ?t)))
 	(assert (exec (step ?s) (action guess) (x ?x) (y ?y)))
 	(pop-focus)
+)
+
+(defrule fill-known-water-cells (declare (salience 15))
+	(k-cell (x ?x) (y ?y) (content water))
+	(not (sure-guess (x ?x) (y ?y)))
+=>
+	(printout t "Fill cell [" ?x ", " ?y "] with water." crlf)
+	(assert (sure-guess (x ?x) (y ?y) (content water)))
 )
 
 
@@ -909,7 +949,7 @@
 	)
 	(not (sunk-check (x ?x) (y ?y)))
 =>
-	(printout t "Sunk sub in cell [" ?x ", " ?y "]." crlf)
+	(printout t "Sink sub in cell [" ?x ", " ?y "]." crlf)
 	(modify ?s (one (+ ?n 1)))
 	(assert (sunk-check (x ?x) (y ?y)))
 )
@@ -1193,23 +1233,51 @@
 
 
 
+;  -------------------------------------------------------------------
+;  --- Fire nella cella più probabile data da: -----------------------
+;  --- num pezzi rimasti / num celle vuote, considerando -------------
+;  --- sia righe che colonne -----------------------------------------
+;  -------------------------------------------------------------------
+(defrule fire-most-probable-cell (declare (salience -15))
+	(status (step ?s) (currently running))
+	(moves (fires ?nf&:(> ?nf 0)))
+	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
+	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
+	(empty-cells-per-row (row ?x) (num ?numer&:(> ?numer 0)))
+	(empty-cells-per-col (col ?y) (num ?numec&:(> ?numec 0)))
+	(row-pieces (row ?x2&~?x) (num ?numr2&:(> ?numr2 0)))
+	(col-pieces (col ?y2&~?y) (num ?numc2&:(> ?numc2 0)))
+	(empty-cells-per-row (row ?x2) (num ?numer2&:(> ?numer2 0)))
+	(empty-cells-per-col (col ?y2) (num ?numec2&:(> ?numec2 0)))
+	(test (not (> (/ ?numr2 ?numer2) (/ ?numr ?numer))))
+	(test (not (> (/ ?numc2 ?numec2) (/ ?numc ?numec))))
+	(not (sure-guess (x ?x) (y ?y)))
+	(not (exec (action fire) (x ?x) (y ?y)))
+=>
+	(printout t "Fire in cell [" ?x ", " ?y "]." crlf)
+	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
+	(pop-focus)
+)
+
+
+
 
 ;  ---------------------------------------------
 ;  --- Prima fire ------------------------------
 ;  ---------------------------------------------
-(defrule fire-up-3-pieces-ver (declare (salience -15))
-	(status (step ?s) (currently running))
-	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
-	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
-	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
-	(not (sure-guess (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y)))
-	(not (exec (action fire) (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y)))
-	(test (>= (- ?x 3) 0))
-=>
-	(printout t "Fire in cell [" (- ?x 3) ", " ?y "]." crlf)
-	(assert (exec (step ?s) (action fire) (x (- ?x 3)) (y ?y)))
-	(pop-focus)
-)
+; (defrule fire-up-3-pieces-ver (declare (salience -15))
+; 	(status (step ?s) (currently running))
+; 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+; 	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
+; 	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
+; 	(not (sure-guess (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y)))
+; 	(not (exec (action fire) (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y)))
+; 	(test (>= (- ?x 3) 0))
+; =>
+; 	(printout t "Fire in cell [" (- ?x 3) ", " ?y "]." crlf)
+; 	(assert (exec (step ?s) (action fire) (x (- ?x 3)) (y ?y)))
+; 	(pop-focus)
+; )
 
 
 
