@@ -103,14 +103,34 @@ for line in lines:
 
 print(f'Fire used: {fire_used}')
 
+# find row and column ratio
+row_ratio = []
+column_ratio = []
+for i in range(10):
+    if empty_cells_per_row[i] == 0:
+        row_ratio.append(0.0)
+    if empty_cells_per_column[i] == 0:
+        column_ratio.append(0.0)
+    if empty_cells_per_row[i] != 0:
+        row_ratio.append(round(pieces_per_row[i] / empty_cells_per_row[i], 2))
+    if empty_cells_per_column[i] != 0:
+        column_ratio.append(round(pieces_per_column[i] / empty_cells_per_column[i], 2))
+
+
+
 # print the grid with pretty table
 table = PrettyTable()
-table.field_names = [' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Pieces left', 'Empty cells']
+table.field_names = [' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Pieces left', 'Empty cells', 'Row ratio']
 for i in range(9):
-    table.add_row([i, grid[i][0], grid[i][1], grid[i][2], grid[i][3], grid[i][4], grid[i][5], grid[i][6], grid[i][7], grid[i][8], grid[i][9], pieces_per_row[i], empty_cells_per_row[i]])
-table.add_row([9, grid[9][0], grid[9][1], grid[9][2], grid[9][3], grid[9][4], grid[9][5], grid[9][6], grid[9][7], grid[9][8], grid[9][9], pieces_per_row[9], empty_cells_per_row[9]], divider=True)
-table.add_row(['Pieces left', pieces_per_column[0], pieces_per_column[1], pieces_per_column[2], pieces_per_column[3], pieces_per_column[4], pieces_per_column[5], pieces_per_column[6], pieces_per_column[7], pieces_per_column[8], pieces_per_column[9], '', ''])
-table.add_row(['Empty cells', empty_cells_per_column[0], empty_cells_per_column[1], empty_cells_per_column[2], empty_cells_per_column[3], empty_cells_per_column[4], empty_cells_per_column[5], empty_cells_per_column[6], empty_cells_per_column[7], empty_cells_per_column[8], empty_cells_per_column[9], '', ''])
+    table.add_row([i, grid[i][0], grid[i][1], grid[i][2], grid[i][3], grid[i][4], grid[i][5], grid[i][6], grid[i][7], grid[i][8], grid[i][9], pieces_per_row[i], empty_cells_per_row[i], row_ratio[i]])
+table.add_row([9, grid[9][0], grid[9][1], grid[9][2], grid[9][3], grid[9][4], grid[9][5], grid[9][6], grid[9][7], grid[9][8], grid[9][9], pieces_per_row[9], empty_cells_per_row[9], 
+                row_ratio[9]], divider=True)
+table.add_row(['Pieces left', pieces_per_column[0], pieces_per_column[1], pieces_per_column[2], pieces_per_column[3], pieces_per_column[4], pieces_per_column[5], pieces_per_column[6], 
+               pieces_per_column[7], pieces_per_column[8], pieces_per_column[9], '', '', ''])
+table.add_row(['Empty cells', empty_cells_per_column[0], empty_cells_per_column[1], empty_cells_per_column[2], empty_cells_per_column[3], empty_cells_per_column[4], empty_cells_per_column[5], 
+               empty_cells_per_column[6], empty_cells_per_column[7], empty_cells_per_column[8], empty_cells_per_column[9], '', '', ''])
+table.add_row(['Column ratio', column_ratio[0], column_ratio[1], column_ratio[2], column_ratio[3], column_ratio[4], column_ratio[5], column_ratio[6], column_ratio[7], column_ratio[8],
+                column_ratio[9], '', '', ''])
 print(table)
 
 
