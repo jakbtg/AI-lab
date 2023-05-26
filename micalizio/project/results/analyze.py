@@ -4,8 +4,11 @@ from prettytable import PrettyTable
 with open ('micalizio/project/results/result.txt', 'r') as f:
     lines = f.readlines()
 
-# first 468 lines -- testing
-# lines = lines[:468]
+
+# last 8 lines for statistics
+statistics = lines[-8:]
+# exclude last 8 lines
+lines = lines[:-8]
 
 # empty cells per row and column
 empty_cells_per_row = {0: 10, 1: 10, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 10, 8: 10, 9: 10}
@@ -54,6 +57,15 @@ print()
 print(f'Fire used: {fire_used}')
 print(f'Total guesses: {total_guesses}')
 print(f'Total water cells: {total_water_cells}')
+
+# find number of known cells since the beginning, searching only the first 30 lines to avoid counting
+# cells known after a fire. Considering that the first 20 lines are for the rows and columns content and
+# and considering that I could know a maximum of 10 cells since the beginning.
+num_known_cells_from_beginning = 0
+for line in lines[:30]:
+    if re.search(r'know that cell', line, re.IGNORECASE):
+        num_known_cells_from_beginning += 1
+print(f'Number of known cells since the beginning: {num_known_cells_from_beginning}')
 
 # print sunk boats
 sink_table = PrettyTable()
@@ -116,3 +128,7 @@ table.add_row(['Empty cells', empty_cells_per_column[0], empty_cells_per_column[
 table.add_row(['Column ratio', column_ratio[0], column_ratio[1], column_ratio[2], column_ratio[3], column_ratio[4], column_ratio[5], column_ratio[6], column_ratio[7], column_ratio[8],
                 column_ratio[9], '', '', ''])
 print(table)
+
+# print statistics
+for line in statistics:
+    print(line.strip())

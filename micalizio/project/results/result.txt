@@ -685,3 +685,12 @@ Cell [0, 2] is not empty anymore.
 Sink sub in cell [0, 2].
 Update row 0 ratio to 0
 Update col 2 ratio to 0
+Finished.
+Statistics: 
+  - 4 correct fires
+  - 1 wrong fires
+  - 11 correct guesses (without considering known cells from beginning)
+  - 3 wrong guesses
+  - 3 boat pieces untouched
+  - 7 boats sunk
+Your score is 245
