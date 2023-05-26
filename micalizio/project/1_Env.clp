@@ -231,6 +231,15 @@
 	(statistics (num_fire_ok ?fok) (num_fire_ko ?fko) (num_guess_ok ?gok) (num_guess_ko ?gko) (num_safe ?saf) (num_sink ?sink))
 	(moves (fires ?nf) (guesses ?ng))
 =>
+	;;; Aggiungo una stampa per vedere come sono andate le varie mosse ;;;
+	(printout t "Statistics: " crlf)
+	(printout t "  - " ?fok " correct fires" crlf)
+	(printout t "  - " ?fko " wrong fires" crlf)
+	(printout t "  - " ?gok " correct guesses (without considering known cells from beginning)" crlf)
+	(printout t "  - " ?gko " wrong guesses" crlf)
+	(printout t "  - " ?saf " boat pieces untouched" crlf)
+	(printout t "  - " ?sink " boats sunk" crlf)
+	;;; -------------------------------------------------------------- ;;;
 	(printout t "Your score is " (scoring ?fok ?fko ?gok ?gko ?saf ?sink ?nf ?ng) crlf)
 )
 	
