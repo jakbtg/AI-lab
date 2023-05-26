@@ -1124,6 +1124,40 @@
 )
 
 
+;;; DA ESEGUIRE SOLAMENTE ALL'INIZIO PROBABILMENTE UNA SOLA VOLTA
+; (defrule update-ratio-per-row-when-all-empty-cells (declare (salience -5))
+; 	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
+; 	(empty-cells-per-row (row ?x) (num ?numer&:(eq ?numer 10)))
+; 	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
+; 	(empty-cells-per-col (col ?y) (num ?numec&:(> ?numec 0)))
+; 	(not (counted-for-ratio (x ?x) (y ?y)))
+; 	?r <- (row-ratio (row ?x) (ratio ?ratior))
+; 	?c <- (col-ratio (col ?y) (ratio ?ratioc))
+; =>
+; 	(modify ?r (ratio (/ ?numr ?numer)))
+; 	(modify ?c (ratio (/ ?numc ?numec)))
+; 	(assert (counted-for-ratio (x ?x) (y ?y)))
+; 	(printout t "Update row " ?x " ratio to " (/ ?numr ?numer) crlf)
+; 	(printout t "Update col " ?y " ratio to " (/ ?numc ?numec) crlf)
+; )
+
+; (defrule update-ratio-per-col-when-all-empty-cells (declare (salience -5))
+; 	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
+; 	(empty-cells-per-row (row ?x) (num ?numer&:(> ?numer 0)))
+; 	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
+; 	(empty-cells-per-col (col ?y) (num ?numec&:(eq ?numec 10)))
+; 	(not (counted-for-ratio (x ?x) (y ?y)))
+; 	?r <- (row-ratio (row ?x) (ratio ?ratior))
+; 	?c <- (col-ratio (col ?y) (ratio ?ratioc))
+; =>
+; 	(modify ?r (ratio (/ ?numr ?numer)))
+; 	(modify ?c (ratio (/ ?numc ?numec)))
+; 	(assert (counted-for-ratio (x ?x) (y ?y)))
+; 	(printout t "Update row " ?x " ratio to " (/ ?numr ?numer) crlf)
+; 	(printout t "Update col " ?y " ratio to " (/ ?numc ?numec) crlf)
+; )
+
+
 
 ;  -------------------------------------------------------------------
 ;  --- Cerco, date le sure-guess che ho fatto le barche --------------
@@ -1649,7 +1683,7 @@
 	(not (sure-guess (x ?x) (y ?y)))
 	(not (exec (action fire) (x ?x) (y ?y)))
 =>
-	(printout t "Fire in cell [" ?x ", " ?y "]." crlf)
+	(printout t "Fire in cell [" ?x ", " ?y "]. Row ratio: " ?rx ", col ratio: " ?ry crlf)
 	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
 	(pop-focus)
 )

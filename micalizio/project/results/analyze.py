@@ -82,6 +82,7 @@ for i in range(10):
     grid.append(['   '] * 10)
 
 for line in lines:
+    # if re.search(r'guess', line, re.IGNORECASE) and not re.search(r'best', line, re.IGNORECASE):
     if re.search(r'guess', line, re.IGNORECASE):
         row = re.search(r'\[(\d)', line).group(1)
         column = re.search(r'(\d)\]', line).group(1)
