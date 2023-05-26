@@ -4,6 +4,9 @@ from prettytable import PrettyTable
 with open ('micalizio/project/results/result.txt', 'r') as f:
     lines = f.readlines()
 
+# first 468 lines -- testing
+# lines = lines[:468]
+
 # empty cells per row and column
 empty_cells_per_row = {0: 10, 1: 10, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 10, 8: 10, 9: 10}
 empty_cells_per_column = {0: 10, 1: 10, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 10, 8: 10, 9: 10}

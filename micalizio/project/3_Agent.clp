@@ -84,6 +84,18 @@
 	(slot y)
 )
 
+; Template per memorizzare la migliore colonna o riga su cui fare fire
+(deftemplate best-row-or-col
+	(slot row (default -1))
+	(slot col (default -1))
+)
+
+; Template per tenere traccia delle celle vuote
+(deftemplate empty-cell
+	(slot x)
+	(slot y)
+)
+
 
 
 ;  ---------------------------------------------
@@ -133,6 +145,106 @@
 	(col-ratio (col 7))
 	(col-ratio (col 8))
 	(col-ratio (col 9))
+	(empty-cell (x 0) (y 0))
+	(empty-cell (x 0) (y 1))
+	(empty-cell (x 0) (y 2))
+	(empty-cell (x 0) (y 3))
+	(empty-cell (x 0) (y 4))
+	(empty-cell (x 0) (y 5))
+	(empty-cell (x 0) (y 6))
+	(empty-cell (x 0) (y 7))
+	(empty-cell (x 0) (y 8))
+	(empty-cell (x 0) (y 9))
+	(empty-cell (x 1) (y 0))
+	(empty-cell (x 1) (y 1))
+	(empty-cell (x 1) (y 2))
+	(empty-cell (x 1) (y 3))
+	(empty-cell (x 1) (y 4))
+	(empty-cell (x 1) (y 5))
+	(empty-cell (x 1) (y 6))
+	(empty-cell (x 1) (y 7))
+	(empty-cell (x 1) (y 8))
+	(empty-cell (x 1) (y 9))
+	(empty-cell (x 2) (y 0))
+	(empty-cell (x 2) (y 1))
+	(empty-cell (x 2) (y 2))
+	(empty-cell (x 2) (y 3))
+	(empty-cell (x 2) (y 4))
+	(empty-cell (x 2) (y 5))
+	(empty-cell (x 2) (y 6))
+	(empty-cell (x 2) (y 7))
+	(empty-cell (x 2) (y 8))
+	(empty-cell (x 2) (y 9))
+	(empty-cell (x 3) (y 0))
+	(empty-cell (x 3) (y 1))
+	(empty-cell (x 3) (y 2))
+	(empty-cell (x 3) (y 3))
+	(empty-cell (x 3) (y 4))
+	(empty-cell (x 3) (y 5))
+	(empty-cell (x 3) (y 6))
+	(empty-cell (x 3) (y 7))
+	(empty-cell (x 3) (y 8))
+	(empty-cell (x 3) (y 9))
+	(empty-cell (x 4) (y 0))
+	(empty-cell (x 4) (y 1))
+	(empty-cell (x 4) (y 2))
+	(empty-cell (x 4) (y 3))
+	(empty-cell (x 4) (y 4))
+	(empty-cell (x 4) (y 5))
+	(empty-cell (x 4) (y 6))
+	(empty-cell (x 4) (y 7))
+	(empty-cell (x 4) (y 8))
+	(empty-cell (x 4) (y 9))
+	(empty-cell (x 5) (y 0))
+	(empty-cell (x 5) (y 1))
+	(empty-cell (x 5) (y 2))
+	(empty-cell (x 5) (y 3))
+	(empty-cell (x 5) (y 4))
+	(empty-cell (x 5) (y 5))
+	(empty-cell (x 5) (y 6))
+	(empty-cell (x 5) (y 7))
+	(empty-cell (x 5) (y 8))
+	(empty-cell (x 5) (y 9))
+	(empty-cell (x 6) (y 0))
+	(empty-cell (x 6) (y 1))
+	(empty-cell (x 6) (y 2))
+	(empty-cell (x 6) (y 3))
+	(empty-cell (x 6) (y 4))
+	(empty-cell (x 6) (y 5))
+	(empty-cell (x 6) (y 6))
+	(empty-cell (x 6) (y 7))
+	(empty-cell (x 6) (y 8))
+	(empty-cell (x 6) (y 9))
+	(empty-cell (x 7) (y 0))
+	(empty-cell (x 7) (y 1))
+	(empty-cell (x 7) (y 2))
+	(empty-cell (x 7) (y 3))
+	(empty-cell (x 7) (y 4))
+	(empty-cell (x 7) (y 5))
+	(empty-cell (x 7) (y 6))
+	(empty-cell (x 7) (y 7))
+	(empty-cell (x 7) (y 8))
+	(empty-cell (x 7) (y 9))
+	(empty-cell (x 8) (y 0))
+	(empty-cell (x 8) (y 1))
+	(empty-cell (x 8) (y 2))
+	(empty-cell (x 8) (y 3))
+	(empty-cell (x 8) (y 4))
+	(empty-cell (x 8) (y 5))
+	(empty-cell (x 8) (y 6))
+	(empty-cell (x 8) (y 7))
+	(empty-cell (x 8) (y 8))
+	(empty-cell (x 8) (y 9))
+	(empty-cell (x 9) (y 0))
+	(empty-cell (x 9) (y 1))
+	(empty-cell (x 9) (y 2))
+	(empty-cell (x 9) (y 3))
+	(empty-cell (x 9) (y 4))
+	(empty-cell (x 9) (y 5))
+	(empty-cell (x 9) (y 6))
+	(empty-cell (x 9) (y 7))
+	(empty-cell (x 9) (y 8))
+	(empty-cell (x 9) (y 9))
 )
 
 
@@ -928,6 +1040,21 @@
 
 
 
+;  -------------------------------------------------------------------
+;  --- Aggiorno le celle vuote cancellandone il fatto che le ---------
+;  --- rappresenta, se è presente una sure-guess in quella cella -----
+;  -------------------------------------------------------------------
+(defrule update-empty-cells
+	(sure-guess (x ?x) (y ?y))
+	?e <- (empty-cell (x ?x) (y ?y))
+=>
+	(retract ?e)
+	(printout t "Cell [" ?x ", " ?y "] is not empty anymore." crlf)
+)
+
+
+
+
 
 ;  -------------------------------------------------------------------
 ;  --- Aggiorno il rapporto tra pezzi rimasti e celle libere ---------
@@ -1019,38 +1146,118 @@
 	(assert (sunk-check (x ?x) (y ?y)))
 )
 
-(defrule sunk-one-given-piece
+(defrule sunk-one-given-piece-in-the-middle
 	?s <- (sunk-boats (one ?n &:(< ?n 4)))
 	(sure-guess (x ?x) (y ?y) (content piece))
 	(not (sunk-check (x ?x) (y ?y)))
-	(or
-		(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water))
-		(and (sure-guess (x ?x) (y 0) (content ?p1 &~water))
-			 (sure-guess (x ?x) (y 1) (content water))
-		)
-	)
-	(or
-		(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (+ ?y 1))) (content water))
-		(and (sure-guess (x ?x) (y 9) (content ?p2 &~water))
-			 (sure-guess (x ?x) (y 8) (content water))
-		)
-	)
-	(or
-		(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water))
-		(and (sure-guess (x 0) (y ?y) (content ?p3 &~water))
-			 (sure-guess (x 1) (y ?y) (content water))
-		)
-	)
-	(or
-		(sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y) (content water))
-		(and (sure-guess (x 9) (y ?y) (content ?p4 &~water))
-			 (sure-guess (x 8) (y ?y) (content water))
-		)
-	)
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water))
+	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (+ ?y 1))) (content water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water))
+	(sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y) (content water))
 =>
 	(printout t "Sink sub in cell [" ?x ", " ?y "]." crlf)
 	(modify ?s (one (+ ?n 1)))
 	(assert (sunk-check (x ?x) (y ?y)))
+)
+
+(defrule sunk-one-given-piece-left-border
+	?s <- (sunk-boats (one ?n &:(< ?n 4)))
+	(sure-guess (x ?x) (y ?y&:(eq ?y 0)) (content piece))
+	(not (sunk-check (x ?x) (y ?y)))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y 0) (content water))
+	(sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y 0) (content water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water))
+=>
+	(printout t "Sink sub in cell [" ?x ", " 0 "]." crlf)
+	(modify ?s (one (+ ?n 1)))
+	(assert (sunk-check (x ?x) (y 0)))
+)
+
+(defrule sunk-one-given-piece-right-border
+	?s <- (sunk-boats (one ?n &:(< ?n 4)))
+	(sure-guess (x ?x) (y ?y&:(eq ?y 9)) (content piece))
+	(not (sunk-check (x ?x) (y ?y)))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y 9) (content water))
+	(sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y 9) (content water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water))
+=>
+	(printout t "Sink sub in cell [" ?x ", " 9 "]." crlf)
+	(modify ?s (one (+ ?n 1)))
+	(assert (sunk-check (x ?x) (y 9)))
+)
+
+(defrule sunk-one-given-piece-top-border
+	?s <- (sunk-boats (one ?n &:(< ?n 4)))
+	(sure-guess (x ?x&:(eq ?x 0)) (y ?y) (content piece))
+	(not (sunk-check (x ?x) (y ?y)))
+	(sure-guess (x 0) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water))
+	(sure-guess (x 0) (y ?y2 &:(eq ?y2 (+ ?y 1))) (content water))
+	(sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y) (content water))
+=>
+	(printout t "Sink sub in cell [" 0 ", " ?y "]." crlf)
+	(modify ?s (one (+ ?n 1)))
+	(assert (sunk-check (x 0) (y ?y)))
+)
+
+(defrule sunk-one-given-piece-bottom-border
+	?s <- (sunk-boats (one ?n &:(< ?n 4)))
+	(sure-guess (x ?x&:(eq ?x 9)) (y ?y) (content piece))
+	(not (sunk-check (x ?x) (y ?y)))
+	(sure-guess (x 9) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water))
+	(sure-guess (x 9) (y ?y2 &:(eq ?y2 (+ ?y 1))) (content water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water))
+=>
+	(printout t "Sink sub in cell [" 9 ", " ?y "]." crlf)
+	(modify ?s (one (+ ?n 1)))
+	(assert (sunk-check (x 9) (y ?y)))
+)
+
+(defrule sunk-one-given-piece-top-left-corner
+	?s <- (sunk-boats (one ?n &:(< ?n 4)))
+	(sure-guess (x 0) (y 0) (content piece))
+	(not (sunk-check (x 0) (y 0)))
+	(sure-guess (x 0) (y 1) (content water))
+	(sure-guess (x 1) (y 0) (content water))
+=>
+	(printout t "Sink sub in cell [" 0 ", " 0 "]." crlf)
+	(modify ?s (one (+ ?n 1)))
+	(assert (sunk-check (x 0) (y 0)))
+)
+
+(defrule sunk-one-given-piece-top-right-corner
+	?s <- (sunk-boats (one ?n &:(< ?n 4)))
+	(sure-guess (x 0) (y 9) (content piece))
+	(not (sunk-check (x 0) (y 9)))
+	(sure-guess (x 0) (y 8) (content water))
+	(sure-guess (x 1) (y 9) (content water))
+=>
+	(printout t "Sink sub in cell [" 0 ", " 9 "]." crlf)
+	(modify ?s (one (+ ?n 1)))
+	(assert (sunk-check (x 0) (y 9)))
+)
+
+(defrule sunk-one-given-piece-bottom-left-corner
+	?s <- (sunk-boats (one ?n &:(< ?n 4)))
+	(sure-guess (x 9) (y 0) (content piece))
+	(not (sunk-check (x 9) (y 0)))
+	(sure-guess (x 9) (y 1) (content water))
+	(sure-guess (x 8) (y 0) (content water))
+=>
+	(printout t "Sink sub in cell [" 9 ", " 0 "]." crlf)
+	(modify ?s (one (+ ?n 1)))
+	(assert (sunk-check (x 9) (y 0)))
+)
+
+(defrule sunk-one-given-piece-bottom-right-corner
+	?s <- (sunk-boats (one ?n &:(< ?n 4)))
+	(sure-guess (x 9) (y 9) (content piece))
+	(not (sunk-check (x 9) (y 9)))
+	(sure-guess (x 9) (y 8) (content water))
+	(sure-guess (x 8) (y 9) (content water))
+=>
+	(printout t "Sink sub in cell [" 9 ", " 9 "]." crlf)
+	(modify ?s (one (+ ?n 1)))
+	(assert (sunk-check (x 9) (y 9)))
 )
 
 ; Trovo le barche da due pezzi affondate
@@ -1451,6 +1658,68 @@
 	(not (exec (action fire) (x ?x) (y ?y)))
 =>
 	(printout t "Fire in cell [" ?x ", " ?y "]." crlf)
+	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
+	(pop-focus)
+)
+
+
+
+;  -------------------------------------------------------------------
+;  --- Se non trovo la cella più promettente (con sia riga che -------
+;  --- colonna con ratio più alta), allora cerco la cella ------------
+;  --- con la riga o la colonna con ratio più alta -------------------
+;  -------------------------------------------------------------------
+(defrule find-best-row-to-fire (declare (salience -20))
+	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
+	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
+	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
+	(not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
+	(test (> ?rx ?ry))
+=>
+	(printout t "Best row is " ?x " with ratio " ?rx "." crlf)
+	(assert (best-row-or-col (row ?x)))
+)
+
+(defrule find-best-col-to-fire (declare (salience -20))
+	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
+	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
+	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
+	(not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
+	(test (> ?ry ?rx))
+=>
+	(printout t "Best column is " ?y " with ratio " ?ry "." crlf)
+	(assert (best-row-or-col (col ?y)))
+)
+
+(defrule fire-best-row (declare (salience -20))
+	(status (step ?s) (currently running))
+	(moves (fires ?nf&:(> ?nf 0)))
+	?b <- (best-row-or-col (row ?x) (col -1))
+	(empty-cell (x ?x) (y ?y))
+	; (col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
+	; (not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
+	(not (sure-guess (x ?x) (y ?y)))
+	(not (exec (action fire) (x ?x) (y ?y)))
+=>
+	(printout t "Fire in cell [" ?x ", " ?y "] because it is the best row." crlf)
+	(modify ?b (row -1))
+	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
+	(pop-focus)
+)
+
+(defrule fire-best-col (declare (salience -20))
+	(status (step ?s) (currently running))
+	(moves (fires ?nf&:(> ?nf 0)))
+	?b <- (best-row-or-col (row -1) (col ?y))
+	(empty-cell (x ?x) (y ?y))
+	; (row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
+	; (not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
+	;; deve essere la riga maggiore tra le disponibili, ovvero tra quelle con celle vuote in quella colonna
+	(not (sure-guess (x ?x) (y ?y)))
+	(not (exec (action fire) (x ?x) (y ?y)))
+=>
+	(printout t "Fire in cell [" ?x ", " ?y "] because it is the best column." crlf)
+	(modify ?b (col -1))
 	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
 	(pop-focus)
 )
