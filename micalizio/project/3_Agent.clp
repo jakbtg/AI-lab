@@ -941,8 +941,8 @@
 	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
 	(empty-cells-per-col (col ?y) (num ?numec&:(> ?numec 0)))
 	(not (counted-for-ratio (x ?x) (y ?y)))
-	?r <- (row-ratio (row ?x) (ratio -10))
-	?c <- (col-ratio (col ?y) (ratio -10))
+	?r <- (row-ratio (row ?x) (ratio ?ratior))
+	?c <- (col-ratio (col ?y) (ratio ?ratioc))
 =>
 	(modify ?r (ratio (/ ?numr ?numer)))
 	(modify ?c (ratio (/ ?numc ?numec)))
@@ -958,8 +958,8 @@
 	(col-pieces (col ?y) (num 0))
 	(empty-cells-per-col (col ?y) (num 0))
 	(not (counted-for-ratio (x ?x) (y ?y)))
-	?r <- (row-ratio (row ?x) (ratio -10))
-	?c <- (col-ratio (col ?y) (ratio -10))
+	?r <- (row-ratio (row ?x) (ratio ?ratior))
+	?c <- (col-ratio (col ?y) (ratio ?ratioc))
 =>
 	(modify ?r (ratio (/ ?numr ?numer)))
 	(modify ?c (ratio 0))
@@ -975,8 +975,8 @@
 	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
 	(empty-cells-per-col (col ?y) (num ?numec&:(> ?numec 0)))
 	(not (counted-for-ratio (x ?x) (y ?y)))
-	?r <- (row-ratio (row ?x) (ratio -10))
-	?c <- (col-ratio (col ?y) (ratio -10))
+	?r <- (row-ratio (row ?x) (ratio ?ratior))
+	?c <- (col-ratio (col ?y) (ratio ?ratioc))
 =>
 	(modify ?r (ratio 0))
 	(modify ?c (ratio (/ ?numc ?numec)))
@@ -992,8 +992,8 @@
 	(col-pieces (col ?y) (num 0))
 	(empty-cells-per-col (col ?y) (num 0))
 	(not (counted-for-ratio (x ?x) (y ?y)))
-	?r <- (row-ratio (row ?x) (ratio -10))
-	?c <- (col-ratio (col ?y) (ratio -10))
+	?r <- (row-ratio (row ?x) (ratio ?ratior))
+	?c <- (col-ratio (col ?y) (ratio ?ratioc))
 =>
 	(modify ?r (ratio 0))
 	(modify ?c (ratio 0))
@@ -1009,26 +1009,44 @@
 ;  --- completamente affondate ---------------------------------------
 ;  -------------------------------------------------------------------
 ; Trovo i sub affondati
-(defrule sunk-one
+(defrule sunk-one-given-sub
 	?s <- (sunk-boats (one ?n &:(< ?n 4)))
-	(sure-guess (x ?x) (y ?y) (content ?p &~water))
-	(or 
+	(sure-guess (x ?x) (y ?y) (content sub))
+	(not (sunk-check (x ?x) (y ?y)))
+=>
+	(printout t "Sink sub in cell [" ?x ", " ?y "]." crlf)
+	(modify ?s (one (+ ?n 1)))
+	(assert (sunk-check (x ?x) (y ?y)))
+)
+
+(defrule sunk-one-given-piece
+	?s <- (sunk-boats (one ?n &:(< ?n 4)))
+	(sure-guess (x ?x) (y ?y) (content piece))
+	(not (sunk-check (x ?x) (y ?y)))
+	(or
 		(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water))
-		(eq ?y 0)
+		(and (sure-guess (x ?x) (y 0) (content ?p1 &~water))
+			 (sure-guess (x ?x) (y 1) (content water))
+		)
 	)
 	(or
 		(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (+ ?y 1))) (content water))
-		(eq ?y 9)
+		(and (sure-guess (x ?x) (y 9) (content ?p2 &~water))
+			 (sure-guess (x ?x) (y 8) (content water))
+		)
 	)
 	(or
 		(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water))
-		(eq ?x 0)
+		(and (sure-guess (x 0) (y ?y) (content ?p3 &~water))
+			 (sure-guess (x 1) (y ?y) (content water))
+		)
 	)
 	(or
 		(sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y) (content water))
-		(eq ?x 9)
+		(and (sure-guess (x 9) (y ?y) (content ?p4 &~water))
+			 (sure-guess (x 8) (y ?y) (content water))
+		)
 	)
-	(not (sunk-check (x ?x) (y ?y)))
 =>
 	(printout t "Sink sub in cell [" ?x ", " ?y "]." crlf)
 	(modify ?s (one (+ ?n 1)))
@@ -1042,11 +1060,17 @@
 	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
 	(or 
 		(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2))) (content water))
-		(eq ?y 1)
+		(and (sure-guess (x ?x) (y 1) (content ?p3 &~water))
+			 (sure-guess (x ?x) (y 0) (content ?p4 &~water))
+			 (sure-guess (x ?x) (y 2) (content water))
+		)
 	)
 	(or
 		(sure-guess (x ?x) (y ?y3 &:(eq ?y3 (+ ?y 1))) (content water))
-		(eq ?y 9)
+		(and (sure-guess (x ?x) (y 9) (content ?p5 &~water))
+			 (sure-guess (x ?x) (y 8) (content ?p6 &~water))
+			 (sure-guess (x ?x) (y 7) (content water))
+		)
 	)
 	(not (sunk-check (x ?x) (y ?y)))
 	(not (sunk-check (x ?x) (y ?y1)))
@@ -1063,11 +1087,17 @@
 	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
 	(or 
 		(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content water))
-		(eq ?x 1)
+		(and (sure-guess (x 1) (y ?y) (content ?p3 &~water))
+			 (sure-guess (x 0) (y ?y) (content ?p4 &~water))
+			 (sure-guess (x 2) (y ?y) (content water))
+		)
 	)
 	(or
 		(sure-guess (x ?x3 &:(eq ?x3 (+ ?x 1))) (y ?y) (content water))
-		(eq ?x 9)
+		(and (sure-guess (x 9) (y ?y) (content ?p5 &~water))
+			 (sure-guess (x 8) (y ?y) (content ?p6 &~water))
+			 (sure-guess (x 7) (y ?y) (content water))
+		)
 	)
 	(not (sunk-check (x ?x) (y ?y)))
 	(not (sunk-check (x ?x1) (y ?y)))
@@ -1086,11 +1116,19 @@
 	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2))) (content ?p3 &~water))
 	(or 
 		(sure-guess (x ?x) (y ?y3 &:(eq ?y3 (- ?y 3))) (content water))
-		(eq ?y 2)
+		(and (sure-guess (x ?x) (y 2) (content ?p4 &~water))
+			 (sure-guess (x ?x) (y 1) (content ?p5 &~water))
+			 (sure-guess (x ?x) (y 0) (content ?p6 &~water))
+			 (sure-guess (x ?x) (y 3) (content water))
+		)
 	)
 	(or
 		(sure-guess (x ?x) (y ?y4 &:(eq ?y4 (+ ?y 1))) (content water))
-		(eq ?y 9)
+		(and (sure-guess (x ?x) (y 9) (content ?p7 &~water))
+			 (sure-guess (x ?x) (y 8) (content ?p8 &~water))
+			 (sure-guess (x ?x) (y 7) (content ?p9 &~water))
+			 (sure-guess (x ?x) (y 6) (content water))
+		)
 	)
 	(not (sunk-check (x ?x) (y ?y)))
 	(not (sunk-check (x ?x) (y ?y1)))
@@ -1110,11 +1148,19 @@
 	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
 	(or 
 		(sure-guess (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y) (content water))
-		(eq ?x 2)
+		(and (sure-guess (x 2) (y ?y) (content ?p4 &~water))
+			 (sure-guess (x 1) (y ?y) (content ?p5 &~water))
+			 (sure-guess (x 0) (y ?y) (content ?p6 &~water))
+			 (sure-guess (x 3) (y ?y) (content water))
+		)
 	)
 	(or
 		(sure-guess (x ?x4 &:(eq ?x4 (+ ?x 1))) (y ?y) (content water))
-		(eq ?x 9)
+		(and (sure-guess (x 9) (y ?y) (content ?p7 &~water))
+			 (sure-guess (x 8) (y ?y) (content ?p8 &~water))
+			 (sure-guess (x 7) (y ?y) (content ?p9 &~water))
+			 (sure-guess (x 6) (y ?y) (content water))
+		)
 	)
 	(not (sunk-check (x ?x) (y ?y)))
 	(not (sunk-check (x ?x1) (y ?y)))
@@ -1273,6 +1319,81 @@
 
 
 
+;  -------------------------------------------------------------------
+;  --- Se ho già affondato tutte le navi da 3 e ho tre pezzi di ------
+;  --- fila e acqua sopra o sotto di essi, posso dedurre che ---------
+;  --- quei tre pezzi rappresentano una barca da 4 e fare guess ------
+;  --- sulla cella adiacente vuota -----------------------------------
+;  -------------------------------------------------------------------
+(defrule guess-4-piece-up-when-all-3-sunk (declare (salience -10))
+	(status (step ?s) (currently running))
+	(sunk-boats (three 2))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
+	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
+	(sure-guess (x ?x3 &:(eq ?x3 (+ ?x 1))) (y ?y) (content water))
+	(not (sure-guess (x ?x4 &:(eq ?x4 (- ?x 3))) (y ?y)))
+	(not (exec (action guess) (x ?x4 &:(eq ?x4 (- ?x 3))) (y ?y)))
+	(test (>= (- ?x 3) 0))
+=>
+	(printout t "Guess fourth piece in cell [" (- ?x 3) ", " ?y "] because all three-pieces boat sunk." crlf)
+	(assert (sure-guess (x (- ?x 3)) (y ?y) (content piece)))
+	(assert (exec (step ?s) (action guess) (x (- ?x 3)) (y ?y)))
+	(pop-focus)
+)
+
+(defrule guess-4-piece-down-when-all-3-sunk (declare (salience -10))
+	(status (step ?s) (currently running))
+	(sunk-boats (three 2))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
+	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
+	(sure-guess (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y) (content water))
+	(not (sure-guess (x ?x4 &:(eq ?x4 (+ ?x 1))) (y ?y)))
+	(not (exec (action guess) (x ?x4 &:(eq ?x4 (+ ?x 1))) (y ?y)))
+	(test (< (+ ?x 1) 10))
+=>
+	(printout t "Guess piece in cell [" (+ ?x 1) ", " ?y "] because all three-pieces boat sunk." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y ?y) (content piece)))
+	(assert (exec (step ?s) (action guess) (x (+ ?x 1)) (y ?y)))
+	(pop-focus)
+)
+
+(defrule guess-4-piece-left-when-all-3-sunk (declare (salience -10))
+	(status (step ?s) (currently running))
+	(sunk-boats (three 2))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
+	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2))) (content ?p3 &~water))
+	(sure-guess (x ?x) (y ?y3 &:(eq ?y3 (+ ?y 1))) (content water))
+	(not (sure-guess (x ?x) (y ?y4 &:(eq ?y4 (- ?y 3)))))
+	(not (exec (action guess) (x ?x) (y ?y4 &:(eq ?y4 (- ?y 3)))))
+	(test (>= (- ?y 3) 0))
+=>
+	(printout t "Guess piece in cell [" ?x ", " (- ?y 3) "] because all three-pieces boat sunk." crlf)
+	(assert (sure-guess (x ?x) (y (- ?y 3)) (content piece)))
+	(assert (exec (step ?s) (action guess) (x ?x) (y (- ?y 3))))
+	(pop-focus)
+)
+
+(defrule guess-4-piece-right-when-all-3-sunk (declare (salience -10))
+	(status (step ?s) (currently running))
+	(sunk-boats (three 2))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content ?p2 &~water))
+	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 2))) (content ?p3 &~water))
+	(sure-guess (x ?x) (y ?y3 &:(eq ?y3 (- ?y 3))) (content water))
+	(not (sure-guess (x ?x) (y ?y4 &:(eq ?y4 (+ ?y 1)))))
+	(not (exec (action guess) (x ?x) (y ?y4 &:(eq ?y4 (+ ?y 1)))))
+	(test (< (+ ?y 1) 10))
+=>
+	(printout t "Guess piece in cell [" ?x ", " (+ ?y 1) "] because all three-pieces boat sunk." crlf)
+	(assert (sure-guess (x ?x) (y (+ ?y 1)) (content piece)))
+	(assert (exec (step ?s) (action guess) (x ?x) (y (+ ?y 1))))
+	(pop-focus)
+)
+
+
 
 
 ;  -------------------------------------------------------------------
@@ -1291,7 +1412,7 @@
 	(not (sure-guess (x ?x) (y ?y)))
 	(not (exec (action guess) (x ?x) (y ?y)))
 =>
-	(printout t "Guess piece in cell [" ?x ", " ?y "]." crlf)
+	(printout t "Guess piece in cell [" ?x ", " ?y "] because the number of pieces in row is equal to the number of empty cells." crlf)
 	(assert (sure-guess (x ?x) (y ?y) (content piece)))
 	(assert (exec (step ?s) (action guess) (x ?x) (y ?y)))
 	(pop-focus)
@@ -1306,7 +1427,7 @@
 	(not (sure-guess (x ?x) (y ?y)))
 	(not (exec (action guess) (x ?x) (y ?y)))
 =>
-	(printout t "Guess piece in cell [" ?x ", " ?y "]." crlf)
+	(printout t "Guess piece in cell [" ?x ", " ?y "] because the number of pieces in column is equal to the number of empty cells." crlf)
 	(assert (sure-guess (x ?x) (y ?y) (content piece)))
 	(assert (exec (step ?s) (action guess) (x ?x) (y ?y)))
 	(pop-focus)
