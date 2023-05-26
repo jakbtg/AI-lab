@@ -88,11 +88,11 @@ for line in lines:
             sunk_four += 1
 
 sink_table = PrettyTable()
-sink_table.field_names = ['Boat', 'Sunk']
-sink_table.add_row(['Sub', sunk_one])
-sink_table.add_row(['Two-pieces', sunk_two])
-sink_table.add_row(['Three-pieces', sunk_three])
-sink_table.add_row(['Four-pieces', sunk_four])
+sink_table.field_names = ['Boat', 'Sunk', 'Total']
+sink_table.add_row(['Sub', sunk_one, 4])
+sink_table.add_row(['Two-pieces', sunk_two, 3])
+sink_table.add_row(['Three-pieces', sunk_three, 2])
+sink_table.add_row(['Four-pieces', sunk_four, 1])
 print(sink_table)
 
 # check number of fire used
