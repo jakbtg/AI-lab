@@ -591,4 +591,97 @@ Update col 2 ratio to 0.5
 Update row 2 ratio to 0.666666666666667
 Update col 3 ratio to 0.5
 Best row is 2 with ratio 0.666666666666667.
-Best row is 2 with ratio 0.666666666666667.
+Guess in cell [2, 6] because it is the best row.
+Update row 2 num pieces to 1 given piece in cell [2, 6].
+Update col 6 num pieces to 0 given piece in cell [2, 6].
+Fill cell [5, 6] with water.
+Update row 5 num empty cells to 4 given water in cell [5, 6].
+Update col 6 num empty cells to 2 given water in cell [5, 6].
+Update row 2 num empty cells to 2 given piece in cell [2, 6].
+Update col 6 num empty cells to 1 given piece in cell [2, 6].
+Cell [5, 6] is not empty anymore.
+Fill cell [0, 6] with water.
+Update row 0 num empty cells to 4 given water in cell [0, 6].
+Update col 6 num empty cells to 0 given water in cell [0, 6].
+Cell [0, 6] is not empty anymore.
+Cell [2, 6] is not empty anymore.
+Update row 5 ratio to 0.5
+Update col 6 ratio to 0
+Update row 0 ratio to 0.25
+Update col 6 ratio to 0
+Update row 2 ratio to 0.5
+Update col 6 ratio to 0
+Best row is 2 with ratio 0.5.
+Guess in cell [2, 5] because it is the best row.
+Update row 2 num pieces to 0 given piece in cell [2, 5].
+Update col 5 num pieces to 0 given piece in cell [2, 5].
+Fill cell [5, 5] with water.
+Update row 5 num empty cells to 3 given water in cell [5, 5].
+Update col 5 num empty cells to 2 given water in cell [5, 5].
+Update row 2 num empty cells to 1 given piece in cell [2, 5].
+Update col 5 num empty cells to 1 given piece in cell [2, 5].
+Cell [5, 5] is not empty anymore.
+Fill cell [0, 5] with water.
+Update row 0 num empty cells to 3 given water in cell [0, 5].
+Update col 5 num empty cells to 0 given water in cell [0, 5].
+Cell [0, 5] is not empty anymore.
+Fill cell [2, 4] with water.
+Sink two-pieces boat in cells [2, 6] and [2, 5].
+Update row 2 num empty cells to 0 given water in cell [2, 4].
+Update col 4 num empty cells to 2 given water in cell [2, 4].
+Cell [2, 4] is not empty anymore.
+Cell [2, 5] is not empty anymore.
+Update row 2 ratio to 0
+Update col 4 ratio to 0.5
+Update row 2 ratio to 0
+Update col 5 ratio to 0
+Update row 0 ratio to 0.333333333333333
+Update col 5 ratio to 0
+Update row 5 ratio to 0.666666666666667
+Update col 5 ratio to 0
+Best row is 5 with ratio 0.666666666666667.
+Guess in cell [5, 4] because it is the best row.
+Update row 5 num pieces to 1 given piece in cell [5, 4].
+Update col 4 num pieces to 0 given piece in cell [5, 4].
+Fill cell [0, 4] with water.
+Update row 0 num empty cells to 2 given water in cell [0, 4].
+Update col 4 num empty cells to 1 given water in cell [0, 4].
+Update row 5 num empty cells to 2 given piece in cell [5, 4].
+Update col 4 num empty cells to 0 given piece in cell [5, 4].
+Cell [0, 4] is not empty anymore.
+Cell [5, 4] is not empty anymore.
+Update row 0 ratio to 0.5
+Update col 4 ratio to 0
+Update row 5 ratio to 0.5
+Update col 4 ratio to 0
+Best row is 5 with ratio 0.5.
+Guess in cell [5, 3] because it is the best row.
+Update row 5 num pieces to 0 given piece in cell [5, 3].
+Update col 3 num pieces to 0 given piece in cell [5, 3].
+Fill cell [0, 3] with water.
+Update row 0 num empty cells to 1 given water in cell [0, 3].
+Update col 3 num empty cells to 1 given water in cell [0, 3].
+Update row 5 num empty cells to 1 given piece in cell [5, 3].
+Update col 3 num empty cells to 0 given piece in cell [5, 3].
+Cell [0, 3] is not empty anymore.
+Fill cell [5, 2] with water.
+Sink two-pieces boat in cells [5, 4] and [5, 3].
+Update row 5 num empty cells to 0 given water in cell [5, 2].
+Update col 2 num empty cells to 1 given water in cell [5, 2].
+Cell [5, 2] is not empty anymore.
+Cell [5, 3] is not empty anymore.
+Update row 5 ratio to 0
+Update col 2 ratio to 1.0
+Update row 5 ratio to 0
+Update col 3 ratio to 0
+Update row 0 ratio to 1.0
+Update col 3 ratio to 0
+Guess piece in cell [0, 2] because the number of pieces in column is equal to the number of empty cells.
+Update row 0 num pieces to 0 given piece in cell [0, 2].
+Update col 2 num pieces to 0 given piece in cell [0, 2].
+Update row 0 num empty cells to 0 given piece in cell [0, 2].
+Update col 2 num empty cells to 0 given piece in cell [0, 2].
+Cell [0, 2] is not empty anymore.
+Sink sub in cell [0, 2].
+Update row 0 ratio to 0
+Update col 2 ratio to 0

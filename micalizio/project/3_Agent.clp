@@ -1674,7 +1674,7 @@
 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
 	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
 	(not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
-	(test (> ?rx ?ry))
+	(test (>= ?rx ?ry))
 =>
 	(printout t "Best row is " ?x " with ratio " ?rx "." crlf)
 	(assert (best-row-or-col (row ?x)))
@@ -1726,6 +1726,90 @@
 
 
 
+;  -------------------------------------------------------------------
+;  --- Se non ho più fire da eseguire allora faccio guess nella ------
+;  --- cella più probabile, finchè ho guess a disposizione -----------
+;  -------------------------------------------------------------------
+(defrule guess-most-probable-cell (declare (salience -25))
+	(status (step ?s) (currently running))
+	(moves (guesses ?nf&:(> ?nf 0)))
+	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
+	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
+	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
+	(not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
+	(not (sure-guess (x ?x) (y ?y)))
+	(not (exec (action guess) (x ?x) (y ?y)))
+=>
+	(printout t "Try a guess in cell [" ?x ", " ?y "] because it is the most probable cell." crlf)
+	(assert (exec (step ?s) (action guess) (x ?x) (y ?y)))
+	(assert (sure-guess (x ?x) (y ?y) (content piece)))
+	(pop-focus)
+)
+
+
+
+;  -------------------------------------------------------------------
+;  --- Se non trovo la cella più promettente (con sia riga che -------
+;  --- colonna con ratio più alta), allora cerco la cella ------------
+;  --- con la riga o la colonna con ratio più alta -------------------
+;  -------------------------------------------------------------------
+(defrule find-best-row-to-guess (declare (salience -20))
+	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
+	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
+	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
+	(not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
+	(test (>= ?rx ?ry))
+=>
+	(printout t "Best row to guess is " ?x " with ratio " ?rx "." crlf)
+	(assert (best-row-or-col (row ?x)))
+)
+
+(defrule find-best-col-to-guess (declare (salience -20))
+	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
+	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
+	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
+	(not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
+	(test (> ?ry ?rx))
+=>
+	(printout t "Best column to guess is " ?y " with ratio " ?ry "." crlf)
+	(assert (best-row-or-col (col ?y)))
+)
+
+(defrule guess-best-row (declare (salience -20))
+	(status (step ?s) (currently running))
+	(moves (guesses ?nf&:(> ?nf 0)))
+	?b <- (best-row-or-col (row ?x) (col -1))
+	(empty-cell (x ?x) (y ?y))
+	; (col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
+	; (not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
+	(not (sure-guess (x ?x) (y ?y)))
+	(not (exec (action guess) (x ?x) (y ?y)))
+=>
+	(printout t "Guess in cell [" ?x ", " ?y "] because it is the best row." crlf)
+	(modify ?b (row -1))
+	(assert (exec (step ?s) (action guess) (x ?x) (y ?y)))
+	(assert (sure-guess (x ?x) (y ?y) (content piece)))
+	(pop-focus)
+)
+
+(defrule guess-best-col (declare (salience -20))
+	(status (step ?s) (currently running))
+	(moves (guesses ?nf&:(> ?nf 0)))
+	?b <- (best-row-or-col (row -1) (col ?y))
+	(empty-cell (x ?x) (y ?y))
+	; (row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
+	; (not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
+	(not (sure-guess (x ?x) (y ?y)))
+	(not (exec (action guess) (x ?x) (y ?y)))
+=>
+	(printout t "Guess in cell [" ?x ", " ?y "] because it is the best column." crlf)
+	(modify ?b (col -1))
+	(assert (exec (step ?s) (action guess) (x ?x) (y ?y)))
+	(assert (sure-guess (x ?x) (y ?y) (content piece)))
+	(pop-focus)
+)
+
+
 
 ;  ---------------------------------------------
 ;  --- Prima fire ------------------------------
@@ -1749,7 +1833,7 @@
 ;  ---------------------------------------------
 ;  --- Quando non ho più azioni da eseguire ----
 ;  ---------------------------------------------
-(defrule finished (declare (salience -25))
+(defrule finished (declare (salience -30))
 	(status (step ?s) (currently running))
 => 
 	(printout t "Finished." crlf)
