@@ -1744,7 +1744,7 @@
 ;  --- colonna con ratio più alta), allora cerco la cella ------------
 ;  --- con la riga o la colonna con ratio più alta -------------------
 ;  -------------------------------------------------------------------
-(defrule find-best-row-to-guess (declare (salience -20))
+(defrule find-best-row-to-guess (declare (salience -26))
 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
 	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
@@ -1755,7 +1755,7 @@
 	(assert (best-row-or-col (row ?x)))
 )
 
-(defrule find-best-col-to-guess (declare (salience -20))
+(defrule find-best-col-to-guess (declare (salience -26))
 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
 	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
@@ -1766,7 +1766,7 @@
 	(assert (best-row-or-col (col ?y)))
 )
 
-(defrule guess-best-row (declare (salience -20))
+(defrule guess-best-row (declare (salience -26))
 	(status (step ?s) (currently running))
 	(moves (guesses ?nf&:(> ?nf 0)))
 	?b <- (best-row-or-col (row ?x) (col -1))
@@ -1783,7 +1783,7 @@
 	(pop-focus)
 )
 
-(defrule guess-best-col (declare (salience -20))
+(defrule guess-best-col (declare (salience -26))
 	(status (step ?s) (currently running))
 	(moves (guesses ?nf&:(> ?nf 0)))
 	?b <- (best-row-or-col (row -1) (col ?y))
