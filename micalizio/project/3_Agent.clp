@@ -101,8 +101,9 @@
 ;  ---------------------------------------------
 ;  -------- Fatti iniziali utili ---------------
 ;  ---------------------------------------------
-; Inizializzo per ogni riga e colonna il numero di celle libere (inizialmente 10)
-; e il contenitore delle barche affondate
+; Inizializzo per ogni riga e colonna il numero di celle libere (inizialmente 10),
+; il contenitore delle barche affondate, il rapporto tra pezzi e celle libere per riga e colonna
+; e le celle vuote
 (deffacts initialize
 	(empty-cells-per-row (row 0))
 	(empty-cells-per-row (row 1))
@@ -273,6 +274,7 @@
 )
 
 
+
 ;  ------------------------------------------------
 ;  --- Inizialmente fa guess sulle info di base ---
 ;  ------------------------------------------------
@@ -294,6 +296,7 @@
 	(printout t "Fill cell [" ?x ", " ?y "] with water." crlf)
 	(assert (sure-guess (x ?x) (y ?y) (content water)))
 )
+
 
 
 ;  ---------------------------------------------------------------------
@@ -388,6 +391,7 @@
 	(assert (exec (step ?s) (action guess) (x 9) (y (+ ?y 1))))
 	(pop-focus)
 )
+
 
 
 ;  --------------------------------------------------------------------
@@ -521,7 +525,6 @@
 	(assert (sure-guess (x ?x) (y ?y) (content water)))
 )
 
-
 ; Riempio di acqua le celle attorno a pezzi right
 (defrule fill-water-up-left-around-right-piece
 	(sure-guess (x ?x) (y ?y) (content right))
@@ -589,7 +592,6 @@
 	(printout t "Fill cell [" (+ ?x 1) ", " (- ?y 1) "] with water." crlf)
 	(assert (sure-guess (x (+ ?x 1)) (y (- ?y 1)) (content water)))
 )
-
 
 ; Riempio di acqua le celle attorno a pezzi left
 (defrule fill-water-up-left-around-left-piece
@@ -659,7 +661,6 @@
 	(assert (sure-guess (x (+ ?x 1)) (y (+ ?y 1)) (content water)))
 )
 
-
 ; Riempio di acqua le celle attorno a pezzi top
 (defrule fill-water-up-left-around-top-piece
 	(sure-guess (x ?x) (y ?y) (content top))
@@ -728,7 +729,6 @@
 	(assert (sure-guess (x (+ ?x 1)) (y (+ ?y 1)) (content water)))
 )
 
-
 ; Riempio di acqua le celle attorno a pezzi bottom
 (defrule fill-water-up-left-around-bot-piece
 	(sure-guess (x ?x) (y ?y) (content bot))
@@ -796,7 +796,6 @@
 	(printout t "Fill cell [" (+ ?x 1) ", " (+ ?y 1) "] with water." crlf)
 	(assert (sure-guess (x (+ ?x 1)) (y (+ ?y 1)) (content water)))
 )
-
 
 ; Riempio di acqua le celle attorno a pezzi sub
 (defrule fill-water-up-left-around-sub-piece
@@ -874,7 +873,6 @@
 	(printout t "Fill cell [" (+ ?x 1) ", " (+ ?y 1) "] with water." crlf)
 	(assert (sure-guess (x (+ ?x 1)) (y (+ ?y 1)) (content water)))
 )
-
 
 ; Riempio di acqua le celle attorno a pezzi middle
 (defrule fill-water-up-left-around-middle-piece
@@ -957,7 +955,6 @@
 	(assert (sure-guess (x (+ ?x 1)) (y (+ ?y 1)) (content water)))
 )
 
-
 ; Riempio di acqua le celle attorno a pezzi piece
 (defrule fill-water-up-left-around-piece
 	(sure-guess (x ?x) (y ?y) (content piece))
@@ -1021,7 +1018,6 @@
 
 
 
-
 ;  -------------------------------------------------------------------
 ;  --- Aggiorno il numero di celle vuote in ogni riga e colonna ------
 ;  -------------------------------------------------------------------
@@ -1051,8 +1047,6 @@
 	(retract ?e)
 	(printout t "Cell [" ?x ", " ?y "] is not empty anymore." crlf)
 )
-
-
 
 
 
@@ -1525,7 +1519,6 @@
 
 
 
-
 ;  -------------------------------------------------------------------
 ;  --- Se ho già affondato tutte le navi da 3 e ho tre pezzi di ------
 ;  --- fila e acqua sopra o sotto di essi, posso dedurre che ---------
@@ -1599,7 +1592,6 @@
 	(assert (exec (step ?s) (action guess) (x ?x) (y (+ ?y 1))))
 	(pop-focus)
 )
-
 
 
 
@@ -1714,7 +1706,6 @@
 	(empty-cell (x ?x) (y ?y))
 	; (row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	; (not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
-	;; deve essere la riga maggiore tra le disponibili, ovvero tra quelle con celle vuote in quella colonna
 	(not (sure-guess (x ?x) (y ?y)))
 	(not (exec (action fire) (x ?x) (y ?y)))
 =>
@@ -1808,25 +1799,6 @@
 	(assert (sure-guess (x ?x) (y ?y) (content piece)))
 	(pop-focus)
 )
-
-
-
-;  ---------------------------------------------
-;  --- Prima fire ------------------------------
-;  ---------------------------------------------
-; (defrule fire-up-3-pieces-ver (declare (salience -15))
-; 	(status (step ?s) (currently running))
-; 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
-; 	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2 &~water))
-; 	(sure-guess (x ?x2 &:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3 &~water))
-; 	(not (sure-guess (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y)))
-; 	(not (exec (action fire) (x ?x3 &:(eq ?x3 (- ?x 3))) (y ?y)))
-; 	(test (>= (- ?x 3) 0))
-; =>
-; 	(printout t "Fire in cell [" (- ?x 3) ", " ?y "]." crlf)
-; 	(assert (exec (step ?s) (action fire) (x (- ?x 3)) (y ?y)))
-; 	(pop-focus)
-; )
 
 
 
