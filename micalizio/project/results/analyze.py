@@ -4,79 +4,32 @@ from prettytable import PrettyTable
 with open ('micalizio/project/results/result.txt', 'r') as f:
     lines = f.readlines()
 
-# select only the first 262 lines
-# lines = lines[:262]
-
-
-# find total pieces per column and row
-pieces_per_row = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
-pieces_per_column = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
-for line in lines:
-    if re.search(r'know that column', line, re.IGNORECASE):
-        pieces_per_column[int(re.search(r'column (\d)', line).group(1))] = int(re.search(r'(\d) pieces', line).group(1))
-    if re.search(r'know that row', line, re.IGNORECASE):
-        pieces_per_row[int(re.search(r'row (\d)', line).group(1))] = int(re.search(r'(\d) pieces', line).group(1))
-
-print(f'Initial pieces per row: {pieces_per_row}')
-print(f'Initial pieces per column: {pieces_per_column}')
-
 # empty cells per row and column
 empty_cells_per_row = {0: 10, 1: 10, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 10, 8: 10, 9: 10}
 empty_cells_per_column = {0: 10, 1: 10, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 10, 8: 10, 9: 10}
 
-# find total number of guesses
+# find total pieces per column and row, total number of guesses, fire used and water cells
+pieces_per_row = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
+pieces_per_column = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
+fire_used = 0
 total_guesses = 0
-for line in lines:
-    if re.search(r'guess', line, re.IGNORECASE):
-        total_guesses += 1
-
-print(f'Total guesses: {total_guesses}')
-
-# find total number of water cells
 total_water_cells = 0
-for line in lines:
-    if re.search(r'water', line, re.IGNORECASE) and re.search(r'fill', line, re.IGNORECASE):
-        total_water_cells += 1
-
-print(f'Total water cells: {total_water_cells}')
-
-# create grid 10x10
-grid = []
-for i in range(10):
-    grid.append(['   '] * 10)
-
-for line in lines:
-    if re.search(r'guess', line, re.IGNORECASE):
-        # find coordinates: row is after '[' and before ','
-        # find coordinates: column is after ',' and before ']'
-        row = re.search(r'\[(\d)', line).group(1)
-        column = re.search(r'(\d)\]', line).group(1)
-        x = int(row)
-        y = int(column)
-        grid[x][y] = '⛵️'
-        pieces_per_row[x] -= 1
-        pieces_per_column[y] -= 1
-        empty_cells_per_row[x] -= 1
-        empty_cells_per_column[y] -= 1
-
-# for line in lines:
-    if re.search(r'water', line, re.IGNORECASE) and (re.search(r'fill', line, re.IGNORECASE) or re.search(r'deduce', line, re.IGNORECASE)):
-        # find coordinates: row is after '[' and before ','
-        # find coordinates: column is after ',' and before ']'
-        row = re.search(r'\[(\d)', line).group(1)
-        column = re.search(r'(\d)\]', line).group(1)
-        x = int(row)
-        y = int(column)
-        grid[x][y] = '🌊'
-        empty_cells_per_row[x] -= 1
-        empty_cells_per_column[y] -= 1
-
 # check number of sunk boats
 sunk_one = 0
 sunk_two = 0
 sunk_three = 0
 sunk_four = 0
 for line in lines:
+    if re.search(r'know that column', line, re.IGNORECASE):
+        pieces_per_column[int(re.search(r'column (\d)', line).group(1))] = int(re.search(r'(\d) pieces', line).group(1))
+    if re.search(r'know that row', line, re.IGNORECASE):
+        pieces_per_row[int(re.search(r'row (\d)', line).group(1))] = int(re.search(r'(\d) pieces', line).group(1))
+    if re.search(r'guess', line, re.IGNORECASE):
+        total_guesses += 1
+    if re.search(r'fire', line, re.IGNORECASE):
+        fire_used += 1
+    if re.search(r'water', line, re.IGNORECASE) and (re.search(r'fill', line, re.IGNORECASE) or re.search(r'deduce', line, re.IGNORECASE)):
+        total_water_cells += 1
     if re.search(r'sink', line, re.IGNORECASE):
         if re.search(r'sub', line, re.IGNORECASE):
             sunk_one += 1
@@ -87,6 +40,19 @@ for line in lines:
         if re.search(r'four', line, re.IGNORECASE):
             sunk_four += 1
 
+print('Initial pieces per row: ', end='')
+for value in pieces_per_row.values():
+    print(value, end=' ')
+print()
+print('Initial pieces per column: ', end='')
+for value in pieces_per_column.values():
+    print(value, end=' ')
+print()
+print(f'Fire used: {fire_used}')
+print(f'Total guesses: {total_guesses}')
+print(f'Total water cells: {total_water_cells}')
+
+# print sunk boats
 sink_table = PrettyTable()
 sink_table.field_names = ['Boat', 'Sunk', 'Total']
 sink_table.add_row(['Sub', sunk_one, 4])
@@ -95,13 +61,30 @@ sink_table.add_row(['Three-pieces', sunk_three, 2])
 sink_table.add_row(['Four-pieces', sunk_four, 1])
 print(sink_table)
 
-# check number of fire used
-fire_used = 0
-for line in lines:
-    if re.search(r'fire', line, re.IGNORECASE):
-        fire_used += 1
+# create grid 10x10
+grid = []
+for i in range(10):
+    grid.append(['   '] * 10)
 
-print(f'Fire used: {fire_used}')
+for line in lines:
+    if re.search(r'guess', line, re.IGNORECASE):
+        row = re.search(r'\[(\d)', line).group(1)
+        column = re.search(r'(\d)\]', line).group(1)
+        x = int(row)
+        y = int(column)
+        grid[x][y] = '⛵️'
+        pieces_per_row[x] -= 1
+        pieces_per_column[y] -= 1
+        empty_cells_per_row[x] -= 1
+        empty_cells_per_column[y] -= 1
+    if re.search(r'water', line, re.IGNORECASE) and (re.search(r'fill', line, re.IGNORECASE) or re.search(r'deduce', line, re.IGNORECASE)):
+        row = re.search(r'\[(\d)', line).group(1)
+        column = re.search(r'(\d)\]', line).group(1)
+        x = int(row)
+        y = int(column)
+        grid[x][y] = '🌊'
+        empty_cells_per_row[x] -= 1
+        empty_cells_per_column[y] -= 1
 
 # find row and column ratio
 row_ratio = []
@@ -115,8 +98,6 @@ for i in range(10):
         row_ratio.append(round(pieces_per_row[i] / empty_cells_per_row[i], 2))
     if empty_cells_per_column[i] != 0:
         column_ratio.append(round(pieces_per_column[i] / empty_cells_per_column[i], 2))
-
-
 
 # print the grid with pretty table
 table = PrettyTable()
@@ -132,8 +113,3 @@ table.add_row(['Empty cells', empty_cells_per_column[0], empty_cells_per_column[
 table.add_row(['Column ratio', column_ratio[0], column_ratio[1], column_ratio[2], column_ratio[3], column_ratio[4], column_ratio[5], column_ratio[6], column_ratio[7], column_ratio[8],
                 column_ratio[9], '', '', ''])
 print(table)
-
-
-
-
-
