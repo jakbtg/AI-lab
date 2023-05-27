@@ -9,6 +9,8 @@ with open ('micalizio/project/results/result.txt', 'r') as f:
 statistics = lines[-8:]
 # exclude last 8 lines
 lines = lines[:-8]
+# testing -- first n lines
+# lines = lines[:556]
 
 # empty cells per row and column
 empty_cells_per_row = {0: 10, 1: 10, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 10, 8: 10, 9: 10}

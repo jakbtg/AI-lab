@@ -1770,6 +1770,77 @@
 
 
 ;  -------------------------------------------------------------------
+;  --- Se ho tre pezzi di fila e poi una cella vuota e non ho --------
+;  --- ancora trovato la barca da quattro, allora provo una fire -----
+;  --- nella cella vuota. --------------------------------------------
+;  -------------------------------------------------------------------
+(defrule fire-up-three-pieces (declare (salience -18))
+	(status (step ?s) (currently running))
+	(moves (fires ?nf&:(> ?nf 0)))
+	(sunk-boats (four 0))
+	(sure-guess (x ?x) (y ?y) (content ?p1&~water))
+	(sure-guess (x ?x1&:(eq ?x1 (- ?x 1))) (y ?y) (content ?p2&~water))
+	(sure-guess (x ?x2&:(eq ?x2 (- ?x 2))) (y ?y) (content ?p3&~water))
+	(not (sure-guess (x ?x3&:(eq ?x3 (- ?x 3))) (y ?y)))
+	(not (exec (action fire) (x ?x3&:(eq ?x3 (- ?x 3))) (y ?y)))
+	(test (>= (- ?x 3) 0))
+=>
+	(printout t "Fire in cell [" (- ?x 3) ", " ?y "], because there are three pieces in a row and still need to find the four pieces boat." crlf)
+	(assert (exec (step ?s) (action fire) (x (- ?x 3)) (y ?y)))
+	(pop-focus)
+)
+
+(defrule fire-down-three-pieces (declare (salience -18))
+	(status (step ?s) (currently running))
+	(moves (fires ?nf&:(> ?nf 0)))
+	(sunk-boats (four 0))
+	(sure-guess (x ?x) (y ?y) (content ?p1&~water))
+	(sure-guess (x ?x1&:(eq ?x1 (+ ?x 1))) (y ?y) (content ?p2&~water))
+	(sure-guess (x ?x2&:(eq ?x2 (+ ?x 2))) (y ?y) (content ?p3&~water))
+	(not (sure-guess (x ?x3&:(eq ?x3 (+ ?x 3))) (y ?y)))
+	(not (exec (action fire) (x ?x3&:(eq ?x3 (+ ?x 3))) (y ?y)))
+	(test (< (+ ?x 3) 10))
+=>
+	(printout t "Fire in cell [" (+ ?x 3) ", " ?y "], because there are three pieces in a row and still need to find the four pieces boat." crlf)
+	(assert (exec (step ?s) (action fire) (x (+ ?x 3)) (y ?y)))
+	(pop-focus)
+)
+
+(defrule fire-left-three-pieces (declare (salience -18))
+	(status (step ?s) (currently running))
+	(moves (fires ?nf&:(> ?nf 0)))
+	(sunk-boats (four 0))
+	(sure-guess (x ?x) (y ?y) (content ?p1&~water))
+	(sure-guess (x ?x) (y ?y1&:(eq ?y1 (- ?y 1))) (content ?p2&~water))
+	(sure-guess (x ?x) (y ?y2&:(eq ?y2 (- ?y 2))) (content ?p3&~water))
+	(not (sure-guess (x ?x) (y ?y3&:(eq ?y3 (- ?y 3)))))
+	(not (exec (action fire) (x ?x) (y ?y3&:(eq ?y3 (- ?y 3)))))
+	(test (>= (- ?y 3) 0))
+=>
+	(printout t "Fire in cell [" ?x ", " (- ?y 3) "], because there are three pieces in a row and still need to find the four pieces boat." crlf)
+	(assert (exec (step ?s) (action fire) (x ?x) (y (- ?y 3))))
+	(pop-focus)
+)
+
+(defrule fire-right-three-pieces (declare (salience -18))
+	(status (step ?s) (currently running))
+	(moves (fires ?nf&:(> ?nf 0)))
+	(sunk-boats (four 0))
+	(sure-guess (x ?x) (y ?y) (content ?p1&~water))
+	(sure-guess (x ?x) (y ?y1&:(eq ?y1 (+ ?y 1))) (content ?p2&~water))
+	(sure-guess (x ?x) (y ?y2&:(eq ?y2 (+ ?y 2))) (content ?p3&~water))
+	(not (sure-guess (x ?x) (y ?y3&:(eq ?y3 (+ ?y 3)))))
+	(not (exec (action fire) (x ?x) (y ?y3&:(eq ?y3 (+ ?y 3)))))
+	(test (< (+ ?y 3) 10))
+=>
+	(printout t "Fire in cell [" ?x ", " (+ ?y 3) "], because there are three pieces in a row and still need to find the four pieces boat." crlf)
+	(assert (exec (step ?s) (action fire) (x ?x) (y (+ ?y 3))))
+	(pop-focus)
+)
+
+
+
+;  -------------------------------------------------------------------
 ;  --- Se non trovo la cella più promettente (con sia riga che -------
 ;  --- colonna con ratio più alta), allora cerco la cella ------------
 ;  --- con la riga o la colonna con ratio più alta -------------------
@@ -1803,8 +1874,9 @@
 	(moves (fires ?nf&:(> ?nf 0)))
 	?b <- (best-row-or-col (row ?x) (col -1))
 	(empty-cell (x ?x) (y ?y))
-	; (col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
-	; (not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
+	(empty-cell (x ?x) (y ?y2&:(neq ?y2 ?y)))
+	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
+	(not (col-ratio (col ?y2) (ratio ?ry2&:(> ?ry2 ?ry))))
 	(not (sure-guess (x ?x) (y ?y)))
 	(not (exec (action fire) (x ?x) (y ?y)))
 =>
@@ -1819,8 +1891,9 @@
 	(moves (fires ?nf&:(> ?nf 0)))
 	?b <- (best-row-or-col (row -1) (col ?y))
 	(empty-cell (x ?x) (y ?y))
-	; (row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
-	; (not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
+	(empty-cell (x ?x2&:(neq ?x2 ?x)) (y ?y))
+	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
+	(not (row-ratio (row ?x2) (ratio ?rx2&:(> ?rx2 ?rx))))
 	(not (sure-guess (x ?x) (y ?y)))
 	(not (exec (action fire) (x ?x) (y ?y)))
 =>
@@ -1968,6 +2041,9 @@
 	(moves (guesses ?ng&:(> ?ng 0)))
 	?b <- (best-row-or-col (row ?x) (col -1))
 	(empty-cell (x ?x) (y ?y))
+	(empty-cell (x ?x) (y ?y2&:(neq ?y2 ?y)))
+	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
+	(not (col-ratio (col ?y2) (ratio ?ry2&:(> ?ry2 ?ry))))
 	; (col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
 	; (not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
 	(not (sure-guess (x ?x) (y ?y)))
@@ -1985,6 +2061,9 @@
 	(moves (guesses ?ng&:(> ?ng 0)))
 	?b <- (best-row-or-col (row -1) (col ?y))
 	(empty-cell (x ?x) (y ?y))
+	(empty-cell (x ?x2&:(neq ?x2 ?x)) (y ?y))
+	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
+	(not (row-ratio (row ?x2) (ratio ?rx2&:(> ?rx2 ?rx))))
 	; (row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	; (not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
 	(not (sure-guess (x ?x) (y ?y)))
