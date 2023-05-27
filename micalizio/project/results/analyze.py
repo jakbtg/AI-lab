@@ -30,7 +30,7 @@ for line in lines:
         pieces_per_column[int(re.search(r'column (\d)', line).group(1))] = int(re.search(r'(\d) pieces', line).group(1))
     if re.search(r'know that row', line, re.IGNORECASE):
         pieces_per_row[int(re.search(r'row (\d)', line).group(1))] = int(re.search(r'(\d) pieces', line).group(1))
-    if re.search(r'guess', line, re.IGNORECASE):
+    if re.search(r'guess', line, re.IGNORECASE) and re.search(r'cell', line, re.IGNORECASE):
         total_guesses += 1
     if re.search(r'fire', line, re.IGNORECASE):
         fire_used += 1
@@ -83,7 +83,7 @@ for i in range(10):
 
 for line in lines:
     # if re.search(r'guess', line, re.IGNORECASE) and not re.search(r'best', line, re.IGNORECASE):
-    if re.search(r'guess', line, re.IGNORECASE):
+    if re.search(r'guess', line, re.IGNORECASE) and re.search(r'cell', line, re.IGNORECASE):
         row = re.search(r'\[(\d)', line).group(1)
         column = re.search(r'(\d)\]', line).group(1)
         x = int(row)
@@ -101,6 +101,7 @@ for line in lines:
         grid[x][y] = '🌊'
         empty_cells_per_row[x] -= 1
         empty_cells_per_column[y] -= 1
+        # print(line.strip()) # test
 
 # find row and column ratio
 row_ratio = []

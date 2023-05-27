@@ -274,6 +274,40 @@
 )
 
 
+;;; DA ESEGUIRE SOLAMENTE ALL'INIZIO PROBABILMENTE UNA SOLA VOLTA
+(defrule initialize-ratio-per-row (declare (salience 15))
+	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
+	(empty-cells-per-row (row ?x) (num ?numer&:(eq ?numer 10)))
+	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
+	(empty-cells-per-col (col ?y) (num ?numec&:(> ?numec 0)))
+	; (not (counted-for-ratio (x ?x) (y ?y)))
+	?r <- (row-ratio (row ?x) (ratio ?ratior&:(eq ?ratior -10)))
+	?c <- (col-ratio (col ?y) (ratio ?ratioc&:(eq ?ratioc -10)))
+=>
+	(modify ?r (ratio (/ ?numr ?numer)))
+	(modify ?c (ratio (/ ?numc ?numec)))
+	; (assert (counted-for-ratio (x ?x) (y ?y)))
+	(printout t "Initialize row " ?x " ratio to " (/ ?numr ?numer) crlf)
+	(printout t "Initialize col " ?y " ratio to " (/ ?numc ?numec) crlf)
+)
+
+(defrule initialize-ratio-per-col (declare (salience 15))
+	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
+	(empty-cells-per-row (row ?x) (num ?numer&:(> ?numer 0)))
+	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
+	(empty-cells-per-col (col ?y) (num ?numec&:(eq ?numec 10)))
+	; (not (counted-for-ratio (x ?x) (y ?y)))
+	?r <- (row-ratio (row ?x) (ratio ?ratior&:(eq ?ratior -10)))
+	?c <- (col-ratio (col ?y) (ratio ?ratioc&:(eq ?ratioc -10)))
+=>
+	(modify ?r (ratio (/ ?numr ?numer)))
+	(modify ?c (ratio (/ ?numc ?numec)))
+	; (assert (counted-for-ratio (x ?x) (y ?y)))
+	(printout t "Initialize row " ?x " ratio to " (/ ?numr ?numer) crlf)
+	(printout t "Initialize col " ?y " ratio to " (/ ?numc ?numec) crlf)
+)
+
+
 
 ;  ------------------------------------------------
 ;  --- Inizialmente fa guess sulle info di base ---
@@ -1124,40 +1158,6 @@
 )
 
 
-;;; DA ESEGUIRE SOLAMENTE ALL'INIZIO PROBABILMENTE UNA SOLA VOLTA
-; (defrule update-ratio-per-row-when-all-empty-cells (declare (salience -5))
-; 	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
-; 	(empty-cells-per-row (row ?x) (num ?numer&:(eq ?numer 10)))
-; 	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
-; 	(empty-cells-per-col (col ?y) (num ?numec&:(> ?numec 0)))
-; 	(not (counted-for-ratio (x ?x) (y ?y)))
-; 	?r <- (row-ratio (row ?x) (ratio ?ratior))
-; 	?c <- (col-ratio (col ?y) (ratio ?ratioc))
-; =>
-; 	(modify ?r (ratio (/ ?numr ?numer)))
-; 	(modify ?c (ratio (/ ?numc ?numec)))
-; 	(assert (counted-for-ratio (x ?x) (y ?y)))
-; 	(printout t "Update row " ?x " ratio to " (/ ?numr ?numer) crlf)
-; 	(printout t "Update col " ?y " ratio to " (/ ?numc ?numec) crlf)
-; )
-
-; (defrule update-ratio-per-col-when-all-empty-cells (declare (salience -5))
-; 	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
-; 	(empty-cells-per-row (row ?x) (num ?numer&:(> ?numer 0)))
-; 	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
-; 	(empty-cells-per-col (col ?y) (num ?numec&:(eq ?numec 10)))
-; 	(not (counted-for-ratio (x ?x) (y ?y)))
-; 	?r <- (row-ratio (row ?x) (ratio ?ratior))
-; 	?c <- (col-ratio (col ?y) (ratio ?ratioc))
-; =>
-; 	(modify ?r (ratio (/ ?numr ?numer)))
-; 	(modify ?c (ratio (/ ?numc ?numec)))
-; 	(assert (counted-for-ratio (x ?x) (y ?y)))
-; 	(printout t "Update row " ?x " ratio to " (/ ?numr ?numer) crlf)
-; 	(printout t "Update col " ?y " ratio to " (/ ?numc ?numec) crlf)
-; )
-
-
 
 ;  -------------------------------------------------------------------
 ;  --- Cerco, date le sure-guess che ho fatto le barche --------------
@@ -1775,6 +1775,7 @@
 ;  --- con la riga o la colonna con ratio più alta -------------------
 ;  -------------------------------------------------------------------
 (defrule find-best-row-to-fire (declare (salience -20))
+	(moves (fires ?nf&:(> ?nf 0)))
 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
 	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
@@ -1786,6 +1787,7 @@
 )
 
 (defrule find-best-col-to-fire (declare (salience -20))
+	(moves (fires ?nf&:(> ?nf 0)))
 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
 	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
@@ -1836,7 +1838,7 @@
 ;  -------------------------------------------------------------------
 (defrule guess-most-probable-cell (declare (salience -25))
 	(status (step ?s) (currently running))
-	(moves (guesses ?nf&:(> ?nf 0)))
+	(moves (guesses ?ng&:(> ?ng 0)))
 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
 	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
@@ -1860,7 +1862,7 @@
 ;  -------------------------------------------------------------------
 (defrule guess-2-piece-left-when-two-boats-left (declare (salience -30))
 	(status (step ?s) (currently running))
-	(moves (guesses ?nf&:(> ?nf 0)))
+	(moves (guesses ?ng&:(> ?ng 0)))
 	(sunk-boats (two ?n &:(< ?n 3)))
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water))
@@ -1878,7 +1880,7 @@
 
 (defrule guess-2-piece-right-when-two-boats-left (declare (salience -30))
 	(status (step ?s) (currently running))
-	(moves (guesses ?nf&:(> ?nf 0)))
+	(moves (guesses ?ng&:(> ?ng 0)))
 	(sunk-boats (two ?n &:(< ?n 3)))
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water))
@@ -1896,7 +1898,7 @@
 
 (defrule guess-2-piece-up-when-two-boats-left (declare (salience -30))
 	(status (step ?s) (currently running))
-	(moves (guesses ?nf&:(> ?nf 0)))
+	(moves (guesses ?ng&:(> ?ng 0)))
 	(sunk-boats (two ?n &:(< ?n 3)))
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water))
@@ -1914,7 +1916,7 @@
 
 (defrule guess-2-piece-down-when-two-boats-left (declare (salience -30))
 	(status (step ?s) (currently running))
-	(moves (guesses ?nf&:(> ?nf 0)))
+	(moves (guesses ?ng&:(> ?ng 0)))
 	(sunk-boats (two ?n &:(< ?n 3)))
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water))
@@ -1938,6 +1940,7 @@
 ;  --- con la riga o la colonna con ratio più alta -------------------
 ;  -------------------------------------------------------------------
 (defrule find-best-row-to-guess (declare (salience -35))
+	(moves (guesses ?ng&:(> ?ng 0)))
 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
 	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
@@ -1949,6 +1952,7 @@
 )
 
 (defrule find-best-col-to-guess (declare (salience -35))
+	(moves (guesses ?ng&:(> ?ng 0)))
 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
 	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
@@ -1961,7 +1965,7 @@
 
 (defrule guess-best-row (declare (salience -35))
 	(status (step ?s) (currently running))
-	(moves (guesses ?nf&:(> ?nf 0)))
+	(moves (guesses ?ng&:(> ?ng 0)))
 	?b <- (best-row-or-col (row ?x) (col -1))
 	(empty-cell (x ?x) (y ?y))
 	; (col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
@@ -1978,7 +1982,7 @@
 
 (defrule guess-best-col (declare (salience -35))
 	(status (step ?s) (currently running))
-	(moves (guesses ?nf&:(> ?nf 0)))
+	(moves (guesses ?ng&:(> ?ng 0)))
 	?b <- (best-row-or-col (row -1) (col ?y))
 	(empty-cell (x ?x) (y ?y))
 	; (row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
