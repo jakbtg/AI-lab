@@ -1630,6 +1630,85 @@
 
 
 ;  -------------------------------------------------------------------
+;  --- Se ho già affondato tutte le navi da 1 e ho un pezzo e una ----
+;  --- cella vuota accanto e acqua tutto intorno, allora posso -------
+;  --- dedurre che in quella cella vuota ci sarà un pezzo ------------
+;  -------------------------------------------------------------------
+(defrule guess-2-piece-left-when-all-sub-sunk (declare (salience -10))
+	(status (step ?s) (currently running))
+	(sunk-boats (one 4))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water))
+	(sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y) (content water))
+	(not (sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 1)))))
+	(not (exec (action guess) (x ?x) (y ?y2 &:(eq ?y2 (- ?y 1)))))
+	(test (>= (- ?y 1) 0))
+=>
+	(printout t "Guess second piece in cell [" ?x ", " (- ?y 1) "] because all subs sunk." crlf)
+	(assert (sure-guess (x ?x) (y (- ?y 1)) (content piece)))
+	(assert (exec (step ?s) (action guess) (x ?x) (y (- ?y 1))))
+	(pop-focus)
+)
+
+(defrule guess-2-piece-right-when-all-sub-sunk (declare (salience -10))
+	(status (step ?s) (currently running))
+	(sunk-boats (one 4))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water))
+	(sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y) (content water))
+	(not (sure-guess (x ?x) (y ?y2 &:(eq ?y2 (+ ?y 1)))))
+	(not (exec (action guess) (x ?x) (y ?y2 &:(eq ?y2 (+ ?y 1)))))
+	(test (< (+ ?y 1) 10))
+=>
+	(printout t "Guess second piece in cell [" ?x ", " (+ ?y 1) "] because all subs sunk." crlf)
+	(assert (sure-guess (x ?x) (y (+ ?y 1)) (content piece)))
+	(assert (exec (step ?s) (action guess) (x ?x) (y (+ ?y 1))))
+	(pop-focus)
+)
+
+(defrule guess-2-piece-up-when-all-sub-sunk (declare (salience -10))
+	(status (step ?s) (currently running))
+	(sunk-boats (one 4))
+	; (or 
+	; 	(sunk-boats (one 4))
+	; 	(sunk-boats (two ?n &:(< ?n 3)))
+	; )
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water))
+	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 1))) (content water))
+	(sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y) (content water))
+	(not (sure-guess (x ?x2 &:(eq ?x2 (- ?x 1))) (y ?y)))
+	(not (exec (action guess) (x ?x2 &:(eq ?x2 (- ?x 1))) (y ?y)))
+	(test (>= (- ?x 1) 0))
+=>
+	(printout t "Guess second piece in cell [" (- ?x 1) ", " ?y "] because all subs sunk." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y ?y) (content piece)))
+	(assert (exec (step ?s) (action guess) (x (- ?x 1)) (y ?y)))
+	(pop-focus)
+)
+
+(defrule guess-2-piece-down-when-all-sub-sunk (declare (salience -10))
+	(status (step ?s) (currently running))
+	(sunk-boats (one 4))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water))
+	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 1))) (content water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water))
+	(not (sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y)))
+	(not (exec (action guess) (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y)))
+	(test (< (+ ?x 1) 10))
+=>
+	(printout t "Guess second piece in cell [" (+ ?x 1) ", " ?y "] because all subs sunk." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y ?y) (content piece)))
+	(assert (exec (step ?s) (action guess) (x (+ ?x 1)) (y ?y)))
+	(pop-focus)
+)
+
+
+
+;  -------------------------------------------------------------------
 ;  --- Se il numero di pezzi rimasti in una riga o colonna è ---------
 ;  --- uguale al numero di celle vuote, allora posso dedurre ---------
 ;  --- che ci sono dei pezzi di barca in quelle celle. ---------------
@@ -1774,11 +1853,91 @@
 
 
 ;  -------------------------------------------------------------------
+;  --- Se ancora mancano da affondare delle barche da due, do la -----
+;  --- precedenza a loro, per cui se ho un pezzo, con una cella ------
+;  --- vuota accanto e acqua tutta intorno allora faccio una guess ---
+;  --- in quella cella vuota, supponendo che ci sia la barca da due --
+;  -------------------------------------------------------------------
+(defrule guess-2-piece-left-when-two-boats-left (declare (salience -30))
+	(status (step ?s) (currently running))
+	(moves (guesses ?nf&:(> ?nf 0)))
+	(sunk-boats (two ?n &:(< ?n 3)))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water))
+	(sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y) (content water))
+	(not (sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 1)))))
+	(not (exec (action guess) (x ?x) (y ?y2 &:(eq ?y2 (- ?y 1)))))
+	(test (>= (- ?y 1) 0))
+=>
+	(printout t "Guess second piece in cell [" ?x ", " (- ?y 1) "] because some two-pieces boats are still safe." crlf)
+	(assert (sure-guess (x ?x) (y (- ?y 1)) (content piece)))
+	(assert (exec (step ?s) (action guess) (x ?x) (y (- ?y 1))))
+	(pop-focus)
+)
+
+(defrule guess-2-piece-right-when-two-boats-left (declare (salience -30))
+	(status (step ?s) (currently running))
+	(moves (guesses ?nf&:(> ?nf 0)))
+	(sunk-boats (two ?n &:(< ?n 3)))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (- ?y 1))) (content water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water))
+	(sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y) (content water))
+	(not (sure-guess (x ?x) (y ?y2 &:(eq ?y2 (+ ?y 1)))))
+	(not (exec (action guess) (x ?x) (y ?y2 &:(eq ?y2 (+ ?y 1)))))
+	(test (< (+ ?y 1) 10))
+=>
+	(printout t "Guess second piece in cell [" ?x ", " (+ ?y 1) "] because some two-pieces boats are still safe." crlf)
+	(assert (sure-guess (x ?x) (y (+ ?y 1)) (content piece)))
+	(assert (exec (step ?s) (action guess) (x ?x) (y (+ ?y 1))))
+	(pop-focus)
+)
+
+(defrule guess-2-piece-up-when-two-boats-left (declare (salience -30))
+	(status (step ?s) (currently running))
+	(moves (guesses ?nf&:(> ?nf 0)))
+	(sunk-boats (two ?n &:(< ?n 3)))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water))
+	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 1))) (content water))
+	(sure-guess (x ?x1 &:(eq ?x1 (+ ?x 1))) (y ?y) (content water))
+	(not (sure-guess (x ?x2 &:(eq ?x2 (- ?x 1))) (y ?y)))
+	(not (exec (action guess) (x ?x2 &:(eq ?x2 (- ?x 1))) (y ?y)))
+	(test (>= (- ?x 1) 0))
+=>
+	(printout t "Guess second piece in cell [" (- ?x 1) ", " ?y "] because some two-pieces boats are still safe." crlf)
+	(assert (sure-guess (x (- ?x 1)) (y ?y) (content piece)))
+	(assert (exec (step ?s) (action guess) (x (- ?x 1)) (y ?y)))
+	(pop-focus)
+)
+
+(defrule guess-2-piece-down-when-two-boats-left (declare (salience -30))
+	(status (step ?s) (currently running))
+	(moves (guesses ?nf&:(> ?nf 0)))
+	(sunk-boats (two ?n &:(< ?n 3)))
+	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
+	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water))
+	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 1))) (content water))
+	(sure-guess (x ?x1 &:(eq ?x1 (- ?x 1))) (y ?y) (content water))
+	(not (sure-guess (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y)))
+	(not (exec (action guess) (x ?x2 &:(eq ?x2 (+ ?x 1))) (y ?y)))
+	(test (< (+ ?x 1) 10))
+=>
+	(printout t "Guess second piece in cell [" (+ ?x 1) ", " ?y "] because some two-pieces boats are still safe." crlf)
+	(assert (sure-guess (x (+ ?x 1)) (y ?y) (content piece)))
+	(assert (exec (step ?s) (action guess) (x (+ ?x 1)) (y ?y)))
+	(pop-focus)
+)
+
+
+
+;  -------------------------------------------------------------------
 ;  --- Se non trovo la cella più promettente (con sia riga che -------
 ;  --- colonna con ratio più alta), allora cerco la cella ------------
 ;  --- con la riga o la colonna con ratio più alta -------------------
 ;  -------------------------------------------------------------------
-(defrule find-best-row-to-guess (declare (salience -26))
+(defrule find-best-row-to-guess (declare (salience -35))
 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
 	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
@@ -1789,7 +1948,7 @@
 	(assert (best-row-or-col (row ?x)))
 )
 
-(defrule find-best-col-to-guess (declare (salience -26))
+(defrule find-best-col-to-guess (declare (salience -35))
 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
 	(not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
@@ -1800,7 +1959,7 @@
 	(assert (best-row-or-col (col ?y)))
 )
 
-(defrule guess-best-row (declare (salience -26))
+(defrule guess-best-row (declare (salience -35))
 	(status (step ?s) (currently running))
 	(moves (guesses ?nf&:(> ?nf 0)))
 	?b <- (best-row-or-col (row ?x) (col -1))
@@ -1817,7 +1976,7 @@
 	(pop-focus)
 )
 
-(defrule guess-best-col (declare (salience -26))
+(defrule guess-best-col (declare (salience -35))
 	(status (step ?s) (currently running))
 	(moves (guesses ?nf&:(> ?nf 0)))
 	?b <- (best-row-or-col (row -1) (col ?y))
@@ -1839,7 +1998,7 @@
 ;  ---------------------------------------------
 ;  --- Quando non ho più azioni da eseguire ----
 ;  ---------------------------------------------
-(defrule finished (declare (salience -30))
+(defrule finished (declare (salience -40))
 	(status (step ?s) (currently running))
 => 
 	(printout t "Finished." crlf)
