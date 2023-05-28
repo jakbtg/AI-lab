@@ -27,8 +27,14 @@
 
 (defrule go-on-env-first (declare (salience 30))
   ?f <- (first-pass-to-env)
+  ;; added only to let me print on which map I'm playing
+  ?m <- (map ?map)
+  ;; -----------------------------
 =>
-
+  ;; printing the map
+  (printout t "Playing on: " ?map crlf)
+  (retract ?m)
+  ;; -----------------------------
   (retract ?f)
   (focus ENV)
 )
