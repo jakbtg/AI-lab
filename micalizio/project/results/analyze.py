@@ -4,6 +4,15 @@ from prettytable import PrettyTable
 with open ('micalizio/project/results/result.txt', 'r') as f:
     lines = f.readlines()
 
+# first line is the map
+map = lines[0]
+map = map.strip()
+map_name = map.split(': ')[1]
+m1 = map_name.split('_')[0]
+m2 = map_name.split('_')[1]
+map_number = re.search(r'(\d)', m1).group(1)
+obs_number = re.search(r'(\d)', m2).group(1)
+print(f'Playing map {map_number} with {obs_number} observations')
 
 # last 8 lines for statistics
 statistics = lines[-8:]
@@ -137,3 +146,18 @@ print(table)
 # print statistics
 for line in statistics:
     print(line.strip())
+
+
+# save all printed output in a file named as the map
+with open(f'micalizio/project/results/{map_name}_results.txt', 'w') as f:
+    f.write(f'Map name: {map_name}\n')
+    f.write(f'Initial pieces per row: {pieces_per_row}\n')
+    f.write(f'Initial pieces per column: {pieces_per_column}\n')
+    f.write(f'Fire used: {fire_used}\n')
+    f.write(f'Total guesses: {total_guesses}\n')
+    f.write(f'Total water cells: {total_water_cells}\n')
+    f.write(f'Number of known cells since the beginning: {num_known_cells_from_beginning}\n')
+    f.write(f'{sink_table}\n')
+    f.write(f'{table}\n')
+    for line in statistics:
+        f.write(f'{line.strip()}\n')
