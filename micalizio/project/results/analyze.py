@@ -9,7 +9,8 @@ with open ('micalizio/project/results/result.txt', 'r') as f:
 statistics = lines[-8:]
 # exclude last 8 lines
 lines = lines[:-8]
-# testing -- first n lines
+
+# first n lines --> fpr testing
 # lines = lines[:556]
 
 # empty cells per row and column
@@ -61,8 +62,8 @@ print(f'Total guesses: {total_guesses}')
 print(f'Total water cells: {total_water_cells}')
 
 # find number of known cells since the beginning, searching only the first 30 lines to avoid counting
-# cells known after a fire. Considering that the first 20 lines are for the rows and columns content and
-# and considering that I could know a maximum of 10 cells since the beginning.
+# cells known after a fire. Considering that the first 20 lines are for the rows and columns content
+# and considering that I could know a maximum of 10 cells since the beginning
 num_known_cells_from_beginning = 0
 for line in lines[:30]:
     if re.search(r'know that cell', line, re.IGNORECASE):
@@ -103,7 +104,7 @@ for line in lines:
         grid[x][y] = '🌊'
         empty_cells_per_row[x] -= 1
         empty_cells_per_column[y] -= 1
-        # print(line.strip()) # test
+        # print(line.strip()) # for testing
 
 # find row and column ratio
 row_ratio = []
