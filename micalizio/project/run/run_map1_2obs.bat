@@ -3,4 +3,5 @@
 (load /Users/jak/Documents/Uni/IALab/AI-lab/micalizio/project/maps/2_map1_2obs.clp)
 (load /Users/jak/Documents/Uni/IALab/AI-lab/micalizio/project/3_Agent.clp)
 (reset)
+(assert (map map1_2obs))
 (run)
