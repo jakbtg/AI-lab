@@ -274,19 +274,20 @@
 )
 
 
-;;; DA ESEGUIRE SOLAMENTE ALL'INIZIO PROBABILMENTE UNA SOLA VOLTA
+
+;  ------------------------------------------------------
+;  --- Inizializzazione del ratio di righe e colonne ----
+;  ------------------------------------------------------
 (defrule initialize-ratio-per-row (declare (salience 15))
 	(row-pieces (row ?x) (num ?numr&:(> ?numr 0)))
 	(empty-cells-per-row (row ?x) (num ?numer&:(eq ?numer 10)))
 	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
 	(empty-cells-per-col (col ?y) (num ?numec&:(> ?numec 0)))
-	; (not (counted-for-ratio (x ?x) (y ?y)))
 	?r <- (row-ratio (row ?x) (ratio ?ratior&:(eq ?ratior -10)))
 	?c <- (col-ratio (col ?y) (ratio ?ratioc&:(eq ?ratioc -10)))
 =>
 	(modify ?r (ratio (/ ?numr ?numer)))
 	(modify ?c (ratio (/ ?numc ?numec)))
-	; (assert (counted-for-ratio (x ?x) (y ?y)))
 	(printout t "Initialize row " ?x " ratio to " (/ ?numr ?numer) crlf)
 	(printout t "Initialize col " ?y " ratio to " (/ ?numc ?numec) crlf)
 )
@@ -296,13 +297,11 @@
 	(empty-cells-per-row (row ?x) (num ?numer&:(> ?numer 0)))
 	(col-pieces (col ?y) (num ?numc&:(> ?numc 0)))
 	(empty-cells-per-col (col ?y) (num ?numec&:(eq ?numec 10)))
-	; (not (counted-for-ratio (x ?x) (y ?y)))
 	?r <- (row-ratio (row ?x) (ratio ?ratior&:(eq ?ratior -10)))
 	?c <- (col-ratio (col ?y) (ratio ?ratioc&:(eq ?ratioc -10)))
 =>
 	(modify ?r (ratio (/ ?numr ?numer)))
 	(modify ?c (ratio (/ ?numc ?numec)))
-	; (assert (counted-for-ratio (x ?x) (y ?y)))
 	(printout t "Initialize row " ?x " ratio to " (/ ?numr ?numer) crlf)
 	(printout t "Initialize col " ?y " ratio to " (/ ?numc ?numec) crlf)
 )
@@ -1671,10 +1670,6 @@
 (defrule guess-2-piece-up-when-all-sub-sunk (declare (salience -10))
 	(status (step ?s) (currently running))
 	(sunk-boats (one 4))
-	; (or 
-	; 	(sunk-boats (one 4))
-	; 	(sunk-boats (two ?n &:(< ?n 3)))
-	; )
 	(sure-guess (x ?x) (y ?y) (content ?p1 &~water))
 	(sure-guess (x ?x) (y ?y1 &:(eq ?y1 (+ ?y 1))) (content water))
 	(sure-guess (x ?x) (y ?y2 &:(eq ?y2 (- ?y 1))) (content water))
@@ -2044,8 +2039,6 @@
 	(empty-cell (x ?x) (y ?y2&:(neq ?y2 ?y)))
 	(col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
 	(not (col-ratio (col ?y2) (ratio ?ry2&:(> ?ry2 ?ry))))
-	; (col-ratio (col ?y) (ratio ?ry&:(> ?ry 0)))
-	; (not (col-ratio (col ?y2&~?y) (ratio ?ry2&:(> ?ry2 ?ry))))
 	(not (sure-guess (x ?x) (y ?y)))
 	(not (exec (action guess) (x ?x) (y ?y)))
 =>
@@ -2064,8 +2057,6 @@
 	(empty-cell (x ?x2&:(neq ?x2 ?x)) (y ?y))
 	(row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
 	(not (row-ratio (row ?x2) (ratio ?rx2&:(> ?rx2 ?rx))))
-	; (row-ratio (row ?x) (ratio ?rx&:(> ?rx 0)))
-	; (not (row-ratio (row ?x2&~?x) (ratio ?rx2&:(> ?rx2 ?rx))))
 	(not (sure-guess (x ?x) (y ?y)))
 	(not (exec (action guess) (x ?x) (y ?y)))
 =>
