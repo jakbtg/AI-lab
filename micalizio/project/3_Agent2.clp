@@ -1976,6 +1976,8 @@
 	(pop-focus)
 )
 
+
+
 ;  -------------------------------------------------------------------
 ;  --- Se non trovo la cella più promettente (con sia riga che -------
 ;  --- colonna con ratio più alta), allora cerco la cella ------------
