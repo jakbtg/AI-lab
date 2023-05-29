@@ -1,707 +1,710 @@
-Playing on: map2_5obs
-I know that column 9 contains 1 pieces.
-I know that column 8 contains 3 pieces.
+Playing on: map1_4obs
+I know that column 9 contains 0 pieces.
+I know that column 8 contains 5 pieces.
 I know that column 7 contains 1 pieces.
 I know that column 6 contains 1 pieces.
-I know that column 5 contains 3 pieces.
-I know that column 4 contains 1 pieces.
-I know that column 3 contains 3 pieces.
+I know that column 5 contains 2 pieces.
+I know that column 4 contains 2 pieces.
+I know that column 3 contains 2 pieces.
 I know that column 2 contains 2 pieces.
-I know that column 1 contains 4 pieces.
-I know that column 0 contains 1 pieces.
-I know that row 9 contains 2 pieces.
-I know that row 8 contains 4 pieces.
-I know that row 7 contains 1 pieces.
-I know that row 6 contains 2 pieces.
-I know that row 5 contains 0 pieces.
-I know that row 4 contains 3 pieces.
-I know that row 3 contains 0 pieces.
-I know that row 2 contains 2 pieces.
-I know that row 1 contains 2 pieces.
-I know that row 0 contains 4 pieces.
-I know that cell [7, 2] contains bot.
-I know that cell [4, 4] contains middle.
-I know that cell [2, 8] contains sub.
-I know that cell [2, 1] contains bot.
-I know that cell [0, 5] contains sub.
-Initialize row 0 ratio to 0.4
-Initialize col 0 ratio to 0.1
-Initialize row 1 ratio to 0.2
-Initialize col 1 ratio to 0.4
-Initialize row 2 ratio to 0.2
+I know that column 1 contains 0 pieces.
+I know that column 0 contains 5 pieces.
+I know that row 9 contains 1 pieces.
+I know that row 8 contains 3 pieces.
+I know that row 7 contains 2 pieces.
+I know that row 6 contains 1 pieces.
+I know that row 5 contains 3 pieces.
+I know that row 4 contains 2 pieces.
+I know that row 3 contains 1 pieces.
+I know that row 2 contains 4 pieces.
+I know that row 1 contains 1 pieces.
+I know that row 0 contains 2 pieces.
+I know that cell [8, 4] contains middle.
+I know that cell [5, 3] contains right.
+I know that cell [5, 0] contains middle.
+I know that cell [0, 8] contains top.
+Initialize row 0 ratio to 0.2
+Initialize col 0 ratio to 0.5
+Initialize row 1 ratio to 0.1
 Initialize col 2 ratio to 0.2
-Initialize row 4 ratio to 0.3
-Initialize col 3 ratio to 0.3
-Initialize row 6 ratio to 0.2
-Initialize col 4 ratio to 0.1
-Initialize row 7 ratio to 0.1
-Initialize col 5 ratio to 0.3
-Initialize row 8 ratio to 0.4
+Initialize row 2 ratio to 0.4
+Initialize col 3 ratio to 0.2
+Initialize row 3 ratio to 0.1
+Initialize col 4 ratio to 0.2
+Initialize row 4 ratio to 0.2
+Initialize col 5 ratio to 0.2
+Initialize row 5 ratio to 0.3
 Initialize col 6 ratio to 0.1
-Initialize row 9 ratio to 0.2
+Initialize row 6 ratio to 0.1
 Initialize col 7 ratio to 0.1
-I guess that cell [7, 2] contains bot.
-I guess that cell [4, 4] contains middle.
-I guess that cell [2, 8] contains sub.
-I guess that cell [2, 1] contains bot.
-I guess that cell [0, 5] contains sub.
-I guess that cell [1, 1] contains a piece.
-I guess that cell [6, 2] contains a piece.
-I guess that cell [4, 3] contains a piece.
-I guess that cell [4, 5] contains a piece.
-Fill cell [3, 4] with water.
-Update row 3 num empty cells to 9 given water in cell [3, 4].
-Update col 4 num empty cells to 9 given water in cell [3, 4].
-Update row 4 num empty cells to 9 given middle in cell [4, 4].
-Update col 4 num empty cells to 8 given middle in cell [4, 4].
-Update row 4 num empty cells to 8 given piece in cell [4, 3].
-Update col 3 num empty cells to 9 given piece in cell [4, 3].
-Update row 4 num empty cells to 7 given piece in cell [4, 5].
-Update col 5 num empty cells to 9 given piece in cell [4, 5].
-Update row 0 num empty cells to 9 given sub in cell [0, 5].
-Update col 5 num empty cells to 8 given sub in cell [0, 5].
-Cell [3, 4] is not empty anymore.
-Fill cell [3, 6] with water.
-Update row 3 num empty cells to 8 given water in cell [3, 6].
-Update col 6 num empty cells to 9 given water in cell [3, 6].
-Cell [3, 6] is not empty anymore.
-Fill cell [5, 4] with water.
-Update row 5 num empty cells to 9 given water in cell [5, 4].
-Update col 4 num empty cells to 7 given water in cell [5, 4].
-Cell [5, 4] is not empty anymore.
-Fill cell [5, 6] with water.
-Update row 5 num empty cells to 8 given water in cell [5, 6].
-Update col 6 num empty cells to 8 given water in cell [5, 6].
-Cell [5, 6] is not empty anymore.
-Update row 4 num pieces to 2 given piece in cell [4, 5].
-Update col 5 num pieces to 2 given piece in cell [4, 5].
-Fill cell [5, 5] with water.
-Update row 5 num empty cells to 7 given water in cell [5, 5].
-Update col 5 num empty cells to 7 given water in cell [5, 5].
-Cell [5, 5] is not empty anymore.
-Fill cell [3, 5] with water.
-Update row 3 num empty cells to 7 given water in cell [3, 5].
-Update col 5 num empty cells to 6 given water in cell [3, 5].
-Cell [3, 5] is not empty anymore.
-Update row 0 num pieces to 3 given sub in cell [0, 5].
-Update col 5 num pieces to 1 given sub in cell [0, 5].
-Update row 4 num pieces to 1 given middle in cell [4, 4].
-Update col 4 num pieces to 0 given middle in cell [4, 4].
-Fill cell [9, 4] with water.
-Update row 9 num empty cells to 9 given water in cell [9, 4].
-Update col 4 num empty cells to 6 given water in cell [9, 4].
-Cell [9, 4] is not empty anymore.
-Fill cell [8, 4] with water.
-Update row 8 num empty cells to 9 given water in cell [8, 4].
-Update col 4 num empty cells to 5 given water in cell [8, 4].
-Cell [8, 4] is not empty anymore.
+Initialize row 7 ratio to 0.2
+Initialize col 8 ratio to 0.5
+I guess that cell [8, 4] contains middle.
+I guess that cell [5, 3] contains right.
+I guess that cell [5, 0] contains middle.
+I guess that cell [0, 8] contains top.
+I guess that cell [4, 0] contains a piece.
+I guess that cell [6, 0] contains a piece.
+I guess that cell [5, 2] contains a piece.
+I guess that cell [1, 8] contains a piece.
+I guess that cell [8, 3] contains a piece.
+I guess that cell [8, 5] contains a piece.
 Fill cell [7, 4] with water.
 Update row 7 num empty cells to 9 given water in cell [7, 4].
-Update col 4 num empty cells to 4 given water in cell [7, 4].
-Update row 7 num empty cells to 8 given bot in cell [7, 2].
-Update col 2 num empty cells to 9 given bot in cell [7, 2].
-Update row 6 num empty cells to 9 given piece in cell [6, 2].
-Update col 2 num empty cells to 8 given piece in cell [6, 2].
+Update col 4 num empty cells to 9 given water in cell [7, 4].
+Update row 8 num empty cells to 9 given middle in cell [8, 4].
+Update col 4 num empty cells to 8 given middle in cell [8, 4].
+Update row 8 num empty cells to 8 given piece in cell [8, 3].
+Update col 3 num empty cells to 9 given piece in cell [8, 3].
+Update row 5 num empty cells to 9 given right in cell [5, 3].
+Update col 3 num empty cells to 8 given right in cell [5, 3].
+Update row 5 num empty cells to 8 given middle in cell [5, 0].
+Update col 0 num empty cells to 9 given middle in cell [5, 0].
+Update row 4 num empty cells to 9 given piece in cell [4, 0].
+Update col 0 num empty cells to 8 given piece in cell [4, 0].
+Update row 6 num empty cells to 9 given piece in cell [6, 0].
+Update col 0 num empty cells to 7 given piece in cell [6, 0].
+Update row 5 num empty cells to 7 given piece in cell [5, 2].
+Update col 2 num empty cells to 9 given piece in cell [5, 2].
+Update row 8 num empty cells to 7 given piece in cell [8, 5].
+Update col 5 num empty cells to 9 given piece in cell [8, 5].
 Cell [7, 4] is not empty anymore.
-Fill cell [6, 4] with water.
-Update row 6 num empty cells to 8 given water in cell [6, 4].
-Update col 4 num empty cells to 3 given water in cell [6, 4].
-Cell [6, 4] is not empty anymore.
-Fill cell [2, 4] with water.
-Update row 2 num empty cells to 9 given water in cell [2, 4].
-Update col 4 num empty cells to 2 given water in cell [2, 4].
-Update row 2 num empty cells to 8 given sub in cell [2, 8].
-Update col 8 num empty cells to 9 given sub in cell [2, 8].
-Update row 2 num empty cells to 7 given bot in cell [2, 1].
-Update col 1 num empty cells to 9 given bot in cell [2, 1].
-Update row 1 num empty cells to 9 given piece in cell [1, 1].
-Update col 1 num empty cells to 8 given piece in cell [1, 1].
-Cell [2, 4] is not empty anymore.
-Fill cell [1, 4] with water.
-Update row 1 num empty cells to 8 given water in cell [1, 4].
-Update col 4 num empty cells to 1 given water in cell [1, 4].
-Cell [1, 4] is not empty anymore.
-Fill cell [0, 4] with water.
-Update row 0 num empty cells to 8 given water in cell [0, 4].
-Update col 4 num empty cells to 0 given water in cell [0, 4].
-Cell [0, 4] is not empty anymore.
-Update row 4 num pieces to 0 given piece in cell [4, 3].
-Update col 3 num pieces to 2 given piece in cell [4, 3].
-Fill cell [5, 3] with water.
-Update row 5 num empty cells to 6 given water in cell [5, 3].
-Update col 3 num empty cells to 8 given water in cell [5, 3].
-Cell [5, 3] is not empty anymore.
-Fill cell [3, 3] with water.
-Update row 3 num empty cells to 6 given water in cell [3, 3].
-Update col 3 num empty cells to 7 given water in cell [3, 3].
-Cell [3, 3] is not empty anymore.
-Fill cell [4, 0] with water.
-Update row 4 num empty cells to 6 given water in cell [4, 0].
-Update col 0 num empty cells to 9 given water in cell [4, 0].
-Cell [4, 0] is not empty anymore.
-Fill cell [4, 1] with water.
-Update row 4 num empty cells to 5 given water in cell [4, 1].
-Update col 1 num empty cells to 7 given water in cell [4, 1].
-Cell [4, 1] is not empty anymore.
-Fill cell [4, 2] with water.
-Update row 4 num empty cells to 4 given water in cell [4, 2].
-Update col 2 num empty cells to 7 given water in cell [4, 2].
-Cell [4, 2] is not empty anymore.
-Fill cell [4, 6] with water.
-Sink three-pieces boat in cells [4, 5], [4, 4] and [4, 3].
-Sink sub in cell [0, 5].
-Sink sub in cell [2, 8].
-Update row 4 num empty cells to 3 given water in cell [4, 6].
-Update col 6 num empty cells to 7 given water in cell [4, 6].
-Cell [4, 6] is not empty anymore.
-Fill cell [4, 7] with water.
-Update row 4 num empty cells to 2 given water in cell [4, 7].
-Update col 7 num empty cells to 9 given water in cell [4, 7].
-Cell [4, 7] is not empty anymore.
-Fill cell [4, 8] with water.
-Update row 4 num empty cells to 1 given water in cell [4, 8].
-Update col 8 num empty cells to 8 given water in cell [4, 8].
-Cell [4, 8] is not empty anymore.
-Fill cell [4, 9] with water.
-Update row 4 num empty cells to 0 given water in cell [4, 9].
-Update col 9 num empty cells to 9 given water in cell [4, 9].
-Cell [4, 9] is not empty anymore.
-Cell [4, 5] is not empty anymore.
-Fill cell [3, 2] with water.
-Update row 3 num empty cells to 5 given water in cell [3, 2].
-Update col 2 num empty cells to 6 given water in cell [3, 2].
-Cell [3, 2] is not empty anymore.
-Fill cell [5, 2] with water.
-Update row 5 num empty cells to 5 given water in cell [5, 2].
-Update col 2 num empty cells to 5 given water in cell [5, 2].
-Cell [5, 2] is not empty anymore.
-Cell [4, 3] is not empty anymore.
-Fill cell [5, 1] with water.
-Update row 5 num empty cells to 4 given water in cell [5, 1].
-Update col 1 num empty cells to 6 given water in cell [5, 1].
-Cell [5, 1] is not empty anymore.
-Fill cell [7, 1] with water.
-Update row 7 num empty cells to 7 given water in cell [7, 1].
-Update col 1 num empty cells to 5 given water in cell [7, 1].
-Cell [7, 1] is not empty anymore.
+Fill cell [7, 6] with water.
+Update row 7 num empty cells to 8 given water in cell [7, 6].
+Update col 6 num empty cells to 9 given water in cell [7, 6].
+Cell [7, 6] is not empty anymore.
+Fill cell [9, 4] with water.
+Update row 9 num empty cells to 9 given water in cell [9, 4].
+Update col 4 num empty cells to 7 given water in cell [9, 4].
+Cell [9, 4] is not empty anymore.
+Fill cell [9, 6] with water.
+Update row 9 num empty cells to 8 given water in cell [9, 6].
+Update col 6 num empty cells to 8 given water in cell [9, 6].
+Cell [9, 6] is not empty anymore.
+Update row 8 num pieces to 2 given piece in cell [8, 5].
+Update col 5 num pieces to 1 given piece in cell [8, 5].
+Fill cell [8, 1] with water.
+Update row 8 num empty cells to 6 given water in cell [8, 1].
+Update col 1 num empty cells to 9 given water in cell [8, 1].
+Cell [8, 1] is not empty anymore.
+Fill cell [8, 9] with water.
+Update row 8 num empty cells to 5 given water in cell [8, 9].
+Update col 9 num empty cells to 9 given water in cell [8, 9].
+Cell [8, 9] is not empty anymore.
+Update row 8 num pieces to 1 given middle in cell [8, 4].
+Update col 4 num pieces to 1 given middle in cell [8, 4].
+Update row 8 num pieces to 0 given piece in cell [8, 3].
+Update col 3 num pieces to 1 given piece in cell [8, 3].
+Update row 5 num pieces to 2 given right in cell [5, 3].
+Update col 3 num pieces to 0 given right in cell [5, 3].
+Fill cell [9, 3] with water.
+Update row 9 num empty cells to 7 given water in cell [9, 3].
+Update col 3 num empty cells to 7 given water in cell [9, 3].
+Cell [9, 3] is not empty anymore.
 Fill cell [7, 3] with water.
-Update row 7 num empty cells to 6 given water in cell [7, 3].
+Update row 7 num empty cells to 7 given water in cell [7, 3].
 Update col 3 num empty cells to 6 given water in cell [7, 3].
 Cell [7, 3] is not empty anymore.
-Update row 6 num pieces to 1 given piece in cell [6, 2].
-Update col 2 num pieces to 1 given piece in cell [6, 2].
-Update row 7 num pieces to 0 given bot in cell [7, 2].
-Update col 2 num pieces to 0 given bot in cell [7, 2].
-Fill cell [9, 2] with water.
-Update row 9 num empty cells to 8 given water in cell [9, 2].
-Update col 2 num empty cells to 4 given water in cell [9, 2].
-Cell [9, 2] is not empty anymore.
-Fill cell [8, 2] with water.
-Sink two-pieces boat in cells [7, 2] and [6, 2].
-Update row 8 num empty cells to 8 given water in cell [8, 2].
-Update col 2 num empty cells to 3 given water in cell [8, 2].
-Cell [8, 2] is not empty anymore.
-Fill cell [2, 2] with water.
-Update row 2 num empty cells to 6 given water in cell [2, 2].
-Update col 2 num empty cells to 2 given water in cell [2, 2].
-Cell [2, 2] is not empty anymore.
-Fill cell [1, 2] with water.
-Update row 1 num empty cells to 7 given water in cell [1, 2].
-Update col 2 num empty cells to 1 given water in cell [1, 2].
-Cell [1, 2] is not empty anymore.
-Fill cell [0, 2] with water.
-Update row 0 num empty cells to 7 given water in cell [0, 2].
-Update col 2 num empty cells to 0 given water in cell [0, 2].
-Cell [0, 2] is not empty anymore.
-Fill cell [7, 5] with water.
-Update row 7 num empty cells to 5 given water in cell [7, 5].
-Update col 5 num empty cells to 5 given water in cell [7, 5].
-Cell [7, 5] is not empty anymore.
-Fill cell [7, 0] with water.
-Update row 7 num empty cells to 4 given water in cell [7, 0].
-Update col 0 num empty cells to 8 given water in cell [7, 0].
-Cell [7, 0] is not empty anymore.
-Fill cell [7, 6] with water.
-Update row 7 num empty cells to 3 given water in cell [7, 6].
-Update col 6 num empty cells to 6 given water in cell [7, 6].
-Cell [7, 6] is not empty anymore.
-Fill cell [7, 7] with water.
-Update row 7 num empty cells to 2 given water in cell [7, 7].
-Update col 7 num empty cells to 8 given water in cell [7, 7].
-Cell [7, 7] is not empty anymore.
-Fill cell [7, 8] with water.
-Update row 7 num empty cells to 1 given water in cell [7, 8].
-Update col 8 num empty cells to 7 given water in cell [7, 8].
-Cell [7, 8] is not empty anymore.
-Fill cell [7, 9] with water.
-Update row 7 num empty cells to 0 given water in cell [7, 9].
-Update col 9 num empty cells to 8 given water in cell [7, 9].
-Cell [7, 9] is not empty anymore.
-Cell [6, 2] is not empty anymore.
-Fill cell [0, 0] with water.
-Update row 0 num empty cells to 6 given water in cell [0, 0].
-Update col 0 num empty cells to 7 given water in cell [0, 0].
-Cell [0, 0] is not empty anymore.
-Fill cell [2, 0] with water.
-Update row 2 num empty cells to 5 given water in cell [2, 0].
-Update col 0 num empty cells to 6 given water in cell [2, 0].
-Cell [2, 0] is not empty anymore.
-Update row 1 num pieces to 1 given piece in cell [1, 1].
-Update col 1 num pieces to 3 given piece in cell [1, 1].
-Fill cell [3, 1] with water.
-Update row 3 num empty cells to 4 given water in cell [3, 1].
-Update col 1 num empty cells to 4 given water in cell [3, 1].
-Cell [3, 1] is not empty anymore.
-Update row 2 num pieces to 1 given bot in cell [2, 1].
-Update col 1 num pieces to 2 given bot in cell [2, 1].
-Update row 2 num pieces to 0 given sub in cell [2, 8].
-Update col 8 num pieces to 2 given sub in cell [2, 8].
-Fill cell [5, 8] with water.
-Update row 5 num empty cells to 3 given water in cell [5, 8].
-Update col 8 num empty cells to 6 given water in cell [5, 8].
-Cell [5, 8] is not empty anymore.
-Fill cell [3, 8] with water.
-Update row 3 num empty cells to 3 given water in cell [3, 8].
-Update col 8 num empty cells to 5 given water in cell [3, 8].
-Cell [3, 8] is not empty anymore.
-Fill cell [2, 3] with water.
-Update row 2 num empty cells to 4 given water in cell [2, 3].
-Update col 3 num empty cells to 5 given water in cell [2, 3].
-Cell [2, 3] is not empty anymore.
-Fill cell [2, 5] with water.
-Update row 2 num empty cells to 3 given water in cell [2, 5].
-Update col 5 num empty cells to 4 given water in cell [2, 5].
-Cell [2, 5] is not empty anymore.
-Fill cell [2, 6] with water.
-Update row 2 num empty cells to 2 given water in cell [2, 6].
-Update col 6 num empty cells to 5 given water in cell [2, 6].
-Cell [2, 6] is not empty anymore.
-Fill cell [2, 7] with water.
-Update row 2 num empty cells to 1 given water in cell [2, 7].
-Update col 7 num empty cells to 7 given water in cell [2, 7].
-Cell [2, 7] is not empty anymore.
-Fill cell [2, 9] with water.
-Update row 2 num empty cells to 0 given water in cell [2, 9].
-Update col 9 num empty cells to 7 given water in cell [2, 9].
-Cell [2, 9] is not empty anymore.
-Cell [1, 1] is not empty anymore.
-Fill cell [0, 6] with water.
-Update row 0 num empty cells to 5 given water in cell [0, 6].
-Update col 6 num empty cells to 4 given water in cell [0, 6].
-Cell [0, 6] is not empty anymore.
-Fill cell [1, 5] with water.
-Update row 1 num empty cells to 6 given water in cell [1, 5].
-Update col 5 num empty cells to 3 given water in cell [1, 5].
-Cell [1, 5] is not empty anymore.
-Fill cell [1, 6] with water.
-Update row 1 num empty cells to 5 given water in cell [1, 6].
-Update col 6 num empty cells to 3 given water in cell [1, 6].
-Cell [1, 6] is not empty anymore.
-Cell [0, 5] is not empty anymore.
-Fill cell [1, 0] with water.
-Update row 1 num empty cells to 4 given water in cell [1, 0].
-Update col 0 num empty cells to 5 given water in cell [1, 0].
-Cell [1, 0] is not empty anymore.
-Fill cell [3, 0] with water.
-Update row 3 num empty cells to 2 given water in cell [3, 0].
-Update col 0 num empty cells to 4 given water in cell [3, 0].
-Cell [3, 0] is not empty anymore.
-Cell [2, 1] is not empty anymore.
-Fill cell [1, 7] with water.
-Update row 1 num empty cells to 3 given water in cell [1, 7].
-Update col 7 num empty cells to 6 given water in cell [1, 7].
-Cell [1, 7] is not empty anymore.
-Fill cell [1, 8] with water.
-Update row 1 num empty cells to 2 given water in cell [1, 8].
-Update col 8 num empty cells to 4 given water in cell [1, 8].
-Cell [1, 8] is not empty anymore.
-Fill cell [1, 9] with water.
-Update row 1 num empty cells to 1 given water in cell [1, 9].
-Update col 9 num empty cells to 6 given water in cell [1, 9].
-Cell [1, 9] is not empty anymore.
-Fill cell [3, 7] with water.
-Update row 3 num empty cells to 1 given water in cell [3, 7].
-Update col 7 num empty cells to 5 given water in cell [3, 7].
-Cell [3, 7] is not empty anymore.
-Fill cell [3, 9] with water.
-Update row 3 num empty cells to 0 given water in cell [3, 9].
-Update col 9 num empty cells to 5 given water in cell [3, 9].
-Cell [3, 9] is not empty anymore.
-Cell [2, 8] is not empty anymore.
-Cell [4, 4] is not empty anymore.
-Fill cell [6, 1] with water.
-Update row 6 num empty cells to 7 given water in cell [6, 1].
-Update col 1 num empty cells to 3 given water in cell [6, 1].
-Cell [6, 1] is not empty anymore.
 Fill cell [6, 3] with water.
-Update row 6 num empty cells to 6 given water in cell [6, 3].
-Update col 3 num empty cells to 4 given water in cell [6, 3].
+Update row 6 num empty cells to 8 given water in cell [6, 3].
+Update col 3 num empty cells to 5 given water in cell [6, 3].
 Cell [6, 3] is not empty anymore.
-Fill cell [8, 1] with water.
-Update row 8 num empty cells to 7 given water in cell [8, 1].
-Update col 1 num empty cells to 2 given water in cell [8, 1].
-Cell [8, 1] is not empty anymore.
-Fill cell [8, 3] with water.
-Update row 8 num empty cells to 6 given water in cell [8, 3].
-Update col 3 num empty cells to 3 given water in cell [8, 3].
-Cell [8, 3] is not empty anymore.
-Cell [7, 2] is not empty anymore.
-Fill cell [5, 0] with water.
-Update row 5 num empty cells to 2 given water in cell [5, 0].
-Update col 0 num empty cells to 3 given water in cell [5, 0].
-Cell [5, 0] is not empty anymore.
+Fill cell [4, 3] with water.
+Update row 4 num empty cells to 8 given water in cell [4, 3].
+Update col 3 num empty cells to 4 given water in cell [4, 3].
+Cell [4, 3] is not empty anymore.
+Fill cell [3, 3] with water.
+Update row 3 num empty cells to 9 given water in cell [3, 3].
+Update col 3 num empty cells to 3 given water in cell [3, 3].
+Cell [3, 3] is not empty anymore.
+Fill cell [2, 3] with water.
+Update row 2 num empty cells to 9 given water in cell [2, 3].
+Update col 3 num empty cells to 2 given water in cell [2, 3].
+Cell [2, 3] is not empty anymore.
+Fill cell [1, 3] with water.
+Update row 1 num empty cells to 9 given water in cell [1, 3].
+Update col 3 num empty cells to 1 given water in cell [1, 3].
+Update row 1 num empty cells to 8 given piece in cell [1, 8].
+Update col 8 num empty cells to 9 given piece in cell [1, 8].
+Update row 0 num empty cells to 9 given top in cell [0, 8].
+Update col 8 num empty cells to 8 given top in cell [0, 8].
+Cell [1, 3] is not empty anymore.
+Fill cell [0, 3] with water.
+Update row 0 num empty cells to 8 given water in cell [0, 3].
+Update col 3 num empty cells to 0 given water in cell [0, 3].
+Cell [0, 3] is not empty anymore.
+Fill cell [5, 1] with water.
+Update row 5 num empty cells to 6 given water in cell [5, 1].
+Update col 1 num empty cells to 8 given water in cell [5, 1].
+Cell [5, 1] is not empty anymore.
+Fill cell [5, 9] with water.
+Update row 5 num empty cells to 5 given water in cell [5, 9].
+Update col 9 num empty cells to 8 given water in cell [5, 9].
+Cell [5, 9] is not empty anymore.
+Update row 5 num pieces to 1 given middle in cell [5, 0].
+Update col 0 num pieces to 4 given middle in cell [5, 0].
+Fill cell [8, 0] with water.
+Update row 8 num empty cells to 4 given water in cell [8, 0].
+Update col 0 num empty cells to 6 given water in cell [8, 0].
+Cell [8, 0] is not empty anymore.
+Update row 4 num pieces to 1 given piece in cell [4, 0].
+Update col 0 num pieces to 3 given piece in cell [4, 0].
+Update row 6 num pieces to 0 given piece in cell [6, 0].
+Update col 0 num pieces to 2 given piece in cell [6, 0].
+Fill cell [6, 4] with water.
+Update row 6 num empty cells to 7 given water in cell [6, 4].
+Update col 4 num empty cells to 6 given water in cell [6, 4].
+Cell [6, 4] is not empty anymore.
+Fill cell [6, 5] with water.
+Update row 6 num empty cells to 6 given water in cell [6, 5].
+Update col 5 num empty cells to 8 given water in cell [6, 5].
+Cell [6, 5] is not empty anymore.
+Fill cell [6, 1] with water.
+Update row 6 num empty cells to 5 given water in cell [6, 1].
+Update col 1 num empty cells to 7 given water in cell [6, 1].
+Cell [6, 1] is not empty anymore.
+Fill cell [6, 2] with water.
+Update row 6 num empty cells to 4 given water in cell [6, 2].
+Update col 2 num empty cells to 8 given water in cell [6, 2].
+Cell [6, 2] is not empty anymore.
+Fill cell [6, 6] with water.
+Update row 6 num empty cells to 3 given water in cell [6, 6].
+Update col 6 num empty cells to 7 given water in cell [6, 6].
+Cell [6, 6] is not empty anymore.
+Fill cell [6, 7] with water.
+Update row 6 num empty cells to 2 given water in cell [6, 7].
+Update col 7 num empty cells to 9 given water in cell [6, 7].
+Cell [6, 7] is not empty anymore.
+Fill cell [6, 8] with water.
+Update row 6 num empty cells to 1 given water in cell [6, 8].
+Update col 8 num empty cells to 7 given water in cell [6, 8].
+Cell [6, 8] is not empty anymore.
+Fill cell [6, 9] with water.
+Update row 6 num empty cells to 0 given water in cell [6, 9].
+Update col 9 num empty cells to 7 given water in cell [6, 9].
+Cell [6, 9] is not empty anymore.
+Fill cell [4, 1] with water.
+Update row 4 num empty cells to 7 given water in cell [4, 1].
+Update col 1 num empty cells to 6 given water in cell [4, 1].
+Cell [4, 1] is not empty anymore.
+Fill cell [4, 9] with water.
+Update row 4 num empty cells to 6 given water in cell [4, 9].
+Update col 9 num empty cells to 6 given water in cell [4, 9].
+Cell [4, 9] is not empty anymore.
+Update row 5 num pieces to 0 given piece in cell [5, 2].
+Update col 2 num pieces to 1 given piece in cell [5, 2].
+Fill cell [8, 2] with water.
+Update row 8 num empty cells to 3 given water in cell [8, 2].
+Update col 2 num empty cells to 7 given water in cell [8, 2].
+Cell [8, 2] is not empty anymore.
+Fill cell [5, 4] with water.
+Sink two-pieces boat in cells [5, 3] and [5, 2].
+Update row 5 num empty cells to 4 given water in cell [5, 4].
+Update col 4 num empty cells to 5 given water in cell [5, 4].
+Cell [5, 4] is not empty anymore.
+Fill cell [5, 5] with water.
+Update row 5 num empty cells to 3 given water in cell [5, 5].
+Update col 5 num empty cells to 7 given water in cell [5, 5].
+Cell [5, 5] is not empty anymore.
+Fill cell [5, 6] with water.
+Update row 5 num empty cells to 2 given water in cell [5, 6].
+Update col 6 num empty cells to 6 given water in cell [5, 6].
+Cell [5, 6] is not empty anymore.
 Fill cell [5, 7] with water.
 Update row 5 num empty cells to 1 given water in cell [5, 7].
-Update col 7 num empty cells to 4 given water in cell [5, 7].
+Update col 7 num empty cells to 8 given water in cell [5, 7].
 Cell [5, 7] is not empty anymore.
-Fill cell [5, 9] with water.
-Update row 5 num empty cells to 0 given water in cell [5, 9].
-Update col 9 num empty cells to 4 given water in cell [5, 9].
-Cell [5, 9] is not empty anymore.
-Update row 1 ratio to 1.0
-Update col 9 ratio to 0.25
-Update row 5 ratio to 0
-Update col 9 ratio to 0.25
-Update row 3 ratio to 0
-Update col 9 ratio to 0.25
-Update row 2 ratio to 0
-Update col 9 ratio to 0.25
-Update row 7 ratio to 0
-Update col 9 ratio to 0.25
-Update row 4 ratio to 0
-Update col 9 ratio to 0.25
-Update row 4 ratio to 0
-Update col 5 ratio to 0.333333333333333
-Update row 0 ratio to 0.6
-Update col 5 ratio to 0.333333333333333
-Update row 1 ratio to 1.0
-Update col 5 ratio to 0.333333333333333
-Update row 5 ratio to 0
-Update col 5 ratio to 0.333333333333333
-Update row 3 ratio to 0
-Update col 5 ratio to 0.333333333333333
-Update row 2 ratio to 0
-Update col 5 ratio to 0.333333333333333
-Update row 7 ratio to 0
-Update col 5 ratio to 0.333333333333333
-Update row 7 ratio to 0
-Update col 6 ratio to 0.333333333333333
-Update row 0 ratio to 0.6
-Update col 6 ratio to 0.333333333333333
-Update row 1 ratio to 1.0
-Update col 6 ratio to 0.333333333333333
-Update row 4 ratio to 0
-Update col 6 ratio to 0.333333333333333
-Update row 5 ratio to 0
-Update col 6 ratio to 0.333333333333333
-Update row 3 ratio to 0
-Update col 6 ratio to 0.333333333333333
-Update row 2 ratio to 0
-Update col 6 ratio to 0.333333333333333
-Update row 2 ratio to 0
-Update col 8 ratio to 0.5
-Update row 1 ratio to 1.0
-Update col 8 ratio to 0.5
-Update row 7 ratio to 0
-Update col 8 ratio to 0.5
-Update row 4 ratio to 0
-Update col 8 ratio to 0.5
-Update row 5 ratio to 0
-Update col 8 ratio to 0.5
-Update row 3 ratio to 0
-Update col 8 ratio to 0.5
-Update row 3 ratio to 0
-Update col 1 ratio to 1.0
-Update row 6 ratio to 0.166666666666667
-Update col 1 ratio to 1.0
-Update row 8 ratio to 0.666666666666667
-Update col 1 ratio to 1.0
-Update row 1 ratio to 1.0
-Update col 1 ratio to 1.0
-Update row 2 ratio to 0
-Update col 1 ratio to 1.0
-Update row 7 ratio to 0
-Update col 1 ratio to 1.0
-Update row 4 ratio to 0
-Update col 1 ratio to 1.0
-Update row 5 ratio to 0
-Update col 1 ratio to 1.0
-Update row 5 ratio to 0
-Update col 7 ratio to 0.25
-Update row 1 ratio to 1.0
-Update col 7 ratio to 0.25
-Update row 3 ratio to 0
-Update col 7 ratio to 0.25
-Update row 2 ratio to 0
-Update col 7 ratio to 0.25
-Update row 7 ratio to 0
-Update col 7 ratio to 0.25
-Update row 4 ratio to 0
-Update col 7 ratio to 0.25
-Update row 4 ratio to 0
-Update col 3 ratio to 0.666666666666667
-Update row 6 ratio to 0.166666666666667
-Update col 3 ratio to 0.666666666666667
-Update row 8 ratio to 0.666666666666667
-Update col 3 ratio to 0.666666666666667
-Update row 5 ratio to 0
-Update col 3 ratio to 0.666666666666667
-Update row 3 ratio to 0
-Update col 3 ratio to 0.666666666666667
-Update row 2 ratio to 0
-Update col 3 ratio to 0.666666666666667
-Update row 7 ratio to 0
-Update col 3 ratio to 0.666666666666667
-Update row 7 ratio to 0
-Update col 0 ratio to 0.333333333333333
-Update row 0 ratio to 0.6
-Update col 0 ratio to 0.333333333333333
-Update row 1 ratio to 1.0
-Update col 0 ratio to 0.333333333333333
-Update row 4 ratio to 0
-Update col 0 ratio to 0.333333333333333
-Update row 5 ratio to 0
-Update col 0 ratio to 0.333333333333333
-Update row 3 ratio to 0
-Update col 0 ratio to 0.333333333333333
-Update row 2 ratio to 0
-Update col 0 ratio to 0.333333333333333
-Update row 2 ratio to 0
-Update col 4 ratio to 0
-Update row 9 ratio to 0.25
-Update col 4 ratio to 0
-Update row 6 ratio to 0.166666666666667
-Update col 4 ratio to 0
-Update row 8 ratio to 0.666666666666667
-Update col 4 ratio to 0
-Update row 0 ratio to 0.6
-Update col 4 ratio to 0
-Update row 1 ratio to 1.0
-Update col 4 ratio to 0
-Update row 7 ratio to 0
-Update col 4 ratio to 0
-Update row 4 ratio to 0
-Update col 4 ratio to 0
-Update row 5 ratio to 0
-Update col 4 ratio to 0
-Update row 3 ratio to 0
-Update col 4 ratio to 0
-Update row 3 ratio to 0
-Update col 2 ratio to 0
-Update row 9 ratio to 0.25
-Update col 2 ratio to 0
-Update row 6 ratio to 0.166666666666667
-Update col 2 ratio to 0
-Update row 8 ratio to 0.666666666666667
-Update col 2 ratio to 0
-Update row 0 ratio to 0.6
-Update col 2 ratio to 0
-Update row 1 ratio to 1.0
-Update col 2 ratio to 0
-Update row 2 ratio to 0
-Update col 2 ratio to 0
-Update row 7 ratio to 0
-Update col 2 ratio to 0
-Update row 4 ratio to 0
-Update col 2 ratio to 0
-Update row 5 ratio to 0
-Update col 2 ratio to 0
-Guess piece in cell [0, 1] because the number of pieces in column is equal to the number of empty cells.
-Sink three-pieces boat in cells [2, 1], [1, 1] and [0, 1].
-Update row 0 num pieces to 2 given piece in cell [0, 1].
-Update col 1 num pieces to 1 given piece in cell [0, 1].
-Update row 0 num empty cells to 4 given piece in cell [0, 1].
-Update col 1 num empty cells to 1 given piece in cell [0, 1].
-Cell [0, 1] is not empty anymore.
-Update row 0 ratio to 0.5
-Update col 1 ratio to 1.0
-Guess piece in cell [9, 1] because the number of pieces in column is equal to the number of empty cells.
-Fill cell [8, 0] with water.
-Update row 8 num empty cells to 5 given water in cell [8, 0].
-Update col 0 num empty cells to 2 given water in cell [8, 0].
-Cell [8, 0] is not empty anymore.
-Update row 9 num pieces to 1 given piece in cell [9, 1].
-Update col 1 num pieces to 0 given piece in cell [9, 1].
-Update row 9 num empty cells to 7 given piece in cell [9, 1].
-Update col 1 num empty cells to 0 given piece in cell [9, 1].
-Cell [9, 1] is not empty anymore.
-Update row 9 ratio to 0.142857142857143
-Update col 1 ratio to 0
-Update row 8 ratio to 0.8
-Update col 0 ratio to 0.5
-Guess piece in cell [1, 3] because the number of pieces in row is equal to the number of empty cells.
-Update row 1 num pieces to 0 given piece in cell [1, 3].
-Update col 3 num pieces to 1 given piece in cell [1, 3].
-Update row 1 num empty cells to 0 given piece in cell [1, 3].
-Update col 3 num empty cells to 2 given piece in cell [1, 3].
-Cell [1, 3] is not empty anymore.
-Update row 1 ratio to 0
-Update col 3 ratio to 0.5
-Fire in cell [8, 8]. Row ratio: 0.8, col ratio: 0.5
-I know that cell [8, 8] contains right.
-I guess that cell [8, 8] contains right.
-I guess that cell [8, 7] contains a piece.
-Fill cell [9, 6] with water.
-Update row 9 num empty cells to 6 given water in cell [9, 6].
-Update col 6 num empty cells to 2 given water in cell [9, 6].
-Cell [9, 6] is not empty anymore.
-Fill cell [9, 8] with water.
-Update row 9 num empty cells to 5 given water in cell [9, 8].
-Update col 8 num empty cells to 3 given water in cell [9, 8].
-Update row 8 num empty cells to 4 given right in cell [8, 8].
-Update col 8 num empty cells to 2 given right in cell [8, 8].
-Update row 8 num empty cells to 3 given piece in cell [8, 7].
-Update col 7 num empty cells to 3 given piece in cell [8, 7].
-Cell [9, 8] is not empty anymore.
-Update row 8 num pieces to 3 given piece in cell [8, 7].
-Update col 7 num pieces to 0 given piece in cell [8, 7].
-Fill cell [6, 7] with water.
-Update row 6 num empty cells to 5 given water in cell [6, 7].
-Update col 7 num empty cells to 2 given water in cell [6, 7].
-Cell [6, 7] is not empty anymore.
-Fill cell [0, 7] with water.
-Update row 0 num empty cells to 3 given water in cell [0, 7].
-Update col 7 num empty cells to 1 given water in cell [0, 7].
-Cell [0, 7] is not empty anymore.
-Fill cell [9, 7] with water.
-Update row 9 num empty cells to 4 given water in cell [9, 7].
-Update col 7 num empty cells to 0 given water in cell [9, 7].
-Cell [9, 7] is not empty anymore.
-Update row 8 num pieces to 2 given right in cell [8, 8].
-Update col 8 num pieces to 1 given right in cell [8, 8].
+Fill cell [5, 8] with water.
+Update row 5 num empty cells to 0 given water in cell [5, 8].
+Update col 8 num empty cells to 6 given water in cell [5, 8].
+Cell [5, 8] is not empty anymore.
+Fill cell [8, 6] with water.
+Sink three-pieces boat in cells [8, 5], [8, 4] and [8, 3].
+Update row 8 num empty cells to 2 given water in cell [8, 6].
+Update col 6 num empty cells to 5 given water in cell [8, 6].
+Cell [8, 6] is not empty anymore.
+Fill cell [8, 7] with water.
+Update row 8 num empty cells to 1 given water in cell [8, 7].
+Update col 7 num empty cells to 7 given water in cell [8, 7].
 Cell [8, 7] is not empty anymore.
-Fill cell [8, 9] with water.
-Update row 8 num empty cells to 2 given water in cell [8, 9].
-Update col 9 num empty cells to 3 given water in cell [8, 9].
-Cell [8, 9] is not empty anymore.
+Fill cell [8, 8] with water.
+Update row 8 num empty cells to 0 given water in cell [8, 8].
+Update col 8 num empty cells to 5 given water in cell [8, 8].
+Cell [8, 8] is not empty anymore.
+Cell [8, 5] is not empty anymore.
+Fill cell [7, 2] with water.
+Update row 7 num empty cells to 6 given water in cell [7, 2].
+Update col 2 num empty cells to 6 given water in cell [7, 2].
+Cell [7, 2] is not empty anymore.
+Fill cell [9, 2] with water.
+Update row 9 num empty cells to 6 given water in cell [9, 2].
+Update col 2 num empty cells to 5 given water in cell [9, 2].
+Cell [9, 2] is not empty anymore.
+Cell [8, 3] is not empty anymore.
+Fill cell [0, 7] with water.
+Update row 0 num empty cells to 7 given water in cell [0, 7].
+Update col 7 num empty cells to 6 given water in cell [0, 7].
+Cell [0, 7] is not empty anymore.
+Fill cell [0, 9] with water.
+Update row 0 num empty cells to 6 given water in cell [0, 9].
+Update col 9 num empty cells to 5 given water in cell [0, 9].
+Cell [0, 9] is not empty anymore.
+Fill cell [2, 7] with water.
+Update row 2 num empty cells to 8 given water in cell [2, 7].
+Update col 7 num empty cells to 5 given water in cell [2, 7].
+Cell [2, 7] is not empty anymore.
+Fill cell [2, 9] with water.
+Update row 2 num empty cells to 7 given water in cell [2, 9].
+Update col 9 num empty cells to 4 given water in cell [2, 9].
+Cell [2, 9] is not empty anymore.
+Update row 1 num pieces to 0 given piece in cell [1, 8].
+Update col 8 num pieces to 4 given piece in cell [1, 8].
+Update row 0 num pieces to 1 given top in cell [0, 8].
+Update col 8 num pieces to 3 given top in cell [0, 8].
+Fill cell [0, 1] with water.
+Update row 0 num empty cells to 5 given water in cell [0, 1].
+Update col 1 num empty cells to 5 given water in cell [0, 1].
+Cell [0, 1] is not empty anymore.
+Fill cell [1, 2] with water.
+Update row 1 num empty cells to 7 given water in cell [1, 2].
+Update col 2 num empty cells to 4 given water in cell [1, 2].
+Cell [1, 2] is not empty anymore.
+Fill cell [1, 0] with water.
+Update row 1 num empty cells to 6 given water in cell [1, 0].
+Update col 0 num empty cells to 5 given water in cell [1, 0].
+Cell [1, 0] is not empty anymore.
+Fill cell [1, 4] with water.
+Update row 1 num empty cells to 5 given water in cell [1, 4].
+Update col 4 num empty cells to 4 given water in cell [1, 4].
+Cell [1, 4] is not empty anymore.
+Fill cell [1, 5] with water.
+Update row 1 num empty cells to 4 given water in cell [1, 5].
+Update col 5 num empty cells to 6 given water in cell [1, 5].
+Cell [1, 5] is not empty anymore.
+Fill cell [1, 1] with water.
+Update row 1 num empty cells to 3 given water in cell [1, 1].
+Update col 1 num empty cells to 4 given water in cell [1, 1].
+Cell [1, 1] is not empty anymore.
+Fill cell [1, 6] with water.
+Update row 1 num empty cells to 2 given water in cell [1, 6].
+Update col 6 num empty cells to 4 given water in cell [1, 6].
+Cell [1, 6] is not empty anymore.
+Fill cell [1, 7] with water.
+Update row 1 num empty cells to 1 given water in cell [1, 7].
+Update col 7 num empty cells to 4 given water in cell [1, 7].
+Cell [1, 7] is not empty anymore.
+Fill cell [1, 9] with water.
+Update row 1 num empty cells to 0 given water in cell [1, 9].
+Update col 9 num empty cells to 3 given water in cell [1, 9].
+Cell [1, 9] is not empty anymore.
+Cell [1, 8] is not empty anymore.
+Cell [5, 2] is not empty anymore.
+Fill cell [7, 1] with water.
+Update row 7 num empty cells to 5 given water in cell [7, 1].
+Update col 1 num empty cells to 3 given water in cell [7, 1].
+Cell [7, 1] is not empty anymore.
+Cell [6, 0] is not empty anymore.
+Fill cell [3, 1] with water.
+Update row 3 num empty cells to 8 given water in cell [3, 1].
+Update col 1 num empty cells to 2 given water in cell [3, 1].
+Cell [3, 1] is not empty anymore.
+Cell [4, 0] is not empty anymore.
+Cell [0, 8] is not empty anymore.
+Cell [5, 0] is not empty anymore.
+Fill cell [4, 2] with water.
+Update row 4 num empty cells to 5 given water in cell [4, 2].
+Update col 2 num empty cells to 3 given water in cell [4, 2].
+Cell [4, 2] is not empty anymore.
+Fill cell [4, 4] with water.
+Update row 4 num empty cells to 4 given water in cell [4, 4].
+Update col 4 num empty cells to 3 given water in cell [4, 4].
+Cell [4, 4] is not empty anymore.
+Cell [5, 3] is not empty anymore.
+Fill cell [7, 5] with water.
+Update row 7 num empty cells to 4 given water in cell [7, 5].
+Update col 5 num empty cells to 5 given water in cell [7, 5].
+Cell [7, 5] is not empty anymore.
+Fill cell [9, 5] with water.
+Update row 9 num empty cells to 5 given water in cell [9, 5].
+Update col 5 num empty cells to 4 given water in cell [9, 5].
+Cell [9, 5] is not empty anymore.
+Cell [8, 4] is not empty anymore.
+Fill cell [2, 1] with water.
+Update row 2 num empty cells to 6 given water in cell [2, 1].
+Update col 1 num empty cells to 1 given water in cell [2, 1].
+Cell [2, 1] is not empty anymore.
+Fill cell [3, 9] with water.
+Update row 3 num empty cells to 7 given water in cell [3, 9].
+Update col 9 num empty cells to 2 given water in cell [3, 9].
+Cell [3, 9] is not empty anymore.
+Fill cell [7, 9] with water.
+Update row 7 num empty cells to 3 given water in cell [7, 9].
+Update col 9 num empty cells to 1 given water in cell [7, 9].
+Cell [7, 9] is not empty anymore.
+Fill cell [9, 1] with water.
+Update row 9 num empty cells to 4 given water in cell [9, 1].
+Update col 1 num empty cells to 0 given water in cell [9, 1].
+Cell [9, 1] is not empty anymore.
 Fill cell [9, 9] with water.
 Update row 9 num empty cells to 3 given water in cell [9, 9].
-Update col 9 num empty cells to 2 given water in cell [9, 9].
+Update col 9 num empty cells to 0 given water in cell [9, 9].
 Cell [9, 9] is not empty anymore.
-Cell [8, 8] is not empty anymore.
-Update row 8 ratio to 1.0
-Update col 9 ratio to 0.5
+Update row 0 ratio to 0.2
+Update col 9 ratio to 0
 Update row 9 ratio to 0.333333333333333
-Update col 9 ratio to 0.5
-Update row 9 ratio to 0.333333333333333
-Update col 8 ratio to 0.5
-Update row 8 ratio to 1.0
-Update col 8 ratio to 0.5
-Update row 8 ratio to 1.0
-Update col 7 ratio to 0
-Update row 0 ratio to 0.666666666666667
-Update col 7 ratio to 0
-Update row 6 ratio to 0.2
-Update col 7 ratio to 0
-Update row 9 ratio to 0.333333333333333
-Update col 7 ratio to 0
-Update row 9 ratio to 0.333333333333333
-Update col 6 ratio to 0.5
-Guess piece in cell [8, 6] because the number of pieces in row is equal to the number of empty cells.
-Fill cell [9, 5] with water.
-Update row 9 num empty cells to 2 given water in cell [9, 5].
-Update col 5 num empty cells to 2 given water in cell [9, 5].
-Cell [9, 5] is not empty anymore.
-Update row 8 num pieces to 1 given piece in cell [8, 6].
-Update col 6 num pieces to 0 given piece in cell [8, 6].
-Fill cell [6, 6] with water.
-Update row 6 num empty cells to 4 given water in cell [6, 6].
-Update col 6 num empty cells to 1 given water in cell [6, 6].
-Update row 8 num empty cells to 1 given piece in cell [8, 6].
-Update col 6 num empty cells to 0 given piece in cell [8, 6].
-Cell [6, 6] is not empty anymore.
-Cell [8, 6] is not empty anymore.
-Update row 6 ratio to 0.25
-Update col 6 ratio to 0
-Update row 8 ratio to 1.0
-Update col 6 ratio to 0
-Update row 9 ratio to 0.5
-Update col 5 ratio to 0.5
-Guess piece in cell [8, 5] because the number of pieces in row is equal to the number of empty cells.
-Update row 8 num pieces to 0 given piece in cell [8, 5].
-Update col 5 num pieces to 0 given piece in cell [8, 5].
-Fill cell [6, 5] with water.
-Update row 6 num empty cells to 3 given water in cell [6, 5].
-Update col 5 num empty cells to 1 given water in cell [6, 5].
-Update row 8 num empty cells to 0 given piece in cell [8, 5].
-Update col 5 num empty cells to 0 given piece in cell [8, 5].
-Cell [6, 5] is not empty anymore.
-Cell [8, 5] is not empty anymore.
-Sink four-pieces boat in cells [8, 8], [8, 7], [8, 6] and [8, 5].
-Update row 6 ratio to 0.333333333333333
-Update col 5 ratio to 0
+Update col 9 ratio to 0
+Update row 7 ratio to 0.666666666666667
+Update col 9 ratio to 0
+Update row 3 ratio to 0.142857142857143
+Update col 9 ratio to 0
+Update row 2 ratio to 0.666666666666667
+Update col 9 ratio to 0
+Update row 4 ratio to 0.25
+Update col 9 ratio to 0
+Update row 1 ratio to 0
+Update col 9 ratio to 0
 Update row 8 ratio to 0
-Update col 5 ratio to 0
-Fire in cell [0, 3]. Row ratio: 0.666666666666667, col ratio: 0.5
-I know that cell [0, 3] contains top.
-I guess that cell [0, 3] contains top.
-Sink two-pieces boat in cells [1, 3] and [0, 3].
-Update row 0 num pieces to 1 given top in cell [0, 3].
-Update col 3 num pieces to 0 given top in cell [0, 3].
-Fill cell [9, 3] with water.
-Update row 9 num empty cells to 1 given water in cell [9, 3].
-Update col 3 num empty cells to 1 given water in cell [9, 3].
-Update row 0 num empty cells to 2 given top in cell [0, 3].
-Update col 3 num empty cells to 0 given top in cell [0, 3].
-Cell [9, 3] is not empty anymore.
-Cell [0, 3] is not empty anymore.
-Update row 9 ratio to 1.0
+Update col 9 ratio to 0
+Update row 5 ratio to 0
+Update col 9 ratio to 0
+Update row 6 ratio to 0
+Update col 9 ratio to 0
+Update row 6 ratio to 0
+Update col 8 ratio to 0.6
+Update row 0 ratio to 0.2
+Update col 8 ratio to 0.6
+Update row 1 ratio to 0
+Update col 8 ratio to 0.6
+Update row 8 ratio to 0
+Update col 8 ratio to 0.6
+Update row 5 ratio to 0
+Update col 8 ratio to 0.6
+Update row 5 ratio to 0
+Update col 0 ratio to 0.4
+Update row 4 ratio to 0.25
+Update col 0 ratio to 0.4
+Update row 6 ratio to 0
+Update col 0 ratio to 0.4
+Update row 1 ratio to 0
+Update col 0 ratio to 0.4
+Update row 8 ratio to 0
+Update col 0 ratio to 0.4
+Update row 8 ratio to 0
+Update col 6 ratio to 0.25
+Update row 9 ratio to 0.333333333333333
+Update col 6 ratio to 0.25
+Update row 7 ratio to 0.666666666666667
+Update col 6 ratio to 0.25
+Update row 5 ratio to 0
+Update col 6 ratio to 0.25
+Update row 6 ratio to 0
+Update col 6 ratio to 0.25
+Update row 1 ratio to 0
+Update col 6 ratio to 0.25
+Update row 1 ratio to 0
+Update col 7 ratio to 0.25
+Update row 2 ratio to 0.666666666666667
+Update col 7 ratio to 0.25
+Update row 0 ratio to 0.2
+Update col 7 ratio to 0.25
+Update row 8 ratio to 0
+Update col 7 ratio to 0.25
+Update row 5 ratio to 0
+Update col 7 ratio to 0.25
+Update row 6 ratio to 0
+Update col 7 ratio to 0.25
+Update row 6 ratio to 0
+Update col 2 ratio to 0.333333333333333
+Update row 4 ratio to 0.25
+Update col 2 ratio to 0.333333333333333
+Update row 9 ratio to 0.333333333333333
+Update col 2 ratio to 0.333333333333333
+Update row 7 ratio to 0.666666666666667
+Update col 2 ratio to 0.333333333333333
+Update row 1 ratio to 0
+Update col 2 ratio to 0.333333333333333
+Update row 8 ratio to 0
+Update col 2 ratio to 0.333333333333333
+Update row 5 ratio to 0
+Update col 2 ratio to 0.333333333333333
+Update row 5 ratio to 0
+Update col 4 ratio to 0.333333333333333
+Update row 4 ratio to 0.25
+Update col 4 ratio to 0.333333333333333
+Update row 9 ratio to 0.333333333333333
+Update col 4 ratio to 0.333333333333333
+Update row 7 ratio to 0.666666666666667
+Update col 4 ratio to 0.333333333333333
+Update row 6 ratio to 0
+Update col 4 ratio to 0.333333333333333
+Update row 1 ratio to 0
+Update col 4 ratio to 0.333333333333333
+Update row 8 ratio to 0
+Update col 4 ratio to 0.333333333333333
+Update row 8 ratio to 0
+Update col 5 ratio to 0.25
+Update row 9 ratio to 0.333333333333333
+Update col 5 ratio to 0.25
+Update row 7 ratio to 0.666666666666667
+Update col 5 ratio to 0.25
+Update row 5 ratio to 0
+Update col 5 ratio to 0.25
+Update row 6 ratio to 0
+Update col 5 ratio to 0.25
+Update row 1 ratio to 0
+Update col 5 ratio to 0.25
+Update row 1 ratio to 0
 Update col 3 ratio to 0
+Update row 3 ratio to 0.142857142857143
+Update col 3 ratio to 0
+Update row 2 ratio to 0.666666666666667
+Update col 3 ratio to 0
+Update row 0 ratio to 0.2
+Update col 3 ratio to 0
+Update row 4 ratio to 0.25
+Update col 3 ratio to 0
+Update row 9 ratio to 0.333333333333333
+Update col 3 ratio to 0
+Update row 7 ratio to 0.666666666666667
+Update col 3 ratio to 0
+Update row 8 ratio to 0
+Update col 3 ratio to 0
+Update row 5 ratio to 0
+Update col 3 ratio to 0
+Update row 6 ratio to 0
+Update col 3 ratio to 0
+Update row 6 ratio to 0
+Update col 1 ratio to 0
+Update row 3 ratio to 0.142857142857143
+Update col 1 ratio to 0
+Update row 2 ratio to 0.666666666666667
+Update col 1 ratio to 0
+Update row 0 ratio to 0.2
+Update col 1 ratio to 0
+Update row 4 ratio to 0.25
+Update col 1 ratio to 0
+Update row 9 ratio to 0.333333333333333
+Update col 1 ratio to 0
+Update row 7 ratio to 0.666666666666667
+Update col 1 ratio to 0
+Update row 1 ratio to 0
+Update col 1 ratio to 0
+Update row 8 ratio to 0
+Update col 1 ratio to 0
+Update row 5 ratio to 0
+Update col 1 ratio to 0
+Fire in cell [7, 8]. Row ratio: 0.666666666666667, col ratio: 0.6
+I know that cell [7, 8] contains right.
+I guess that cell [7, 8] contains right.
+I guess that cell [7, 7] contains a piece.
+Update row 7 num pieces to 1 given piece in cell [7, 7].
+Update col 7 num pieces to 0 given piece in cell [7, 7].
+Fill cell [9, 7] with water.
+Update row 9 num empty cells to 2 given water in cell [9, 7].
+Update col 7 num empty cells to 3 given water in cell [9, 7].
+Update row 7 num empty cells to 2 given piece in cell [7, 7].
+Update col 7 num empty cells to 2 given piece in cell [7, 7].
+Update row 7 num empty cells to 1 given right in cell [7, 8].
+Update col 8 num empty cells to 4 given right in cell [7, 8].
+Cell [9, 7] is not empty anymore.
+Fill cell [3, 7] with water.
+Update row 3 num empty cells to 6 given water in cell [3, 7].
+Update col 7 num empty cells to 1 given water in cell [3, 7].
+Cell [3, 7] is not empty anymore.
+Fill cell [4, 7] with water.
+Update row 4 num empty cells to 3 given water in cell [4, 7].
+Update col 7 num empty cells to 0 given water in cell [4, 7].
+Cell [4, 7] is not empty anymore.
+Update row 7 num pieces to 0 given right in cell [7, 8].
+Update col 8 num pieces to 2 given right in cell [7, 8].
+Fill cell [7, 0] with water.
+Update row 7 num empty cells to 0 given water in cell [7, 0].
+Update col 0 num empty cells to 4 given water in cell [7, 0].
+Cell [7, 0] is not empty anymore.
+Cell [7, 7] is not empty anymore.
+Sink two-pieces boat in cells [7, 8] and [7, 7].
+Cell [7, 8] is not empty anymore.
+Update row 7 ratio to 0
+Update col 0 ratio to 0.5
+Update row 7 ratio to 0
+Update col 8 ratio to 0.5
+Update row 7 ratio to 0
+Update col 7 ratio to 0
+Update row 4 ratio to 0.333333333333333
+Update col 7 ratio to 0
+Update row 3 ratio to 0.166666666666667
+Update col 7 ratio to 0
+Update row 9 ratio to 0.5
+Update col 7 ratio to 0
+Fire in cell [2, 8]. Row ratio: 0.666666666666667, col ratio: 0.5
+I know that cell [2, 8] contains bot.
+I guess that cell [2, 8] contains bot.
+Fill cell [3, 8] with water.
+Sink three-pieces boat in cells [2, 8], [1, 8] and [0, 8].
+Update row 3 num empty cells to 5 given water in cell [3, 8].
+Update col 8 num empty cells to 3 given water in cell [3, 8].
+Update row 2 num empty cells to 5 given bot in cell [2, 8].
+Update col 8 num empty cells to 2 given bot in cell [2, 8].
+Cell [3, 8] is not empty anymore.
+Update row 2 num pieces to 3 given bot in cell [2, 8].
+Update col 8 num pieces to 1 given bot in cell [2, 8].
+Cell [2, 8] is not empty anymore.
+Update row 3 ratio to 0.2
+Update col 8 ratio to 0.5
+Update row 2 ratio to 0.6
+Update col 8 ratio to 0.5
+Guess fourth piece in cell [3, 0] because all three-pieces boat sunk.
+Update row 3 num pieces to 0 given piece in cell [3, 0].
+Update col 0 num pieces to 1 given piece in cell [3, 0].
+Fill cell [3, 2] with water.
+Update row 3 num empty cells to 4 given water in cell [3, 2].
+Update col 2 num empty cells to 2 given water in cell [3, 2].
+Update row 3 num empty cells to 3 given piece in cell [3, 0].
+Update col 0 num empty cells to 3 given piece in cell [3, 0].
+Cell [3, 2] is not empty anymore.
+Fill cell [3, 4] with water.
+Update row 3 num empty cells to 2 given water in cell [3, 4].
+Update col 4 num empty cells to 2 given water in cell [3, 4].
+Cell [3, 4] is not empty anymore.
+Fill cell [3, 5] with water.
+Update row 3 num empty cells to 1 given water in cell [3, 5].
+Update col 5 num empty cells to 3 given water in cell [3, 5].
+Cell [3, 5] is not empty anymore.
+Fill cell [3, 6] with water.
+Update row 3 num empty cells to 0 given water in cell [3, 6].
+Update col 6 num empty cells to 3 given water in cell [3, 6].
+Cell [3, 6] is not empty anymore.
+Cell [3, 0] is not empty anymore.
+Sink four-pieces boat in cells [6, 0], [5, 0], [4, 0] and [3, 0].
+Deduce water in cell [2, 0].
+Update row 2 num empty cells to 4 given water in cell [2, 0].
+Update col 0 num empty cells to 2 given water in cell [2, 0].
+Cell [2, 0] is not empty anymore.
+Update row 2 ratio to 0.75
+Update col 0 ratio to 0.5
+Update row 3 ratio to 0
+Update col 0 ratio to 0.5
+Update row 3 ratio to 0
+Update col 5 ratio to 0.333333333333333
+Update row 3 ratio to 0
+Update col 4 ratio to 0.5
+Update row 3 ratio to 0
+Update col 2 ratio to 0.5
+Update row 3 ratio to 0
+Update col 6 ratio to 0.333333333333333
+Fire in cell [2, 2]. Row ratio: 0.75, col ratio: 0.5
+I know that cell [2, 2] contains sub.
+I guess that cell [2, 2] contains sub.
+Sink sub in cell [2, 2].
+Update row 2 num pieces to 2 given sub in cell [2, 2].
+Update col 2 num pieces to 0 given sub in cell [2, 2].
+Fill cell [0, 2] with water.
+Update row 0 num empty cells to 4 given water in cell [0, 2].
+Update col 2 num empty cells to 1 given water in cell [0, 2].
+Update row 2 num empty cells to 3 given sub in cell [2, 2].
+Update col 2 num empty cells to 0 given sub in cell [2, 2].
+Cell [0, 2] is not empty anymore.
+Cell [2, 2] is not empty anymore.
+Update row 0 ratio to 0.25
+Update col 2 ratio to 0
+Update row 2 ratio to 0.666666666666667
+Update col 2 ratio to 0
+Fire in cell [2, 4]. Row ratio: 0.666666666666667, col ratio: 0.5
+I know that cell [2, 4] contains left.
+I guess that cell [2, 4] contains left.
+I guess that cell [2, 5] contains a piece.
+Update row 2 num pieces to 1 given piece in cell [2, 5].
+Update col 5 num pieces to 0 given piece in cell [2, 5].
+Fill cell [4, 5] with water.
+Update row 4 num empty cells to 2 given water in cell [4, 5].
+Update col 5 num empty cells to 2 given water in cell [4, 5].
+Update row 2 num empty cells to 2 given piece in cell [2, 5].
+Update col 5 num empty cells to 1 given piece in cell [2, 5].
+Update row 2 num empty cells to 1 given left in cell [2, 4].
+Update col 4 num empty cells to 1 given left in cell [2, 4].
+Cell [4, 5] is not empty anymore.
+Fill cell [0, 5] with water.
+Update row 0 num empty cells to 3 given water in cell [0, 5].
+Update col 5 num empty cells to 0 given water in cell [0, 5].
+Cell [0, 5] is not empty anymore.
+Update row 2 num pieces to 0 given left in cell [2, 4].
+Update col 4 num pieces to 0 given left in cell [2, 4].
+Fill cell [0, 4] with water.
+Update row 0 num empty cells to 2 given water in cell [0, 4].
+Update col 4 num empty cells to 0 given water in cell [0, 4].
+Cell [0, 4] is not empty anymore.
+Fill cell [2, 6] with water.
+Sink two-pieces boat in cells [2, 5] and [2, 4].
+Update row 2 num empty cells to 0 given water in cell [2, 6].
+Update col 6 num empty cells to 2 given water in cell [2, 6].
+Cell [2, 6] is not empty anymore.
+Cell [2, 5] is not empty anymore.
+Cell [2, 4] is not empty anymore.
+Update row 2 ratio to 0
+Update col 6 ratio to 0.5
+Update row 2 ratio to 0
+Update col 4 ratio to 0
 Update row 0 ratio to 0.5
-Update col 3 ratio to 0
-Guess piece in cell [9, 0] because the number of pieces in row is equal to the number of empty cells.
-Sink two-pieces boat in cells [9, 1] and [9, 0].
+Update col 4 ratio to 0
+Update row 0 ratio to 0.5
+Update col 5 ratio to 0
+Update row 4 ratio to 0.5
+Update col 5 ratio to 0
+Update row 2 ratio to 0
+Update col 5 ratio to 0
+Fire in cell [4, 6]. Row ratio: 0.5, col ratio: 0.5
+I know that cell [4, 6] contains water.
+Fill cell [4, 6] with water.
+Update row 4 num empty cells to 1 given water in cell [4, 6].
+Update col 6 num empty cells to 1 given water in cell [4, 6].
+Cell [4, 6] is not empty anymore.
+Update row 4 ratio to 1.0
+Update col 6 ratio to 1.0
+Guess piece in cell [0, 6] because the number of pieces in column is equal to the number of empty cells.
+Update row 0 num pieces to 0 given piece in cell [0, 6].
+Update col 6 num pieces to 0 given piece in cell [0, 6].
+Fill cell [0, 0] with water.
+Update row 0 num empty cells to 1 given water in cell [0, 0].
+Update col 0 num empty cells to 1 given water in cell [0, 0].
+Update row 0 num empty cells to 0 given piece in cell [0, 6].
+Update col 6 num empty cells to 0 given piece in cell [0, 6].
+Cell [0, 0] is not empty anymore.
+Cell [0, 6] is not empty anymore.
+Sink sub in cell [0, 6].
+Update row 0 ratio to 0
+Update col 6 ratio to 0
+Update row 0 ratio to 0
+Update col 0 ratio to 1.0
+Guess piece in cell [9, 0] because the number of pieces in column is equal to the number of empty cells.
+Sink sub in cell [9, 0].
 Update row 9 num pieces to 0 given piece in cell [9, 0].
 Update col 0 num pieces to 0 given piece in cell [9, 0].
-Fill cell [6, 0] with water.
-Update row 6 num empty cells to 2 given water in cell [6, 0].
-Update col 0 num empty cells to 1 given water in cell [6, 0].
+Fill cell [9, 8] with water.
+Update row 9 num empty cells to 1 given water in cell [9, 8].
+Update col 8 num empty cells to 1 given water in cell [9, 8].
 Update row 9 num empty cells to 0 given piece in cell [9, 0].
 Update col 0 num empty cells to 0 given piece in cell [9, 0].
-Cell [6, 0] is not empty anymore.
+Cell [9, 8] is not empty anymore.
 Cell [9, 0] is not empty anymore.
-Update row 6 ratio to 0.5
-Update col 0 ratio to 0
 Update row 9 ratio to 0
 Update col 0 ratio to 0
-Fire in cell [0, 9]. Row ratio: 0.5, col ratio: 0.5
-I know that cell [0, 9] contains sub.
-I guess that cell [0, 9] contains sub.
-Fill cell [0, 8] with water.
-Update row 0 num empty cells to 1 given water in cell [0, 8].
-Update col 8 num empty cells to 1 given water in cell [0, 8].
-Update row 0 num empty cells to 0 given sub in cell [0, 9].
-Update col 9 num empty cells to 1 given sub in cell [0, 9].
-Cell [0, 8] is not empty anymore.
-Sink sub in cell [0, 9].
-Update row 0 num pieces to 0 given sub in cell [0, 9].
-Update col 9 num pieces to 0 given sub in cell [0, 9].
-Fill cell [6, 9] with water.
-Update row 6 num empty cells to 1 given water in cell [6, 9].
-Update col 9 num empty cells to 0 given water in cell [6, 9].
-Cell [6, 9] is not empty anymore.
-Cell [0, 9] is not empty anymore.
-Update row 6 ratio to 1.0
-Update col 9 ratio to 0
-Update row 0 ratio to 0
-Update col 9 ratio to 0
-Update row 0 ratio to 0
+Update row 9 ratio to 0
 Update col 8 ratio to 1.0
-Guess piece in cell [6, 8] because the number of pieces in row is equal to the number of empty cells.
-Sink sub in cell [6, 8].
-Update row 6 num pieces to 0 given piece in cell [6, 8].
-Update col 8 num pieces to 0 given piece in cell [6, 8].
-Update row 6 num empty cells to 0 given piece in cell [6, 8].
-Update col 8 num empty cells to 0 given piece in cell [6, 8].
-Cell [6, 8] is not empty anymore.
-Update row 6 ratio to 0
+Guess piece in cell [4, 8] because the number of pieces in column is equal to the number of empty cells.
+Sink sub in cell [4, 8].
+Update row 4 num pieces to 0 given piece in cell [4, 8].
+Update col 8 num pieces to 0 given piece in cell [4, 8].
+Update row 4 num empty cells to 0 given piece in cell [4, 8].
+Update col 8 num empty cells to 0 given piece in cell [4, 8].
+Cell [4, 8] is not empty anymore.
+Update row 4 ratio to 0
 Update col 8 ratio to 0
 Finished.
 Statistics: 
-  - 3 correct fires
-  - 0 wrong fires
+  - 4 correct fires
+  - 1 wrong fires
   - 12 correct guesses (without considering known cells from beginning)
   - 0 wrong guesses
   - 0 boat pieces untouched
   - 10 boats sunk
-Your score is 340
+Your score is 380

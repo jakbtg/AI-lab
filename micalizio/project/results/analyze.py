@@ -16,8 +16,8 @@ print(f'Playing map {map_number} with {obs_number} observations')
 
 # last 8 lines for statistics
 statistics = lines[-8:]
-# exclude last 8 lines
-lines = lines[:-8]
+# exclude last 8 lines and the first one
+lines = lines[1:-8]
 
 # first n lines --> fpr testing
 # lines = lines[:556]
@@ -148,8 +148,17 @@ for line in statistics:
     print(line.strip())
 
 
+agent2 = False
+if re.search(r'Agente due', lines[0], re.IGNORECASE):
+    file_name = (f'micalizio/project/results/2_{map_name}_results.txt')
+    agent2 = True
+else:
+    file_name = (f'micalizio/project/results/1_{map_name}_results.txt')
+
 # save all printed output in a file named as the map
-with open(f'micalizio/project/results/{map_name}_results.txt', 'w') as f:
+with open(file_name, 'w') as f:
+    if agent2:
+        f.write(f'Agente due\n')
     f.write(f'Map name: {map_name}\n')
     f.write(f'Initial pieces per row: {pieces_per_row}\n')
     f.write(f'Initial pieces per column: {pieces_per_column}\n')
