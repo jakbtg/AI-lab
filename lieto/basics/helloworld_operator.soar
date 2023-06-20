@@ -1,0 +1,27 @@
+sp {propose*hello-world
+
+   (state <s> ^type state)
+
+-->
+
+   (<s> ^operator <o> +)
+
+   (<o> ^name hello-world)
+
+}
+
+
+
+sp {apply*hello-world
+
+   (state <s> ^operator <o>)
+
+   (<o> ^name hello-world)
+
+-->
+
+   (write |Hello World|)
+
+   (halt)
+
+}
