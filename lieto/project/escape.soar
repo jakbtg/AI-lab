@@ -1,0 +1,18 @@
+##################
+### Initialize ###
+##################
+sp {propose*initialize*escape
+    (state <s> ^superstate nil -^name)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name initialize-escape)
+}
+
+sp {apply*initialize*escape
+    (state <s> ^operator.name initialize-escape)
+-->
+    (<s> ^name escape)
+    # Just temporary
+    (write (crlf) |Inizia il gioco!|)
+    (halt)
+}
