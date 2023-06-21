@@ -16,3 +16,7 @@ sp {apply*initialize*escape
     (write (crlf) |Inizia il gioco!|)
     (halt)
 }
+
+
+##################
+# capire come assegnare reward alle azioni
