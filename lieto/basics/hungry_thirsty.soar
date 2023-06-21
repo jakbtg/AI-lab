@@ -11,7 +11,7 @@
 ###
 
 
-##
+###
 ###	I.	Propose the top space
 ###
 ### The code in this section proposes a simple space to work in, and a
@@ -29,11 +29,12 @@ sp {ht*propose-space*ht
 
 ## Initialise the top state
 ## simple way to set up the top-state with a separate production
-##sp {ht*init-state*ht
-##  (state <s> ^problem-space.name hungry-thirsty)
-##  -->
-##  (<s> ^name ht-state)
-##  (<s> ^thirsty yes ^hungry yes)}
+sp {ht*init-state*ht
+ (state <s> ^problem-space.name hungry-thirsty)
+ -->
+ (<s> ^name ht-state)
+ (<s> ^thirsty yes ^hungry yes)
+}
 
 ## You can put the closing parenthesis on its own line (e.g., in the 
 ## first production) to show that it is closed, but I generally don't
@@ -45,8 +46,7 @@ sp {ht*propose-space*ht
 ###
 ### The code in this section proposes the two operators eat and drink.
 
-### The third production creates a preference for choosing between
-### them.
+### The third production creates a preference for choosing between them.
 
 
 ## Propose eat.
@@ -55,7 +55,8 @@ sp {ht*propose-op*eat
   (<s> ^hungry yes)
   -->
   (<s> ^operator <o>)
-  (<o> ^name eat)}
+  (<o> ^name eat)
+}
 
 ## Propose drink.
 sp {ht*propose-op*drink
@@ -63,7 +64,8 @@ sp {ht*propose-op*drink
   (<s> ^thirsty yes)
   -->
   (<s> ^operator <o>)
-  (<o> ^name drink)}
+  (<o> ^name drink)
+}
 
 ## Eat is better if you are hungry and want not to be
 sp {ht*compare*eat*better*drink
@@ -75,7 +77,8 @@ sp {ht*compare*eat*better*drink
   (<s> ^operator <op-drink> +)
   (<op-drink> ^name drink)
   -->
-  (<s> ^operator <op-eat> > <op-drink>)}
+  (<s> ^operator <op-eat> > <op-drink>)
+}
 
 
 ###
@@ -84,12 +87,9 @@ sp {ht*compare*eat*better*drink
 
 ## Implement the operators with productions that modify the state once
 ## the operators have been selected, and then terminate them after
-## they have done
-
-## what they need to do
+## they have done what they need to do
 ##
-## Note: We make the new value acceptable and reject the previous
-## value.
+## Note: We make the new value acceptable and reject the previous value.
 
 ##
 ## The reconsider preference effectively terminates the operator on 
@@ -101,14 +101,16 @@ sp {ht*apply-op*eat
   (<s> ^hungry yes)
   -->
   (write (crlf) |          chomp chomp... |)
-  (<s> ^hungry yes - no +)}
+  (<s> ^hungry yes - no +)
+}
 
 sp {ht*terminate*eat
   (state <s> ^operator <o>)
   (<o> ^name eat)
   (<s> ^hungry no)
   -->
-  (<s> ^operator <o> @)}
+  (<s> ^operator <o> @)
+}
 
 
 ## Implement drink
@@ -119,14 +121,16 @@ sp {ht*apply-op*drink
   (<s> ^thirsty yes)
   -->
   (write (crlf) |          glug glug... |)
-  (<s> ^thirsty no + yes -)}
+  (<s> ^thirsty no + yes -)
+}
 
 sp {ht*terminate*drink
   (state <s>  ^operator <o>)
   (<o> ^name drink)
   (<s> ^thirsty no)
   -->
-  (<s> ^operator <o> @)}
+  (<s> ^operator <o> @)
+}
 
 
 
@@ -142,7 +146,8 @@ sp {ht*evaluate*state*success
   (<d> ^hungry <val>)
   (<s> ^hungry <val>)
   -->
-  (<s> ^success <d>)}
+  (<s> ^success <d>)
+}
 
 
 ## One of the default rules is brought in to notice that we are 
@@ -154,7 +159,8 @@ sp {default*top-goal*halt*state*success
   (<s> ^success <eb>)
   -->
   (write (crlf)  |  goal for  | <s>  | achieved | )
-  (halt)}
+  (halt)
+}
 
 
 ###---------------------------------------------------------------
