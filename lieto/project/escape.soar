@@ -11,12 +11,63 @@ sp {propose*initialize*escape
 sp {apply*initialize*escape
     (state <s> ^operator.name initialize-escape)
 -->
-    (<s> ^name escape)
-    # Just temporary
+    (<s> ^name escape ^previous <p>)
+    (<p> ^name none)
     (write (crlf) |Inizia il gioco!|)
-    (halt)
 }
 
 
+#############################
+### Possible combinations ###
+#############################
+sp {propose*combine-twig-spring
+    (state <s> ^name escape ^previous <previous-action>)
+    (<previous-action> ^name <> combine-twig-spring)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name combine-twig-spring)
+}
+
+sp {apply*combine-twig-spring
+    (state <s> ^operator.name combine-twig-spring ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-action> +)
+    (<new-action> ^name combine-twig-spring ^reward 1)
+    (write (crlf) |Hai combinato il rametto con la molla!|)
+}
+
+
+#############################################
+### Reinforcement learning initialization ###
+#############################################
+sp {rl*combine-twig-spring*initialize
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name combine-twig-spring)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+
+############################################
+### Reinforcement learning apply rewards ###
+############################################
+sp {rl*apply-rewards
+    (state <s> ^name escape ^reward-link <r> ^previous <previous-action>)
+    (<previous-action> ^reward <reward>)
+-->
+    (<r> ^reward <rr>)
+    (<rr> ^value <reward>)
+    (write (crlf) |Reward: | <reward>)
+}
+
+
+
 ##################
-# capire come assegnare reward alle azioni
+# Halt agent for testing
+##################
+sp {halt*escape
+    (state <s> ^name escape ^previous <previous-action>)
+    (<previous-action> ^name combine-twig-spring)
+-->
+    (halt)
+}
