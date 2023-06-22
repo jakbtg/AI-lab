@@ -2,8 +2,9 @@
 rl --set learning on
 # use epsilon-greedy decision making
 indifferent-selection --epsilon-greedy
+indifferent-selection --stats
 # 10% deviation from greedy
-indifferent-selection --epsilon 0.3
+indifferent-selection --epsilon 0.1
 
 
 
