@@ -3,7 +3,7 @@ rl --set learning on
 # use epsilon-greedy decision making
 indifferent-selection --epsilon-greedy
 # 10% deviation from greedy
-indifferent-selection --epsilon 0.1
+indifferent-selection --epsilon 0.3
 
 
 
@@ -25,8 +25,9 @@ sp {apply*initialize*escape
          ^created-slingshot false
          ^broken-window false
          ^first-log-in-place false
-         ^created-tower false
-         ^holding-log false)
+         ^created-ladder false
+         ^holding-log false
+         ^escaped false)
     (<p> ^name none)
     (write (crlf) |Inizia il gioco!|)
 }
@@ -38,7 +39,7 @@ sp {apply*initialize*escape
 #############################
 # twig + spring = slingshot
 sp {propose*combine-twig-spring
-    (state <s> ^name escape ^previous <previous-action> ^created-slingshot false)
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot false ^broken-window false)
     (<previous-action> ^name <> combine-twig-spring)
 -->
     (<s> ^operator <o> +)
@@ -56,7 +57,7 @@ sp {apply*combine-twig-spring
 
 # twig + rock = nothing
 sp {propose*combine-rock-twig
-    (state <s> ^name escape ^previous <previous-action>)
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot false ^broken-window false)
     (<previous-action> ^name <> combine-rock-twig)
 -->
     (<s> ^operator <o> +)
@@ -68,12 +69,12 @@ sp {apply*combine-rock-twig
 -->
     (<s> ^previous <p> - <new-previous-action> +)
     (<new-previous-action> ^name combine-rock-twig ^reward -1)
-    (write (crlf) |Ha combinato il rametto con la pietra senza ottenerne nulla.|)
+    (write (crlf) |Ha combinato il rametto con la pietra senza ottenere nulla.|)
 }
 
 # rock + spring = nothing
 sp {propose*combine-rock-spring
-    (state <s> ^name escape ^previous <previous-action>)
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot false ^broken-window false)
     (<previous-action> ^name <> combine-rock-spring)
 -->
     (<s> ^operator <o> +)
@@ -85,7 +86,7 @@ sp {apply*combine-rock-spring
 -->
     (<s> ^previous <p> - <new-previous-action> +)
     (<new-previous-action> ^name combine-rock-spring ^reward -1)
-    (write (crlf) |Ha combinato la pietra con la molla senza ottenerne nulla.|)
+    (write (crlf) |Ha combinato la pietra con la molla senza ottenere nulla.|)
 }
 
 
@@ -95,7 +96,7 @@ sp {apply*combine-rock-spring
 #######################
 # shooting on the center without breaking the window
 sp {propose*shoot-center
-    (state <s> ^name escape ^previous <previous-action> ^created-slingshot true)
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot true ^broken-window false)
     (<previous-action> ^name <> shoot-center)
 -->
     (<s> ^operator <o> +)
@@ -112,7 +113,7 @@ sp {apply*shoot-center
 
 # shooting on the border and breaking the window
 sp {propose*shoot-border
-    (state <s> ^name escape ^previous <previous-action> ^created-slingshot true)
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot true ^broken-window false)
     (<previous-action> ^name <> shoot-border)
 -->
     (<s> ^operator <o> +)
@@ -134,7 +135,7 @@ sp {apply*shoot-border
 ### Picking up logs ###
 #######################
 sp {propose*pick-up-log
-    (state <s> ^name escape ^previous <previous-action> ^created-tower false ^holding-log false)
+    (state <s> ^name escape ^previous <previous-action> ^created-ladder false ^holding-log false ^broken-window true)
     (<previous-action> ^name <> pick-up-log)
 -->
     (<s> ^operator <o> +)
@@ -152,9 +153,9 @@ sp {apply*pick-up-log
 
 
 
-##################################
-### Building tower with 2 logs ###
-##################################
+###################################
+### Building ladder with 2 logs ###
+###################################
 sp {propose*move-first-log
     (state <s> ^name escape ^previous <previous-action> ^first-log-in-place false ^holding-log true)
     (<previous-action> ^name <> move-first-log)
@@ -174,7 +175,7 @@ sp {apply*move-first-log
 }
 
 sp {propose*move-second-log
-    (state <s> ^name escape ^previous <previous-action> ^first-log-in-place true ^created-tower false ^holding-log true)
+    (state <s> ^name escape ^previous <previous-action> ^first-log-in-place true ^created-ladder false ^holding-log true)
     (<previous-action> ^name <> move-second-log)
 -->
     (<s> ^operator <o> +)
@@ -187,8 +188,30 @@ sp {apply*move-second-log
     (<s> ^previous <p> - <new-previous-action> +)
     (<new-previous-action> ^name move-second-log)
     (<s> ^holding-log true - false +)
-    (<s> ^created-tower false - true +)
-    (write (crlf) |Ha spostato il secondo tronco sotto la finestra e ha costruito una torre!|)
+    (<s> ^created-ladder false - true +)
+    (write (crlf) |Ha spostato il secondo tronco sotto la finestra e ha costruito una scala!|)
+}
+
+
+
+###############################
+### Climb ladder and escape ###
+###############################
+sp {propose*climb-ladder
+    (state <s> ^name escape ^previous <previous-action> ^created-ladder true)
+    (<previous-action> ^name <> climb-ladder)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name climb-ladder)
+}
+
+sp {apply*climb-ladder
+    (state <s> ^operator.name climb-ladder ^previous <p> ^escaped false)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name climb-ladder)
+    (<s> ^escaped false - true +)
+    (write (crlf) |Ha scalato la scala ed è scappato!|)
 }
 
 
@@ -247,11 +270,12 @@ sp {rl*apply-rewards
 
 
 
-##################
-# Halt agent for testing
-##################
+################################
+### Escape and halt the game ###
+################################
 sp {halt*escape
-    (state <s> ^name escape ^created-slingshot true ^broken-window true)
+    (state <s> ^name escape ^escaped true)
 -->
+    (write (crlf) |Fine del gioco!|)
     (halt)
 }
