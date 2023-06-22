@@ -20,7 +20,13 @@ sp {propose*initialize*escape
 sp {apply*initialize*escape
     (state <s> ^operator.name initialize-escape)
 -->
-    (<s> ^name escape ^previous <p> ^created-slingshot false ^broken-window false)
+    (<s> ^name escape 
+         ^previous <p>
+         ^created-slingshot false
+         ^broken-window false
+         ^first-log-in-place false
+         ^created-tower false
+         ^holding-log false)
     (<p> ^name none)
     (write (crlf) |Inizia il gioco!|)
 }
@@ -120,6 +126,69 @@ sp {apply*shoot-border
     (<new-previous-action> ^name shoot-border ^reward 1)
     (<s> ^broken-window false - true +)
     (write (crlf) |Ha sparato al bordo e rotto la finestra!|)
+}
+
+
+
+#######################
+### Picking up logs ###
+#######################
+sp {propose*pick-up-log
+    (state <s> ^name escape ^previous <previous-action> ^created-tower false ^holding-log false)
+    (<previous-action> ^name <> pick-up-log)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name pick-up-log)
+}
+
+sp {apply*pick-up-log
+    (state <s> ^operator.name pick-up-log ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name pick-up-log)
+    (<s> ^holding-log false - true +)
+    (write (crlf) |Ha raccolto un tronco.|)
+}
+
+
+
+##################################
+### Building tower with 2 logs ###
+##################################
+sp {propose*move-first-log
+    (state <s> ^name escape ^previous <previous-action> ^first-log-in-place false ^holding-log true)
+    (<previous-action> ^name <> move-first-log)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name move-first-log)
+}
+
+sp {apply*move-first-log
+    (state <s> ^operator.name move-first-log ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name move-first-log)
+    (<s> ^first-log-in-place false - true +)
+    (<s> ^holding-log true - false +)
+    (write (crlf) |Ha spostato il primo tronco sotto la finestra!|)
+}
+
+sp {propose*move-second-log
+    (state <s> ^name escape ^previous <previous-action> ^first-log-in-place true ^created-tower false ^holding-log true)
+    (<previous-action> ^name <> move-second-log)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name move-second-log)
+}
+
+sp {apply*move-second-log
+    (state <s> ^operator.name move-second-log ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name move-second-log)
+    (<s> ^holding-log true - false +)
+    (<s> ^created-tower false - true +)
+    (write (crlf) |Ha spostato il secondo tronco sotto la finestra e ha costruito una torre!|)
 }
 
 
