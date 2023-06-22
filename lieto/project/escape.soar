@@ -20,7 +20,7 @@ sp {propose*initialize*escape
 sp {apply*initialize*escape
     (state <s> ^operator.name initialize-escape)
 -->
-    (<s> ^name escape ^previous <p>)
+    (<s> ^name escape ^previous <p> ^created-slingshot false ^broken-window false)
     (<p> ^name none)
     (write (crlf) |Inizia il gioco!|)
 }
@@ -30,10 +30,9 @@ sp {apply*initialize*escape
 #############################
 ### Possible combinations ###
 #############################
-
 # twig + spring = slingshot
 sp {propose*combine-twig-spring
-    (state <s> ^name escape ^previous <previous-action>)
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot false)
     (<previous-action> ^name <> combine-twig-spring)
 -->
     (<s> ^operator <o> +)
@@ -43,9 +42,10 @@ sp {propose*combine-twig-spring
 sp {apply*combine-twig-spring
     (state <s> ^operator.name combine-twig-spring ^previous <p>)
 -->
-    (<s> ^previous <p> - <new-action> +)
-    (<new-action> ^name combine-twig-spring ^reward 1)
-    (write (crlf) |Hai combinato il rametto con la molla e creato una fionda!|)
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name combine-twig-spring ^reward 1)
+    (<s> ^created-slingshot false - true +)
+    (write (crlf) |Ha combinato il rametto con la molla e creato una fionda!|)
 }
 
 # twig + rock = nothing
@@ -60,9 +60,9 @@ sp {propose*combine-rock-twig
 sp {apply*combine-rock-twig
     (state <s> ^operator.name combine-rock-twig ^previous <p>)
 -->
-    (<s> ^previous <p> - <new-action> +)
-    (<new-action> ^name combine-rock-twig ^reward -1)
-    (write (crlf) |Hai combinato il rametto con la pietra senza ottenerne nulla.|)
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name combine-rock-twig ^reward -1)
+    (write (crlf) |Ha combinato il rametto con la pietra senza ottenerne nulla.|)
 }
 
 # rock + spring = nothing
@@ -77,9 +77,49 @@ sp {propose*combine-rock-spring
 sp {apply*combine-rock-spring
     (state <s> ^operator.name combine-rock-spring ^previous <p>)
 -->
-    (<s> ^previous <p> - <new-action> +)
-    (<new-action> ^name combine-rock-spring ^reward -1)
-    (write (crlf) |Hai combinato la pietra con la molla senza ottenerne nulla.|)
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name combine-rock-spring ^reward -1)
+    (write (crlf) |Ha combinato la pietra con la molla senza ottenerne nulla.|)
+}
+
+
+
+#######################
+### Possible shoots ###
+#######################
+# shooting on the center without breaking the window
+sp {propose*shoot-center
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot true)
+    (<previous-action> ^name <> shoot-center)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name shoot-center)
+}
+
+sp {apply*shoot-center
+    (state <s> ^operator.name shoot-center ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name shoot-center ^reward -1)
+    (write (crlf) |Ha sparato al centro senza rompere la finestra.|)
+}
+
+# shooting on the border and breaking the window
+sp {propose*shoot-border
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot true)
+    (<previous-action> ^name <> shoot-border)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name shoot-border)
+}
+
+sp {apply*shoot-border
+    (state <s> ^operator.name shoot-border ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name shoot-border ^reward 1)
+    (<s> ^broken-window false - true +)
+    (write (crlf) |Ha sparato al bordo e rotto la finestra!|)
 }
 
 
@@ -108,6 +148,20 @@ sp {rl*combine-rock-spring*initialize
     (<s> ^operator <o> = 0)
 }
 
+sp {rl*shoot-center*initialize
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name shoot-center)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*shoot-border*initialize
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name shoot-border)
+-->
+    (<s> ^operator <o> = 0)
+}
+
 
 
 ############################################
@@ -128,8 +182,7 @@ sp {rl*apply-rewards
 # Halt agent for testing
 ##################
 sp {halt*escape
-    (state <s> ^name escape ^previous <previous-action>)
-    (<previous-action> ^name <> none)
+    (state <s> ^name escape ^created-slingshot true ^broken-window true)
 -->
     (halt)
 }
