@@ -1,3 +1,12 @@
+# enable RL
+rl --set learning on
+# use epsilon-greedy decision making
+indifferent-selection --epsilon-greedy
+# 10% deviation from greedy
+indifferent-selection --epsilon 0.1
+
+
+
 ##################
 ### Initialize ###
 ##################
@@ -17,9 +26,12 @@ sp {apply*initialize*escape
 }
 
 
+
 #############################
 ### Possible combinations ###
 #############################
+
+# twig + spring = slingshot
 sp {propose*combine-twig-spring
     (state <s> ^name escape ^previous <previous-action>)
     (<previous-action> ^name <> combine-twig-spring)
@@ -33,8 +45,43 @@ sp {apply*combine-twig-spring
 -->
     (<s> ^previous <p> - <new-action> +)
     (<new-action> ^name combine-twig-spring ^reward 1)
-    (write (crlf) |Hai combinato il rametto con la molla!|)
+    (write (crlf) |Hai combinato il rametto con la molla e creato una fionda!|)
 }
+
+# twig + rock = nothing
+sp {propose*combine-rock-twig
+    (state <s> ^name escape ^previous <previous-action>)
+    (<previous-action> ^name <> combine-rock-twig)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name combine-rock-twig)
+}
+
+sp {apply*combine-rock-twig
+    (state <s> ^operator.name combine-rock-twig ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-action> +)
+    (<new-action> ^name combine-rock-twig ^reward -1)
+    (write (crlf) |Hai combinato il rametto con la pietra senza ottenerne nulla.|)
+}
+
+# rock + spring = nothing
+sp {propose*combine-rock-spring
+    (state <s> ^name escape ^previous <previous-action>)
+    (<previous-action> ^name <> combine-rock-spring)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name combine-rock-spring)
+}
+
+sp {apply*combine-rock-spring
+    (state <s> ^operator.name combine-rock-spring ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-action> +)
+    (<new-action> ^name combine-rock-spring ^reward -1)
+    (write (crlf) |Hai combinato la pietra con la molla senza ottenerne nulla.|)
+}
+
 
 
 #############################################
@@ -46,6 +93,21 @@ sp {rl*combine-twig-spring*initialize
 -->
     (<s> ^operator <o> = 0)
 }
+
+sp {rl*combine-rock-twig*initialize
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name combine-rock-twig)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*combine-rock-spring*initialize
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name combine-rock-spring)
+-->
+    (<s> ^operator <o> = 0)
+}
+
 
 
 ############################################
@@ -67,7 +129,7 @@ sp {rl*apply-rewards
 ##################
 sp {halt*escape
     (state <s> ^name escape ^previous <previous-action>)
-    (<previous-action> ^name combine-twig-spring)
+    (<previous-action> ^name <> none)
 -->
     (halt)
 }
