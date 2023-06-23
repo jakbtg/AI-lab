@@ -30,8 +30,9 @@ sp {apply*initialize*escape
          ^holding-log false
          ^escaped false
          ^created-combination false
-         ^shot false)
-         # Add fake shot for twig and rock
+         ^shot false
+         ^shot-rock false
+         ^shot-twig false)
     (<p> ^name none)
     (write (crlf) |Inizia il gioco!|)
 }
@@ -103,7 +104,7 @@ sp {apply*combine-rock-spring
 #########################################
 # shooting the window with a rock
 sp {propose*shoot-with-rock
-    (state <s> ^name escape ^previous <previous-action> ^created-slingshot false ^broken-window false ^shot false)
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot false ^broken-window false ^shot-rock false)
     (<previous-action> ^name <> shoot-with-rock)
 -->
     (<s> ^operator <o> +)
@@ -115,13 +116,13 @@ sp {apply*shoot-with-rock
 -->
     (<s> ^previous <p> - <new-previous-action> +)
     (<new-previous-action> ^name shoot-with-rock ^reward -1)
-    (<s> ^shot false - true +)
+    (<s> ^shot-rock false - true +)
     (write (crlf) |Ha lanciato una pietra alla finestra senza romperla.|)
 }
 
 # shooting the window with a twig
 sp {propose*shoot-with-twig
-    (state <s> ^name escape ^previous <previous-action> ^created-slingshot false ^broken-window false ^shot false)
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot false ^broken-window false ^shot-twig false)
     (<previous-action> ^name <> shoot-with-twig)
 -->
     (<s> ^operator <o> +)
@@ -133,7 +134,7 @@ sp {apply*shoot-with-twig
 -->
     (<s> ^previous <p> - <new-previous-action> +)
     (<new-previous-action> ^name shoot-with-twig ^reward -1)
-    (<s> ^shot false - true +)
+    (<s> ^shot-twig false - true +)
     (write (crlf) |Ha lanciato un rametto alla finestra senza romperla.|)
 }
 
@@ -345,7 +346,7 @@ sp {halt*escape
 }
 
 sp {halt*no-slingshot
-    (state <s> ^name escape ^escaped false ^created-slingshot false ^created-combination true)
+    (state <s> ^name escape ^escaped false ^created-slingshot false ^created-combination true ^shot-rock true ^shot-twig true)
 -->
     (write (crlf) |Non ha costruito la fionda, non può scappare!|)
     (halt)
