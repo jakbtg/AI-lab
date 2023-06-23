@@ -267,52 +267,52 @@ sp {apply*climb-ladder
 
 
 
-#############################################
-### Reinforcement learning initialization ###
-#############################################
-sp {rl*combine-twig-spring*initialize
+##############################
+### Reinforcement learning ###
+##############################
+sp {rl*combine-twig-spring
     (state <s> ^name escape ^operator <o> +)
     (<o> ^name combine-twig-spring)
 -->
     (<s> ^operator <o> = 0)
 }
 
-sp {rl*combine-rock-twig*initialize
+sp {rl*combine-rock-twig
     (state <s> ^name escape ^operator <o> +)
     (<o> ^name combine-rock-twig)
 -->
     (<s> ^operator <o> = 0)
 }
 
-sp {rl*combine-rock-spring*initialize
+sp {rl*combine-rock-spring
     (state <s> ^name escape ^operator <o> +)
     (<o> ^name combine-rock-spring)
 -->
     (<s> ^operator <o> = 0)
 }
 
-sp {rl*shoot-center*initialize
+sp {rl*shoot-center
     (state <s> ^name escape ^operator <o> +)
     (<o> ^name shoot-center)
 -->
     (<s> ^operator <o> = 0)
 }
 
-sp {rl*shoot-edge*initialize
+sp {rl*shoot-edge
     (state <s> ^name escape ^operator <o> +)
     (<o> ^name shoot-edge)
 -->
     (<s> ^operator <o> = 0)
 }
 
-sp {rl*shoot-rock*initialize
+sp {rl*shoot-rock
     (state <s> ^name escape ^operator <o> +)
     (<o> ^name shoot-with-rock)
 -->
     (<s> ^operator <o> = 0)
 }
 
-sp {rl*shoot-twig*initialize
+sp {rl*shoot-twig
     (state <s> ^name escape ^operator <o> +)
     (<o> ^name shoot-with-twig)
 -->
