@@ -32,7 +32,8 @@ sp {apply*initialize*escape
          ^created-combination false
          ^shot false
          ^shot-rock false
-         ^shot-twig false)
+         ^shot-twig false
+         ^thrown-log false)
     (<p> ^name none)
     (write (crlf) |Inizia il gioco!|)
 }
@@ -136,6 +137,24 @@ sp {apply*shoot-with-twig
     (<new-previous-action> ^name shoot-with-twig ^reward -1)
     (<s> ^shot-twig false - true +)
     (write (crlf) |Ha lanciato un rametto alla finestra senza romperla.|)
+}
+
+# try to throw a log
+sp {propose*throw-log
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot false ^broken-window false ^thrown-log false)
+    (<previous-action> ^name <> throw-log)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name throw-log)
+}
+
+sp {apply*throw-log
+    (state <s> ^operator.name throw-log ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name throw-log ^reward -1)
+    (<s> ^thrown-log false - true +)
+    (write (crlf) |Non riesce a lanciare il tronco, è troppo pesante. Riesce solo a spostarlo.|)
 }
 
 
@@ -315,6 +334,13 @@ sp {rl*shoot-rock
 sp {rl*shoot-twig
     (state <s> ^name escape ^operator <o> +)
     (<o> ^name shoot-with-twig)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*throw-log
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name throw-log)
 -->
     (<s> ^operator <o> = 0)
 }
