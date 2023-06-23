@@ -92,9 +92,48 @@ sp {apply*combine-rock-spring
 
 
 
-#######################
-### Possible shoots ###
-#######################
+#########################################
+### Possible shoots without slingshot ###
+#########################################
+# shooting the window with a rock
+sp {propose*shoot-with-rock
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot false ^broken-window false)
+    (<previous-action> ^name <> shoot-with-rock)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name shoot-with-rock)
+}
+
+sp {apply*shoot-with-rock
+    (state <s> ^operator.name shoot-with-rock ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name shoot-with-rock ^reward -1)
+    (write (crlf) |Ha lanciato una pietra alla finestra senza romperla.|)
+}
+
+# shooting the window with a twig
+sp {propose*shoot-with-twig
+    (state <s> ^name escape ^previous <previous-action> ^created-slingshot false ^broken-window false)
+    (<previous-action> ^name <> shoot-with-twig)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name shoot-with-twig)
+}
+
+sp {apply*shoot-with-twig
+    (state <s> ^operator.name shoot-with-twig ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name shoot-with-twig ^reward -1)
+    (write (crlf) |Ha lanciato un rametto alla finestra senza romperla.|)
+}
+
+
+
+######################################
+### Possible shoots with slingshot ###
+######################################
 # shooting on the center without breaking the window
 sp {propose*shoot-center
     (state <s> ^name escape ^previous <previous-action> ^created-slingshot true ^broken-window false)
@@ -112,20 +151,20 @@ sp {apply*shoot-center
     (write (crlf) |Ha sparato al centro senza rompere la finestra.|)
 }
 
-# shooting on the border and breaking the window
-sp {propose*shoot-border
+# shooting on the edge and breaking the window
+sp {propose*shoot-edge
     (state <s> ^name escape ^previous <previous-action> ^created-slingshot true ^broken-window false)
-    (<previous-action> ^name <> shoot-border)
+    (<previous-action> ^name <> shoot-edge)
 -->
     (<s> ^operator <o> +)
-    (<o> ^name shoot-border)
+    (<o> ^name shoot-edge)
 }
 
-sp {apply*shoot-border
-    (state <s> ^operator.name shoot-border ^previous <p>)
+sp {apply*shoot-edge
+    (state <s> ^operator.name shoot-edge ^previous <p>)
 -->
     (<s> ^previous <p> - <new-previous-action> +)
-    (<new-previous-action> ^name shoot-border ^reward 1)
+    (<new-previous-action> ^name shoot-edge ^reward 1)
     (<s> ^broken-window false - true +)
     (write (crlf) |Ha sparato al bordo e rotto la finestra!|)
 }
@@ -248,9 +287,23 @@ sp {rl*shoot-center*initialize
     (<s> ^operator <o> = 0)
 }
 
-sp {rl*shoot-border*initialize
+sp {rl*shoot-edge*initialize
     (state <s> ^name escape ^operator <o> +)
-    (<o> ^name shoot-border)
+    (<o> ^name shoot-edge)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*shoot-rock*initialize
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name shoot-with-rock)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*shoot-twig*initialize
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name shoot-with-twig)
 -->
     (<s> ^operator <o> = 0)
 }
