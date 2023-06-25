@@ -1,0 +1,537 @@
+# enable RL
+rl --set learning on
+# use epsilon-greedy decision making
+indifferent-selection --epsilon-greedy
+indifferent-selection --stats
+# 10% deviation from greedy
+indifferent-selection --epsilon 0.1
+
+
+
+##################
+### Initialize ###
+##################
+sp {propose*initialize*escape
+    (state <s> ^superstate nil -^name)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name initialize-escape)
+}
+
+sp {apply*initialize*escape
+    (state <s> ^operator.name initialize-escape)
+-->
+    (<s> ^name escape 
+         ^previous <p>
+         ^created-slingshot false
+         ^broken-window false
+         ^first-log-in-place false
+         ^created-ladder false
+         ^holding-log false
+         ^escaped false
+         ^created-combination false
+         ^shot false
+         ^shot-rock false
+         ^shot-twig false
+         ^thrown-log false
+         ^climbed-ladder false
+         ^punched-window false)
+    (<p> ^name none)
+    (write (crlf) |Inizia il gioco!|)
+}
+
+
+
+#############################
+### Possible combinations ###
+#############################
+# twig + spring = slingshot
+sp {propose*combine-twig-spring
+    (state <s> ^name escape ^previous <previous-action> 
+               ^created-slingshot false ^broken-window false ^created-combination false ^climbed-ladder false ^holding-log false)
+    (<previous-action> ^name <> combine-twig-spring)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name combine-twig-spring)
+}
+
+sp {apply*combine-twig-spring
+    (state <s> ^operator.name combine-twig-spring ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name combine-twig-spring ^reward 1)
+    (<s> ^created-slingshot false - true +)
+    (<s> ^created-combination false - true +)
+    (write (crlf) |Ha combinato il rametto con la molla e creato una fionda!|)
+}
+
+# twig + rock = nothing
+sp {propose*combine-rock-twig
+    (state <s> ^name escape ^previous <previous-action> 
+               ^created-slingshot false ^broken-window false ^created-combination false ^climbed-ladder false ^holding-log false)
+    (<previous-action> ^name <> combine-rock-twig)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name combine-rock-twig)
+}
+
+sp {apply*combine-rock-twig
+    (state <s> ^operator.name combine-rock-twig ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name combine-rock-twig ^reward -1)
+    (<s> ^created-combination false - true +)
+    (write (crlf) |Ha combinato il rametto con la pietra senza ottenere nulla.|)
+}
+
+# rock + spring = nothing
+sp {propose*combine-rock-spring
+    (state <s> ^name escape ^previous <previous-action> 
+               ^created-slingshot false ^broken-window false ^created-combination false ^climbed-ladder false ^holding-log false)
+    (<previous-action> ^name <> combine-rock-spring)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name combine-rock-spring)
+}
+
+sp {apply*combine-rock-spring
+    (state <s> ^operator.name combine-rock-spring ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name combine-rock-spring ^reward -1)
+    (<s> ^created-combination false - true +)
+    (write (crlf) |Ha combinato la pietra con la molla senza ottenere nulla.|)
+}
+
+
+
+#########################################
+### Possible shoots without slingshot ###
+#########################################
+# shooting the window with a rock
+sp {propose*shoot-with-rock
+    (state <s> ^name escape ^previous <previous-action> 
+               ^created-slingshot false ^broken-window false ^shot-rock false ^climbed-ladder false ^holding-log false)
+    (<previous-action> ^name <> shoot-with-rock)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name shoot-with-rock)
+}
+
+sp {apply*shoot-with-rock
+    (state <s> ^operator.name shoot-with-rock ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name shoot-with-rock ^reward -1)
+    (<s> ^shot-rock false - true +)
+    (write (crlf) |Ha lanciato una pietra alla finestra senza romperla.|)
+}
+
+# shooting the window with a twig
+sp {propose*shoot-with-twig
+    (state <s> ^name escape ^previous <previous-action> 
+               ^created-slingshot false ^broken-window false ^shot-twig false ^climbed-ladder false ^holding-log false)
+    (<previous-action> ^name <> shoot-with-twig)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name shoot-with-twig)
+}
+
+sp {apply*shoot-with-twig
+    (state <s> ^operator.name shoot-with-twig ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name shoot-with-twig ^reward -1)
+    (<s> ^shot-twig false - true +)
+    (write (crlf) |Ha lanciato un rametto alla finestra senza romperla.|)
+}
+
+# try to throw a log
+sp {propose*throw-log
+    (state <s> ^name escape ^previous <previous-action> 
+               ^created-slingshot false ^broken-window false ^thrown-log false ^created-ladder false ^holding-log false)
+    (<previous-action> ^name <> throw-log)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name throw-log)
+}
+
+sp {apply*throw-log
+    (state <s> ^operator.name throw-log ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name throw-log ^reward -1)
+    (<s> ^thrown-log false - true +)
+    (write (crlf) |Non riesce a lanciare il tronco, è troppo pesante. Riesce solo a spostarlo.|)
+}
+
+
+
+######################################
+### Possible shoots with slingshot ###
+######################################
+# shooting the center without breaking the window
+sp {propose*shoot-center
+    (state <s> ^name escape ^previous <previous-action> 
+               ^created-slingshot true ^broken-window false ^shot false ^climbed-ladder false ^holding-log false)
+    (<previous-action> ^name <> shoot-center)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name shoot-center)
+}
+
+sp {apply*shoot-center
+    (state <s> ^operator.name shoot-center ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name shoot-center ^reward -1)
+    (<s> ^shot false - true +)
+    (write (crlf) |Ha sparato al centro senza rompere la finestra.|)
+}
+
+# shooting the edge and breaking the window
+sp {propose*shoot-edge
+    (state <s> ^name escape ^previous <previous-action> 
+               ^created-slingshot true ^broken-window false ^shot false ^climbed-ladder false ^holding-log false)
+    (<previous-action> ^name <> shoot-edge)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name shoot-edge)
+}
+
+sp {apply*shoot-edge
+    (state <s> ^operator.name shoot-edge ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name shoot-edge ^reward 1)
+    (<s> ^broken-window false - true +)
+    (<s> ^shot false - true +)
+    (write (crlf) |Ha sparato al bordo e rotto la finestra!|)
+}
+
+
+
+#######################
+### Picking up logs ###
+#######################
+sp {propose*pick-up-log
+    (state <s> ^name escape ^previous <previous-action> ^created-ladder false ^holding-log false)
+    (<previous-action> ^name <> pick-up-log)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name pick-up-log)
+}
+
+sp {apply*pick-up-log
+    (state <s> ^operator.name pick-up-log ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name pick-up-log ^reward 1)
+    (<s> ^holding-log false - true +)
+    (write (crlf) |Ha raccolto un tronco.|)
+}
+
+
+
+###################################
+### Building ladder with 2 logs ###
+###################################
+sp {propose*move-first-log
+    (state <s> ^name escape ^previous <previous-action> ^first-log-in-place false ^holding-log true)
+    (<previous-action> ^name <> move-first-log)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name move-first-log)
+}
+
+sp {apply*move-first-log
+    (state <s> ^operator.name move-first-log ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name move-first-log ^reward 1)
+    (<s> ^first-log-in-place false - true +)
+    (<s> ^holding-log true - false +)
+    (write (crlf) |Ha spostato il primo tronco sotto la finestra!|)
+}
+
+sp {propose*move-second-log
+    (state <s> ^name escape ^previous <previous-action> ^first-log-in-place true ^created-ladder false ^holding-log true)
+    (<previous-action> ^name <> move-second-log)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name move-second-log)
+}
+
+sp {apply*move-second-log
+    (state <s> ^operator.name move-second-log ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name move-second-log ^reward 1)
+    (<s> ^holding-log true - false +)
+    (<s> ^created-ladder false - true +)
+    (write (crlf) |Ha spostato il secondo tronco sotto la finestra e ha costruito una scala!|)
+}
+
+
+
+####################
+### Climb ladder ###
+####################
+sp {propose*climb-ladder
+    (state <s> ^name escape ^previous <previous-action> ^created-ladder true ^climbed-ladder false)
+    (<previous-action> ^name <> climb-ladder)
+    # (<previous-action> ^name <> climb-down)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name climb-ladder)
+}
+
+sp {apply*climb-ladder
+    (state <s> ^operator.name climb-ladder ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name climb-ladder ^reward 1)
+    (<s> ^climbed-ladder false - true +)
+    (write (crlf) |Ha scalato la scala!|)
+}
+
+
+
+############################################
+### Try to break the window with a punch ###
+############################################
+sp {propose*punch-window
+    (state <s> ^name escape ^previous <previous-action> 
+               ^broken-window false ^climbed-ladder true ^punched-window false)
+    (<previous-action> ^name <> punch-window)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name punch-window)
+}
+
+sp {apply*punch-window
+    (state <s> ^operator.name punch-window ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name punch-window ^reward -1)
+    (<s> ^punched-window false - true +)
+    (write (crlf) |Ha provato a rompere la finestra con un pugno ma non ci è riuscito.|)
+}
+
+
+##############################################
+### Climb down if the window is not broken ###
+##############################################
+# sp {propose*climb-down
+#     (state <s> ^name escape ^previous <previous-action> ^climbed-ladder true ^punched-window true ^broken-window false)
+#     (<previous-action> ^name <> climb-down)
+# -->
+#     (<s> ^operator <o> +)
+#     (<o> ^name climb-down)
+# }
+
+# sp {apply*climb-down
+#     (state <s> ^operator.name climb-down ^previous <p>)
+# -->
+#     (<s> ^previous <p> - <new-previous-action> +)
+#     (<new-previous-action> ^name climb-down)
+#     (<s> ^climbed-ladder true - false +)
+#     (write (crlf) |È sceso dalla scala perché la finestra è ancora intatta.|)
+# }
+
+
+
+##############
+### Escape ###
+##############
+sp {propose*escape
+    (state <s> ^name escape ^previous <previous-action> ^climbed-ladder true ^broken-window true)
+    (<previous-action> ^name <> escape)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name escape)
+}
+
+sp {apply*escape
+    (state <s> ^operator.name escape ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name escape)
+    (<s> ^escaped false - true +)
+    (write (crlf) |È scappato!|)
+}
+
+
+
+##############################
+### Reinforcement learning ###
+##############################
+sp {rl*combine-twig-spring
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name combine-twig-spring)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*combine-rock-twig
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name combine-rock-twig)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*combine-rock-spring
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name combine-rock-spring)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*shoot-center
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name shoot-center)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*shoot-edge
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name shoot-edge)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*shoot-rock
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name shoot-with-rock)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*shoot-twig
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name shoot-with-twig)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*throw-log
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name throw-log)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*pick-up-log
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name pick-up-log)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*move-first-log
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name move-first-log)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*move-second-log
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name move-second-log)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*climb-ladder
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name climb-ladder)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+sp {rl*punch-window
+    (state <s> ^name escape ^operator <o> +)
+    (<o> ^name punch-window)
+-->
+    (<s> ^operator <o> = 0)
+}
+
+
+
+############################################
+### Reinforcement learning apply rewards ###
+############################################
+sp {rl*apply-rewards
+    (state <s> ^name escape ^reward-link <r> ^previous <previous-action>)
+    (<previous-action> ^reward <reward>)
+-->
+    (<r> ^reward <rr>)
+    (<rr> ^value <reward>)
+    (write (crlf) |Reward: | <reward>)
+}
+
+
+
+################################
+### Escape and halt the game ###
+################################
+sp {halt*escape
+    (state <s> ^name escape ^escaped true)
+-->
+    (write (crlf) |Fine del gioco!|)
+    (halt)
+}
+
+# sp {halt*no-slingshot
+#     (state <s> ^name escape ^escaped false ^created-slingshot false ^created-combination true ^shot-rock true ^shot-twig true)
+# -->
+#     (write (crlf) |Non ha costruito la fionda, non può scappare!|)
+#     (halt)
+# }
+
+# halt after tried to shoot with a rock
+sp {halt*shot-rock
+    (state <s> ^name escape ^escaped false ^shot-rock true)
+-->
+    (write (crlf) |Ha provato a lanciare il sasso, ma non ha rotto la finestra, non può scappare!|)
+    (halt)
+}
+
+# halt after tried to shoot with a twig
+sp {halt*shot-twig
+    (state <s> ^name escape ^escaped false ^shot-twig true)
+-->
+    (write (crlf) |Ha provato a lanciare il rametto, ma non ha rotto la finestra, non può scappare!|)
+    (halt)
+}
+
+# halt after tried to throw a log
+sp {halt*throw-log
+    (state <s> ^name escape ^escaped false ^thrown-log true)
+-->
+    (write (crlf) |Ha provato a lanciare il tronco, ma non ha rotto la finestra, non può scappare!|)
+    (halt)
+}
+
+# halt after tried a wrong combination
+sp {halt*wrong-combination
+    (state <s> ^name escape ^escaped false ^created-slingshot false ^created-combination true)
+-->
+    (write (crlf) |Ha provato a combinare degli oggetti, ma non ha trovato la combinazione giusta, non può scappare!|)
+    (halt)
+}
+
+sp {halt*wrong-shot
+    (state <s> ^name escape ^escaped false ^created-slingshot true ^shot true ^broken-window false)
+-->
+    (write (crlf) |Ha sparato al centro e non ha rotto la finestra, non può scappare!|)
+    (halt) 
+}
+
+sp {halt*punched-window
+    (state <s> ^name escape ^escaped false ^broken-window false ^punched-window true)
+-->
+    (write (crlf) |Ha creato la scala e colpito la finestra con un pugno. Però la finestra non si è rotta, non può scappare!|)
+    (halt)
+}
