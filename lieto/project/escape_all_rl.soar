@@ -2,9 +2,9 @@
 rl --set learning on
 # use epsilon-greedy decision making
 indifferent-selection --epsilon-greedy
-indifferent-selection --stats
 # 10% deviation from greedy
-indifferent-selection --epsilon 0.1
+indifferent-selection --epsilon 0.2
+indifferent-selection --stats
 
 
 
@@ -278,9 +278,9 @@ sp {apply*move-second-log
 ### Climb ladder ###
 ####################
 sp {propose*climb-ladder
+    # (state <s> ^name escape ^created-ladder true ^climbed-ladder false)
     (state <s> ^name escape ^previous <previous-action> ^created-ladder true ^climbed-ladder false)
-    (<previous-action> ^name <> climb-ladder)
-    # (<previous-action> ^name <> climb-down)
+    (<previous-action> ^name <> climb-down)
 -->
     (<s> ^operator <o> +)
     (<o> ^name climb-ladder)
@@ -322,22 +322,22 @@ sp {apply*punch-window
 ##############################################
 ### Climb down if the window is not broken ###
 ##############################################
-# sp {propose*climb-down
-#     (state <s> ^name escape ^previous <previous-action> ^climbed-ladder true ^punched-window true ^broken-window false)
-#     (<previous-action> ^name <> climb-down)
-# -->
-#     (<s> ^operator <o> +)
-#     (<o> ^name climb-down)
-# }
+sp {propose*climb-down
+    (state <s> ^name escape ^previous <previous-action> ^climbed-ladder true ^punched-window true ^broken-window false)
+    (<previous-action> ^name <> climb-down)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name climb-down)
+}
 
-# sp {apply*climb-down
-#     (state <s> ^operator.name climb-down ^previous <p>)
-# -->
-#     (<s> ^previous <p> - <new-previous-action> +)
-#     (<new-previous-action> ^name climb-down)
-#     (<s> ^climbed-ladder true - false +)
-#     (write (crlf) |È sceso dalla scala perché la finestra è ancora intatta.|)
-# }
+sp {apply*climb-down
+    (state <s> ^operator.name climb-down ^previous <p>)
+-->
+    (<s> ^previous <p> - <new-previous-action> +)
+    (<new-previous-action> ^name climb-down)
+    (<s> ^climbed-ladder true - false +)
+    (write (crlf) |È sceso dalla scala perché la finestra è ancora intatta.|)
+}
 
 
 
@@ -529,9 +529,9 @@ sp {halt*wrong-shot
     (halt) 
 }
 
-sp {halt*punched-window
-    (state <s> ^name escape ^escaped false ^broken-window false ^punched-window true)
--->
-    (write (crlf) |Ha creato la scala e colpito la finestra con un pugno. Però la finestra non si è rotta, non può scappare!|)
-    (halt)
-}
+# sp {halt*punched-window
+#     (state <s> ^name escape ^escaped false ^broken-window false ^punched-window true)
+# -->
+#     (write (crlf) |Ha creato la scala e colpito la finestra con un pugno. Però la finestra non si è rotta, non può scappare!|)
+#     (halt)
+# }
