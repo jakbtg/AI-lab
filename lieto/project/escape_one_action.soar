@@ -364,27 +364,6 @@ sp {rl*apply-rewards
 ################################
 ### Escape and halt the game ###
 ################################
-# sp {halt*escape
-#     (state <s> ^name escape ^escaped true)
-# -->
-#     (write (crlf) |Fine del gioco!|)
-#     (halt)
-# }
-
-# sp {halt*no-slingshot
-#     (state <s> ^name escape ^escaped false ^created-slingshot false ^created-combination true ^shot-rock true ^shot-twig true)
-# -->
-#     (write (crlf) |Non ha costruito la fionda, non può scappare!|)
-#     (halt)
-# }
-
-# sp {halt*wrong-shot
-#     (state <s> ^name escape ^escaped false ^created-slingshot true ^shot true ^broken-window false)
-# -->
-#     (write (crlf) |Ha sparato al centro e non ha rotto la finestra, non può scappare!|)
-#     (halt) 
-# }
-
 sp {halt*escape
     (state <s> ^name escape ^escaped true)
 -->
