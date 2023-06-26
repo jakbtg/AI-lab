@@ -483,14 +483,7 @@ sp {halt*escape
     (halt)
 }
 
-# sp {halt*no-slingshot
-#     (state <s> ^name escape ^escaped false ^created-slingshot false ^created-combination true ^shot-rock true ^shot-twig true)
-# -->
-#     (write (crlf) |Non ha costruito la fionda, non può scappare!|)
-#     (halt)
-# }
-
-# halt after tried to shoot with a rock
+# halt after trying to shoot with a rock
 sp {halt*shot-rock
     (state <s> ^name escape ^escaped false ^shot-rock true)
 -->
@@ -498,7 +491,7 @@ sp {halt*shot-rock
     (halt)
 }
 
-# halt after tried to shoot with a twig
+# halt after trying to shoot with a twig
 sp {halt*shot-twig
     (state <s> ^name escape ^escaped false ^shot-twig true)
 -->
@@ -506,7 +499,7 @@ sp {halt*shot-twig
     (halt)
 }
 
-# halt after tried to throw a log
+# halt after trying to throw a log
 sp {halt*throw-log
     (state <s> ^name escape ^escaped false ^thrown-log true)
 -->
@@ -514,7 +507,7 @@ sp {halt*throw-log
     (halt)
 }
 
-# halt after tried a wrong combination
+# halt after trying a wrong combination
 sp {halt*wrong-combination
     (state <s> ^name escape ^escaped false ^created-slingshot false ^created-combination true)
 -->
@@ -522,6 +515,7 @@ sp {halt*wrong-combination
     (halt)
 }
 
+# halt after shooting the wrong part of the window
 sp {halt*wrong-shot
     (state <s> ^name escape ^escaped false ^created-slingshot true ^shot true ^broken-window false)
 -->
@@ -529,6 +523,7 @@ sp {halt*wrong-shot
     (halt) 
 }
 
+# halt after trying to punch the window
 # sp {halt*punched-window
 #     (state <s> ^name escape ^escaped false ^broken-window false ^punched-window true)
 # -->
