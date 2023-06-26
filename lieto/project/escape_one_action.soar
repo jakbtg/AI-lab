@@ -364,6 +364,27 @@ sp {rl*apply-rewards
 ################################
 ### Escape and halt the game ###
 ################################
+# sp {halt*escape
+#     (state <s> ^name escape ^escaped true)
+# -->
+#     (write (crlf) |Fine del gioco!|)
+#     (halt)
+# }
+
+# sp {halt*no-slingshot
+#     (state <s> ^name escape ^escaped false ^created-slingshot false ^created-combination true ^shot-rock true ^shot-twig true)
+# -->
+#     (write (crlf) |Non ha costruito la fionda, non può scappare!|)
+#     (halt)
+# }
+
+# sp {halt*wrong-shot
+#     (state <s> ^name escape ^escaped false ^created-slingshot true ^shot true ^broken-window false)
+# -->
+#     (write (crlf) |Ha sparato al centro e non ha rotto la finestra, non può scappare!|)
+#     (halt) 
+# }
+
 sp {halt*escape
     (state <s> ^name escape ^escaped true)
 -->
@@ -371,13 +392,39 @@ sp {halt*escape
     (halt)
 }
 
-sp {halt*no-slingshot
-    (state <s> ^name escape ^escaped false ^created-slingshot false ^created-combination true ^shot-rock true ^shot-twig true)
+# halt after trying to shoot with a rock
+sp {halt*shot-rock
+    (state <s> ^name escape ^escaped false ^shot-rock true)
 -->
-    (write (crlf) |Non ha costruito la fionda, non può scappare!|)
+    (write (crlf) |Ha provato a lanciare il sasso, ma non ha rotto la finestra, non può scappare!|)
     (halt)
 }
 
+# halt after trying to shoot with a twig
+sp {halt*shot-twig
+    (state <s> ^name escape ^escaped false ^shot-twig true)
+-->
+    (write (crlf) |Ha provato a lanciare il rametto, ma non ha rotto la finestra, non può scappare!|)
+    (halt)
+}
+
+# halt after trying to throw a log
+sp {halt*throw-log
+    (state <s> ^name escape ^escaped false ^thrown-log true)
+-->
+    (write (crlf) |Ha provato a lanciare il tronco, ma non ha rotto la finestra, non può scappare!|)
+    (halt)
+}
+
+# halt after trying a wrong combination
+sp {halt*wrong-combination
+    (state <s> ^name escape ^escaped false ^created-slingshot false ^created-combination true)
+-->
+    (write (crlf) |Ha provato a combinare degli oggetti, ma non ha trovato la combinazione giusta, non può scappare!|)
+    (halt)
+}
+
+# halt after shooting the wrong part of the window
 sp {halt*wrong-shot
     (state <s> ^name escape ^escaped false ^created-slingshot true ^shot true ^broken-window false)
 -->
