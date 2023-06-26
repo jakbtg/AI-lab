@@ -3,7 +3,7 @@ rl --set learning on
 # use epsilon-greedy decision making
 indifferent-selection --epsilon-greedy
 # 10% deviation from greedy
-indifferent-selection --epsilon 0.1
+indifferent-selection --epsilon 0.2
 indifferent-selection --stats
 
 
@@ -29,8 +29,6 @@ sp {apply*initialize*escape
          ^created-ladder false
          ^holding-log false
          ^escaped false
-         ^shot false
-         ^thrown-log false
          ^climbed-ladder false
          ^punched-window false)
     (<p> ^name none)
@@ -164,7 +162,7 @@ sp {apply*throw-log
 # shooting the center without breaking the window
 sp {propose*shoot-center
     (state <s> ^name escape ^previous <previous-action> 
-               ^created-slingshot true ^broken-window false ^shot false ^climbed-ladder false ^holding-log false)
+               ^created-slingshot true ^broken-window false ^climbed-ladder false ^holding-log false)
     (<previous-action> ^name <> shoot-center)
 -->
     (<s> ^operator <o> +)
@@ -176,14 +174,13 @@ sp {apply*shoot-center
 -->
     (<s> ^previous <p> - <new-previous-action> +)
     (<new-previous-action> ^name shoot-center ^reward -1)
-    (<s> ^shot false - true +)
     (write (crlf) |Ha sparato al centro senza rompere la finestra.|)
 }
 
 # shooting the edge and breaking the window
 sp {propose*shoot-edge
     (state <s> ^name escape ^previous <previous-action> 
-               ^created-slingshot true ^broken-window false ^shot false ^climbed-ladder false ^holding-log false)
+               ^created-slingshot true ^broken-window false ^climbed-ladder false ^holding-log false)
     (<previous-action> ^name <> shoot-edge)
 -->
     (<s> ^operator <o> +)
@@ -196,7 +193,6 @@ sp {apply*shoot-edge
     (<s> ^previous <p> - <new-previous-action> +)
     (<new-previous-action> ^name shoot-edge ^reward 1)
     (<s> ^broken-window false - true +)
-    (<s> ^shot false - true +)
     (write (crlf) |Ha sparato al bordo e rotto la finestra!|)
 }
 
@@ -269,7 +265,6 @@ sp {apply*move-second-log
 ### Climb ladder ###
 ####################
 sp {propose*climb-ladder
-    # (state <s> ^name escape ^created-ladder true ^climbed-ladder false)
     (state <s> ^name escape ^previous <previous-action> ^created-ladder true ^climbed-ladder false)
     (<previous-action> ^name <> climb-down)
 -->
