@@ -323,8 +323,7 @@ sp {apply*punch-window
 ### Climb down if the window is not broken ###
 ##############################################
 sp {propose*climb-down
-    (state <s> ^name escape ^previous <previous-action> ^climbed-ladder true ^punched-window true ^broken-window false)
-    (<previous-action> ^name <> climb-down)
+    (state <s> ^name escape ^climbed-ladder true ^punched-window true ^broken-window false)
 -->
     (<s> ^operator <o> +)
     (<o> ^name climb-down)
