@@ -486,7 +486,7 @@ sp {halt*escape
 sp {halt*shot-rock
     (state <s> ^name escape ^escaped false ^shot-rock true)
 -->
-    (write (crlf) |Ha provato a lanciare il sasso, ma non ha rotto la finestra, non può scappare!|)
+    (write (crlf) |Ha provato a lanciare la pietra, ma non ha rotto la finestra, non può scappare!|)
     (halt)
 }
 
