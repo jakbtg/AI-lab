@@ -1,3 +1,9 @@
+# Istruzioni per l'esecuzione del progetto ASP
+
+Per lanciare il programma occorre spostarsi nella cartella `asp` ed eseguire il comando `clingo asp_project.cl -t n` dove `n` è il numero di thread desiderato.  
+Per poi analizzare il risultato ottenuto occorre copiare tutto ciò che il programma ha stampato (ovvero i vari assegnamenti fatti) e incollarli nel file `asp_out.txt`. Infine eseguendo il file `asp_analyze_results.py` si eseguono i vari test e viene prodotto il file di output finale `asp_final_calendar.tsv`.  
+Per installare le dipendenze richieste dal file python basta eseguire il comando `pip install -r requirements.txt`.  
+
 # Note sulle run del progetto ASP
 
 Queste sono le migliori prestazioni ottenute, ma ogni run impiega tempi diversi.

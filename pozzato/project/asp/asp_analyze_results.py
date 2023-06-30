@@ -6,7 +6,7 @@ N_MATCHES = N_TEAMS * (N_TEAMS - 1)
 N_MATCHES_PER_DAY = int(N_MATCHES / N_DAYS)
 
 # open file 'asp_out.txt' and read the output
-with open('pozzato/project/asp/asp_out.txt', 'r') as f:
+with open('asp_out.txt', 'r') as f:
     line = f.readline()
     result = line.split()
     days = []
@@ -181,7 +181,7 @@ if not error:
 
 # create an output file 
 headers = ['Giornata', 'Squadra Casa', 'Squadra Ospite']
-with open('pozzato/project/asp/asp_final_calendar.tsv', 'w') as f:
+with open('asp_final_calendar.tsv', 'w') as f:
     f.write('\t'.join(headers) + '\n')
     i = 1
     for element in final_calendar:
