@@ -19,7 +19,7 @@ statistics = lines[-8:]
 # exclude last 8 lines and the first one
 lines = lines[1:-8]
 
-# first n lines --> fpr testing
+# first n lines --> for testing
 # lines = lines[:556]
 
 # empty cells per row and column
