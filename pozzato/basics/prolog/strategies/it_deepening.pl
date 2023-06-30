@@ -1,6 +1,6 @@
 % Iterative Deepening Depth First Search
 % Il grosso problema è che se non c'è soluzione (tipo se gli ostacoli bloccano totalmente il robot) il programma non termina mai.
-% Però in questo particolare dominio, ovvero avendo una griglia 10x10, il numero di stati totali e finito e = 100.
+% Però in questo particolare dominio, ovvero avendo una griglia 10x10, il numero di stati totali è finito e = 100.
 % Pertanto possiamo inserire un controllo, che se il numero di stati visitati è maggiore di 100, allora non c'è soluzione e terminiamo.
 
 % inizializzazione: rimuovo tutte le possibili asserzioni di current_depth e ne inizializzo una nuova a 1.
